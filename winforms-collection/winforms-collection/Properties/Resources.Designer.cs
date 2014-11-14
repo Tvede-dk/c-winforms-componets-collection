@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Samples_and_tests.Properties {
+namespace winforms_collection.Properties {
     using System;
     
     
@@ -22,7 +22,7 @@ namespace Samples_and_tests.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,10 +36,10 @@ namespace Samples_and_tests.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Samples_and_tests.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("winforms_collection.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,12 +51,82 @@ namespace Samples_and_tests.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ab
+        ///Abad
+        ///abaddon
+        ///Abadi
+        ///Abadie
+        ///Abagail
+        ///Abagale
+        ///Abagayle
+        ///Abaigeal
+        ///Abair
+        ///Abaja
+        ///Abajian
+        ///Abale
+        ///Abalos
+        ///Abaloz
+        ///Abanoub
+        ///Abar
+        ///Abarca
+        ///Abare
+        ///Abarna
+        ///Abas
+        ///Abascal
+        ///Abasi
+        ///Abass
+        ///Abasta
+        ///Abate
+        ///Abati
+        ///Abatiell
+        ///Abato
+        ///Abatti
+        ///Abaunza
+        ///Abaya
+        ///Abba
+        ///Abbad
+        ///Abbadessa
+        ///Abbagail
+        ///Abbagale
+        ///Abbagayle
+        ///Abbamonte
+        ///abbán
+        ///Abbas
+        ///&apos;abbas
+        ///Abbasi
+        ///Abbassi
+        ///Abbate
+        ///Abbatiello
+        ///Abbay
+        ///Abbe
+        ///Abbed
+        ///Abbelin
+        ///Abbelone
+        ///Abbenante
+        ///Abbey
+        ///Abbeygail
+        ///Abbi
+        ///Abbie
+        ///Abbiegail
+        ///Abbiegayle
+        ///Abbigael
+        ///Abbigail
+        ///Abbigaile
+        ///Abbi [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string names {
+            get {
+                return ResourceManager.GetString("names", resourceCulture);
             }
         }
     }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -32,6 +34,8 @@ namespace Samples_and_tests {
             MessageBox.Show( "value was: " + size );
         }
 
+
+
         public static double profile( int iterations, Action func ) {
             // warm up jit.
             func();
@@ -49,6 +53,43 @@ namespace Samples_and_tests {
             }
             watch.Stop();
             return watch.Elapsed.TotalMilliseconds;
+        }
+
+        private void button2_Click( object sender, EventArgs e ) {
+            string[] arr1 = sTextbox3.Lines;
+            string[] arr2 = sTextbox4.Lines;
+            string[] res = arr1.Union( arr2 ).ToArray();
+            IEnumerable<string> mergedDistinctList = new HashSet<string>( arr1 ).Union( arr2 );
+            Array.Sort( res );
+            sTextbox5.Lines = mergedDistinctList.ToArray();
+        }
+
+        private void button3_Click( object sender, EventArgs e ) {
+
+            string[] lines = sTextbox6.Lines;
+            int indexInWordList = (int)numericUpDown1.Value;
+            string[] result = new string[lines.Length];
+            char[] split = new char[] { ' ', ',' };
+            Parallel.For( 0, lines.Length,
+                ( int index ) => {
+                    var words = lines[index].Split( split );
+                    if ( indexInWordList < words.Length ) {
+                        result[index] = words[indexInWordList];
+                    }
+                } );
+            sTextbox7.Lines = result;
+        }
+
+        private void button4_Click( object sender, EventArgs e ) {
+
+           double mult =  profile( 1, () => {
+                SharedFunctionalities.SharedStringUtils.innerWorkings.splitStringFast( winforms_collection.Properties.Resources.names, Environment.NewLine, StringSplitOptions.None );
+            } );
+
+            double single = profile( 1, () => {
+                winforms_collection.Properties.Resources.names.Split(new []{ Environment.NewLine},StringSplitOptions.RemoveEmptyEntries );
+            } );
+            MessageBox.Show( "mult"+ mult +", single"+single );
         }
     }
 }
