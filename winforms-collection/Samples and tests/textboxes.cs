@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using SharedFunctionalities;
 using System.Diagnostics;
-
+using winforms_collection;
 namespace Samples_and_tests {
     public partial class textboxes : Form {
         public textboxes() {
@@ -97,6 +97,32 @@ namespace Samples_and_tests {
 
         private void textboxes_Load( object sender, EventArgs e ) {
 
+        }
+
+        private void button5_Click( object sender, EventArgs e ) {
+            var pop = new FastNoticePopup( "", 2000, null );
+            pop.ShowDialog();
+        }
+
+        private void button6_Click( object sender, EventArgs e ) {
+            FastNoticePopup.ShowInfo( "test", this );
+            
+        }
+
+        private void button7_Click( object sender, EventArgs e ) {
+            FastNoticePopup.ShowWarning( "test", this );
+        }
+
+        private void button8_Click( object sender, EventArgs e ) {
+            FastNoticePopup.ShowError( "test", this );
+        }
+
+        private void button9_Click( object sender, EventArgs e ) {
+            FastNoticePopup.ShowSucess( "test", this );
+        }
+
+        private void button10_Click( object sender, EventArgs e ) {
+            winforms_collection.popup_boxes.NotificationBar.showAtLocation( "test text", new System.Drawing.Point { Y = 50, X = 50 } );
         }
     }
 }

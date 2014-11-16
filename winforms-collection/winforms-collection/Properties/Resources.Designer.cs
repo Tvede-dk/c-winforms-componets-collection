@@ -61,6 +61,96 @@ namespace winforms_collection.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap _1416174868_info {
+            get {
+                object obj = ResourceManager.GetObject("_1416174868_info", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap _1416175088_cancel {
+            get {
+                object obj = ResourceManager.GetObject("_1416175088_cancel", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap _1416175115_delete {
+            get {
+                object obj = ResourceManager.GetObject("_1416175115_delete", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap _1416175120_faq {
+            get {
+                object obj = ResourceManager.GetObject("_1416175120_faq", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap _1416175235_add {
+            get {
+                object obj = ResourceManager.GetObject("_1416175235_add", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap _1416175496_alert {
+            get {
+                object obj = ResourceManager.GetObject("_1416175496_alert", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap _1416175596_ok {
+            get {
+                object obj = ResourceManager.GetObject("_1416175596_ok", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap dark_metal_back1 {
+            get {
+                object obj = ResourceManager.GetObject("dark_metal_back1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap dark_metal_grid_3 {
+            get {
+                object obj = ResourceManager.GetObject("dark_metal_grid_3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ab
         ///Abad
         ///abaddon
@@ -127,6 +217,16 @@ namespace winforms_collection.Properties {
         public static string names {
             get {
                 return ResourceManager.GetString("names", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap toast_left_small {
+            get {
+                object obj = ResourceManager.GetObject("toast_left_small", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

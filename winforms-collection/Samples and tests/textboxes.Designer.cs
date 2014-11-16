@@ -32,6 +32,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
             this.progressbar1 = new winforms_collection.simple_components.Progressbar();
             this.sTextbox8 = new winforms_collection.STextbox();
             this.sTextbox7 = new winforms_collection.STextbox();
@@ -41,6 +43,10 @@
             this.sTextbox3 = new winforms_collection.STextbox();
             this.sTextbox2 = new winforms_collection.STextbox();
             this.sTextbox1 = new winforms_collection.STextbox();
+            this.button7 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
+            this.button9 = new System.Windows.Forms.Button();
+            this.button10 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,7 +62,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 72);
+            this.label2.Location = new System.Drawing.Point(12, 41);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(116, 13);
             this.label2.TabIndex = 3;
@@ -74,7 +80,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(650, 126);
+            this.button2.Location = new System.Drawing.Point(594, 126);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 8;
@@ -110,7 +116,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(414, 461);
+            this.button4.Location = new System.Drawing.Point(369, 366);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 18;
@@ -127,6 +133,26 @@
             this.label4.TabIndex = 20;
             this.label4.Text = "Pretty progressbar";
             // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(761, 279);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(144, 23);
+            this.button5.TabIndex = 21;
+            this.button5.Text = "Fast notice box";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(761, 308);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(144, 23);
+            this.button6.TabIndex = 22;
+            this.button6.Text = "Fast notice info";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
             // progressbar1
             // 
             this.progressbar1.BackColor = System.Drawing.Color.Black;
@@ -137,6 +163,7 @@
             this.progressbar1.drawProcent = true;
             this.progressbar1.flashbarWidth = 40;
             this.progressbar1.flashColor = System.Drawing.Color.LightGoldenrodYellow;
+            this.progressbar1.flashColorIntensity = 70;
             this.progressbar1.ForeColor = System.Drawing.Color.Lavender;
             this.progressbar1.fps = 45;
             this.progressbar1.Location = new System.Drawing.Point(12, 223);
@@ -155,7 +182,7 @@
             this.sTextbox8.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.sTextbox8.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.sTextbox8.dataType = winforms_collection.STextbox.TextboxType.PERSON_NAME;
-            this.sTextbox8.Location = new System.Drawing.Point(761, 477);
+            this.sTextbox8.Location = new System.Drawing.Point(805, 15);
             this.sTextbox8.Name = "sTextbox8";
             this.sTextbox8.placeHolder = "test";
             this.sTextbox8.Size = new System.Drawing.Size(100, 20);
@@ -175,19 +202,19 @@
             // sTextbox6
             // 
             this.sTextbox6.dataType = winforms_collection.STextbox.TextboxType.REGULAR_TEXT;
-            this.sTextbox6.Location = new System.Drawing.Point(13, 281);
+            this.sTextbox6.Location = new System.Drawing.Point(15, 271);
             this.sTextbox6.MaxLength = 0;
             this.sTextbox6.Multiline = true;
             this.sTextbox6.Name = "sTextbox6";
             this.sTextbox6.placeHolder = "";
-            this.sTextbox6.Size = new System.Drawing.Size(350, 216);
+            this.sTextbox6.Size = new System.Drawing.Size(334, 71);
             this.sTextbox6.TabIndex = 12;
             // 
             // sTextbox5
             // 
             this.sTextbox5.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystem;
             this.sTextbox5.dataType = winforms_collection.STextbox.TextboxType.REGULAR_TEXT;
-            this.sTextbox5.Location = new System.Drawing.Point(742, 12);
+            this.sTextbox5.Location = new System.Drawing.Point(675, 15);
             this.sTextbox5.MaxLength = 0;
             this.sTextbox5.Multiline = true;
             this.sTextbox5.Name = "sTextbox5";
@@ -225,7 +252,7 @@
             this.sTextbox2.Multiline = true;
             this.sTextbox2.Name = "sTextbox2";
             this.sTextbox2.placeHolder = "";
-            this.sTextbox2.Size = new System.Drawing.Size(203, 73);
+            this.sTextbox2.Size = new System.Drawing.Size(203, 32);
             this.sTextbox2.TabIndex = 2;
             // 
             // sTextbox1
@@ -237,11 +264,57 @@
             this.sTextbox1.Size = new System.Drawing.Size(203, 20);
             this.sTextbox1.TabIndex = 0;
             // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(761, 337);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(144, 23);
+            this.button7.TabIndex = 23;
+            this.button7.Text = "Fast notice warning";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(761, 366);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(144, 23);
+            this.button8.TabIndex = 24;
+            this.button8.Text = "Fast notice error";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(761, 395);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(144, 23);
+            this.button9.TabIndex = 25;
+            this.button9.Text = "Fast notice sucess";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
+            // button10
+            // 
+            this.button10.Location = new System.Drawing.Point(12, 474);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(144, 23);
+            this.button10.TabIndex = 26;
+            this.button10.Text = "notification";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
+            // 
             // textboxes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(917, 509);
+            this.Controls.Add(this.button10);
+            this.Controls.Add(this.button9);
+            this.Controls.Add(this.button8);
+            this.Controls.Add(this.button7);
+            this.Controls.Add(this.button6);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.progressbar1);
             this.Controls.Add(this.button4);
@@ -289,6 +362,12 @@
         private System.Windows.Forms.Button button4;
         private winforms_collection.simple_components.Progressbar progressbar1;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.Button button10;
     }
 }
 

@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>winforms_collection</RootNamespace>
     <AssemblyName>winforms-collection</AssemblyName>
-    <TargetFrameworkVersion>v4.5.3</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -42,6 +42,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="popup boxes\BaseAnimationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="popup boxes\fastNoticsPopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="popup boxes\fastNoticsPopup.Designer.cs">
+      <DependentUpon>fastNoticsPopup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="popup boxes\NotificationBar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="popup boxes\NotificationBar.Designer.cs">
+      <DependentUpon>NotificationBar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -63,13 +78,13 @@
     <Compile Include="temp.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SharedFunctionalities\SharedFunctionalities.csproj">
-      <Project>{1611e537-663b-4e03-9afd-4dd22c800496}</Project>
-      <Name>SharedFunctionalities</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="names.txt" />
+    <EmbeddedResource Include="popup boxes\fastNoticsPopup.resx">
+      <DependentUpon>fastNoticsPopup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="popup boxes\NotificationBar.resx">
+      <DependentUpon>NotificationBar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="simple components\Progressbar.resx">
       <DependentUpon>Progressbar.cs</DependentUpon>
     </EmbeddedResource>
@@ -80,6 +95,27 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SharedFunctionalities\SharedFunctionalities.csproj">
+      <Project>{1611e537-663b-4e03-9afd-4dd22c800496}</Project>
+      <Name>SharedFunctionalities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Image licenses.txt" />
+    <Content Include="Resources\backgrounds\dark-metal-back1.jpg" />
+    <Content Include="Resources\backgrounds\toast-left-small.png" />
+    <Content Include="Resources\icons\blue styled\1416174868_info.png" />
+    <Content Include="Resources\icons\blue styled\1416175088_cancel.png" />
+    <Content Include="Resources\icons\blue styled\1416175115_delete.png" />
+    <Content Include="Resources\icons\blue styled\1416175120_faq.png" />
+    <Content Include="Resources\icons\blue styled\1416175235_add.png" />
+    <Content Include="Resources\icons\blue styled\1416175496_alert.png" />
+    <Content Include="Resources\icons\blue styled\1416175596_ok.png" />
+    <None Include="Resources\icons\blue styled\License.txt" />
+    <None Include="Resources\backgrounds\dark-metal-grid-3.jpg" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
