@@ -16,7 +16,7 @@ using System.Windows.Forms.Design;
 namespace winforms_collection {
     
     [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
-    public class FlashTrackBarValueEditor : System.Drawing.Design.UITypeEditor {
+    public class FlashTrackBarValueEditor : UITypeEditor {
 
         private IWindowsFormsEditorService edSvc = null;
 

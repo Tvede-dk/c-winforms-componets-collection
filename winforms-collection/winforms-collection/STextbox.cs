@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.ComponentModel.Design;
 
 namespace winforms_collection {
     public partial class STextbox : TextBox {
@@ -152,7 +153,7 @@ namespace winforms_collection {
         private static class StaticsLoads {
             static AutoCompleteStringCollection autoCompleteNames;
             public static AutoCompleteStringCollection getAutocompleteNames() {
-                if ( autoCompleteNames == null ) {
+                if ( autoCompleteNames == null && isDesignMode() == false && IsInDesignMode() == false ) {
                     autoCompleteNames = new AutoCompleteStringCollection();
                     autoCompleteNames.AddRange( Properties.Resources.names.Split( new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries ) );
                 }
@@ -171,6 +172,28 @@ namespace winforms_collection {
                 default:
                     break;
             }
+        }
+        public static bool IsInDesignMode() {
+            if ( Application.ExecutablePath.IndexOf( "devenv.exe", StringComparison.OrdinalIgnoreCase ) > -1 ) {
+                return true;
+            }
+            return false;
+        }
+
+
+        private bool getDesignMode() {
+            IDesignerHost host;
+            if ( Site != null ) {
+                host = Site.GetService( typeof(IDesignerHost) ) as IDesignerHost;
+                if ( host != null ) {
+                    return host.RootComponent.Site.DesignMode;
+                }
+            }
+            MessageBox.Show( "Runtime Mode" );
+            return false;
+        }
+        private static bool isDesignMode() {
+            return (LicenseManager.UsageMode == LicenseUsageMode.Designtime);
         }
 
         public enum TextboxType {

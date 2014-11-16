@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using SharedFunctionalities;
 using System.Diagnostics;
@@ -16,6 +10,11 @@ namespace Samples_and_tests {
     public partial class textboxes : Form {
         public textboxes() {
             InitializeComponent();
+            Timer t = new Timer();
+            t.Interval = 500;
+            t.Enabled = true;
+            t.Start();
+            t.Tick += T_Tick;
         }
 
         private void button1_Click( object sender, EventArgs e ) {
@@ -32,9 +31,13 @@ namespace Samples_and_tests {
                 isSingleFasterThanMultithreaded = timeMulti >= timeSingle;
             }
             MessageBox.Show( "value was: " + size );
+
+
         }
 
-
+        private void T_Tick( object sender, EventArgs e ) {
+            progressbar1.progressInProcent++;
+        }
 
         public static double profile( int iterations, Action func ) {
             // warm up jit.
@@ -82,14 +85,18 @@ namespace Samples_and_tests {
 
         private void button4_Click( object sender, EventArgs e ) {
 
-           double mult =  profile( 1, () => {
+            double mult = profile( 1, () => {
                 SharedFunctionalities.SharedStringUtils.innerWorkings.splitStringFast( winforms_collection.Properties.Resources.names, Environment.NewLine, StringSplitOptions.None );
             } );
 
             double single = profile( 1, () => {
-                winforms_collection.Properties.Resources.names.Split(new []{ Environment.NewLine},StringSplitOptions.RemoveEmptyEntries );
+                winforms_collection.Properties.Resources.names.Split( new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries );
             } );
-            MessageBox.Show( "mult"+ mult +", single"+single );
+            MessageBox.Show( "mult" + mult + ", single" + single );
+        }
+
+        private void textboxes_Load( object sender, EventArgs e ) {
+
         }
     }
 }

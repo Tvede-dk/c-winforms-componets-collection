@@ -48,6 +48,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="simple components\Progressbar.cs">
+      <SubType>component</SubType>
+    </Compile>
+    <Compile Include="simple components\Progressbar.Designer.cs">
+      <DependentUpon>Progressbar.cs</DependentUpon>
+    </Compile>
     <Compile Include="STextbox.cs">
       <SubType>component</SubType>
     </Compile>
@@ -64,6 +70,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="names.txt" />
+    <EmbeddedResource Include="simple components\Progressbar.resx">
+      <DependentUpon>Progressbar.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
