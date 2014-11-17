@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.ComponentModel.Design;
+using winforms_collection.validator;
 
 namespace winforms_collection {
     public partial class STextbox : TextBox {
@@ -25,6 +26,20 @@ namespace winforms_collection {
             set { _placeHolder = value; }
         }
 
+		[Description("")]
+		[EditorBrowsable]
+
+		private IValidatorType _validator;
+
+		public IValidatorType validator {
+			get {
+				return _validator;
+			}
+			set {
+				_validator = value;
+			}
+		}
+
         private TextboxType _dataType = TextboxType.REGULAR_TEXT;
 
         [EditorBrowsable]
@@ -40,12 +55,38 @@ namespace winforms_collection {
         }
 
 
+		protected override void OnTextChanged( EventArgs e ) {
+			base.OnTextChanged(e);
+			//run validation in background.
+			if ( _validator != null ) {
+				runValidator();
+			}
+		}
+
+		public bool validate() {
+			if ( _validator != null ) {
+				return _validator.Validate(Text);
+			} else {
+				return true;
+			}
+
+		}
+
+		private void runValidator() {
+			//TODO make in another thread
+			validate();
+		}
+
 
         public STextbox() {
             _placeHolderFont = DefaultFont;
             InitializeComponent();
             SetStyle( ControlStyles.Opaque, true );
             SetStyle( ControlStyles.ResizeRedraw, true );
+	
+			var val = new NumberString();
+			val.allowDecimal = true;
+			validator = val;
         }
 
         protected override void OnKeyDown( KeyEventArgs e ) {

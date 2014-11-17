@@ -75,7 +75,11 @@
     <Compile Include="STextbox.Designer.cs">
       <DependentUpon>STextbox.cs</DependentUpon>
     </Compile>
-    <Compile Include="temp.cs" />
+    <Compile Include="temp.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="validator\NumberString.cs" />
+    <Compile Include="validator\ValidatorType.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="names.txt" />
