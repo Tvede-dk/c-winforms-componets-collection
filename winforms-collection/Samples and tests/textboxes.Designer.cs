@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            winforms_collection.validator.NumberString numberString1 = new winforms_collection.validator.NumberString();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
@@ -187,6 +188,7 @@
             this.sTextbox8.placeHolder = "test";
             this.sTextbox8.Size = new System.Drawing.Size(100, 20);
             this.sTextbox8.TabIndex = 17;
+            this.sTextbox8.validator = null;
             // 
             // sTextbox7
             // 
@@ -198,6 +200,7 @@
             this.sTextbox7.placeHolder = "";
             this.sTextbox7.Size = new System.Drawing.Size(184, 216);
             this.sTextbox7.TabIndex = 16;
+            this.sTextbox7.validator = null;
             // 
             // sTextbox6
             // 
@@ -209,6 +212,7 @@
             this.sTextbox6.placeHolder = "";
             this.sTextbox6.Size = new System.Drawing.Size(334, 71);
             this.sTextbox6.TabIndex = 12;
+            this.sTextbox6.validator = null;
             // 
             // sTextbox5
             // 
@@ -221,6 +225,7 @@
             this.sTextbox5.placeHolder = "";
             this.sTextbox5.Size = new System.Drawing.Size(100, 234);
             this.sTextbox5.TabIndex = 11;
+            this.sTextbox5.validator = null;
             // 
             // sTextbox4
             // 
@@ -232,6 +237,7 @@
             this.sTextbox4.placeHolder = "";
             this.sTextbox4.Size = new System.Drawing.Size(100, 234);
             this.sTextbox4.TabIndex = 10;
+            this.sTextbox4.validator = null;
             // 
             // sTextbox3
             // 
@@ -243,6 +249,7 @@
             this.sTextbox3.placeHolder = "";
             this.sTextbox3.Size = new System.Drawing.Size(100, 234);
             this.sTextbox3.TabIndex = 9;
+            this.sTextbox3.validator = null;
             // 
             // sTextbox2
             // 
@@ -254,10 +261,11 @@
             this.sTextbox2.placeHolder = "";
             this.sTextbox2.Size = new System.Drawing.Size(203, 32);
             this.sTextbox2.TabIndex = 2;
+            this.sTextbox2.validator = null;
             // 
             // sTextbox1
             // 
-            this.sTextbox1.dataType = winforms_collection.STextbox.TextboxType.REGULAR_TEXT;
+            this.sTextbox1.dataType = winforms_collection.STextbox.TextboxType.DECIMAL;
             this.sTextbox1.Location = new System.Drawing.Point(134, 15);
             this.sTextbox1.Name = "sTextbox1";
             this.sTextbox1.placeHolder = "";

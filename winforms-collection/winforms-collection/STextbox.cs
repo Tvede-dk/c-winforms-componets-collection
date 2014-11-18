@@ -26,24 +26,22 @@ namespace winforms_collection {
             set { _placeHolder = value; }
         }
 
-		[Description("")]
-		[EditorBrowsable]
-
-		private IValidatorType _validator;
-
-		public IValidatorType validator {
-			get {
-				return _validator;
-			}
-			set {
-				_validator = value;
-			}
-		}
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        private IValidatorType _validator;
+        public IValidatorType validator {
+            get {
+                return _validator;
+            }
+            set {
+                _validator = value;
+            }
+        }
 
         private TextboxType _dataType = TextboxType.REGULAR_TEXT;
 
         [EditorBrowsable]
         [Description("...")]
+
         public TextboxType dataType {
             get {
                 return _dataType;
@@ -55,27 +53,32 @@ namespace winforms_collection {
         }
 
 
-		protected override void OnTextChanged( EventArgs e ) {
-			base.OnTextChanged(e);
-			//run validation in background.
-			if ( _validator != null ) {
-				runValidator();
-			}
-		}
+        protected override void OnTextChanged( EventArgs e ) {
+            base.OnTextChanged( e );
+            //run validation in background.
+            if ( _validator != null ) {
+                runValidator();
+            }
+        }
 
-		public bool validate() {
-			if ( _validator != null ) {
-				return _validator.Validate(Text);
-			} else {
-				return true;
-			}
 
-		}
 
-		private void runValidator() {
-			//TODO make in another thread
-			validate();
-		}
+        private void runValidator() {
+            //propperly a threadpool , given that it is a cpu intensitive validation, and we might want this multiple places and alike..
+            //TODO make in another thread
+            if ( !validate() ) {
+                var loc = PointToScreen( Point.Empty );
+                Point displayPoint = new Point( loc.X + Width, loc.Y );
+                popup_boxes.NotificationBar.showAtLocation( validator.getErrorMessage(), displayPoint );
+            }
+        }
+        public bool validate() {
+            if ( _validator != null ) {
+                return _validator.Validate( Text );
+            } else {
+                return true;
+            }
+        }
 
 
         public STextbox() {
@@ -83,10 +86,6 @@ namespace winforms_collection {
             InitializeComponent();
             SetStyle( ControlStyles.Opaque, true );
             SetStyle( ControlStyles.ResizeRedraw, true );
-	
-			var val = new NumberString();
-			val.allowDecimal = true;
-			validator = val;
         }
 
         protected override void OnKeyDown( KeyEventArgs e ) {
@@ -161,16 +160,6 @@ namespace winforms_collection {
             SelectionStart = Text.Length;
         }
 
-        protected override void OnPaint( PaintEventArgs e ) {
-            //base.OnPaint( e );
-
-            e.Graphics.DrawString( Text, DefaultFont, new SolidBrush( ForeColor ), e.ClipRectangle );
-            // e.Graphics.DrawString( "asd", Font, new SolidBrush( ForeColor ), ClientRectangle );
-        }
-        protected override void OnPaintBackground( PaintEventArgs pevent ) {
-            // base.OnPaintBackground( pevent );
-            pevent.Graphics.DrawString( Text, Font, new SolidBrush( ForeColor ), ClientRectangle );
-        }
 
         public void showTextHint( String hint ) {
 
@@ -210,6 +199,16 @@ namespace winforms_collection {
                 case TextboxType.PERSON_NAME:
                     loadNames();
                     break;
+                case TextboxType.DECIMAL:
+                    var dec = new NumberString();
+                    dec.allowDecimal = true;
+                    this.validator = dec;
+                    break;
+                case TextboxType.NUMBER:
+                    var num = new NumberString();
+                    num.allowInt = true;
+                    this.validator = num;
+                    break;
                 default:
                     break;
             }
@@ -239,7 +238,9 @@ namespace winforms_collection {
 
         public enum TextboxType {
             REGULAR_TEXT,
-            PERSON_NAME
+            PERSON_NAME,
+            NUMBER,
+            DECIMAL
         }
     }
 }
