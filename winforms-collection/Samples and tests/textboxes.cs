@@ -15,6 +15,7 @@ namespace Samples_and_tests {
             t.Enabled = true;
             t.Start();
             t.Tick += T_Tick;
+
         }
 
         private void button1_Click( object sender, EventArgs e ) {

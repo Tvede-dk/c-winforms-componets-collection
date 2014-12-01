@@ -1,0 +1,27 @@
+C:\Users\Tvede\Desktop\c-winforms-componets-collection\winforms-collection\Samples and tests\obj\Debug\Samples and tests.csprojResolveAssemblyReference.cache
+C:\Users\Tvede\Desktop\c-winforms-componets-collection\winforms-collection\Samples and tests\obj\Debug\Samples_and_tests.Properties.Resources.resources
+C:\Users\Tvede\Desktop\c-winforms-componets-collection\winforms-collection\Samples and tests\obj\Debug\Samples and tests.csproj.GenerateResource.Cache
+C:\Users\Tvede\Desktop\c-winforms-componets-collection\winforms-collection\Samples and tests\bin\Debug\Samples and tests.exe.config
+C:\Users\Tvede\Desktop\c-winforms-componets-collection\winforms-collection\Samples and tests\bin\Debug\Samples and tests.exe
+C:\Users\Tvede\Desktop\c-winforms-componets-collection\winforms-collection\Samples and tests\bin\Debug\Samples and tests.pdb
+C:\Users\Tvede\Desktop\c-winforms-componets-collection\winforms-collection\Samples and tests\obj\Debug\Samples and tests.exe
+C:\Users\Tvede\Desktop\c-winforms-componets-collection\winforms-collection\Samples and tests\obj\Debug\Samples and tests.pdb
+C:\Users\Tvede\Desktop\c-winforms-componets-collection\winforms-collection\Samples and tests\obj\Debug\Samples_and_tests.textboxes.resources
+C:\Users\Tvede\Desktop\c-winforms-componets-collection\winforms-collection\Samples and tests\bin\Debug\SharedFunctionalities.dll
+C:\Users\Tvede\Desktop\c-winforms-componets-collection\winforms-collection\Samples and tests\bin\Debug\SharedFunctionalities.pdb
+C:\Users\Tvede\Desktop\c-winforms-componets-collection\winforms-collection\Samples and tests\bin\Debug\winforms-collection.dll
+C:\Users\Tvede\Desktop\c-winforms-componets-collection\winforms-collection\Samples and tests\bin\Debug\winforms-collection.pdb
+C:\programmering\mine\api-builder\c-winforms-componets-collection\winforms-collection\Samples and tests\bin\Debug\Samples and tests.exe.config
+C:\programmering\mine\api-builder\c-winforms-componets-collection\winforms-collection\Samples and tests\obj\Debug\Samples and tests.exe
+C:\programmering\mine\api-builder\c-winforms-componets-collection\winforms-collection\Samples and tests\obj\Debug\Samples and tests.pdb
+C:\programmering\mine\api-builder\c-winforms-componets-collection\winforms-collection\Samples and tests\bin\Debug\Samples and tests.exe
+C:\programmering\mine\api-builder\c-winforms-componets-collection\winforms-collection\Samples and tests\bin\Debug\Samples and tests.pdb
+C:\programmering\mine\api-builder\c-winforms-componets-collection\winforms-collection\Samples and tests\bin\Debug\SharedFunctionalities.dll
+C:\programmering\mine\api-builder\c-winforms-componets-collection\winforms-collection\Samples and tests\bin\Debug\winforms-collection.dll
+C:\programmering\mine\api-builder\c-winforms-componets-collection\winforms-collection\Samples and tests\bin\Debug\SharedFunctionalities.pdb
+C:\programmering\mine\api-builder\c-winforms-componets-collection\winforms-collection\Samples and tests\bin\Debug\winforms-collection.pdb
+C:\programmering\mine\api-builder\c-winforms-componets-collection\winforms-collection\Samples and tests\obj\Debug\Samples and tests.csprojResolveAssemblyReference.cache
+C:\programmering\mine\api-builder\c-winforms-componets-collection\winforms-collection\Samples and tests\obj\Debug\Samples_and_tests.textboxes.resources
+C:\programmering\mine\api-builder\c-winforms-componets-collection\winforms-collection\Samples and tests\obj\Debug\Samples_and_tests.Properties.Resources.resources
+C:\programmering\mine\api-builder\c-winforms-componets-collection\winforms-collection\Samples and tests\obj\Debug\Samples and tests.csproj.GenerateResource.Cache
+C:\programmering\mine\api-builder\c-winforms-componets-collection\winforms-collection\Samples and tests\obj\Debug\Samples_and_tests.controls.resources

@@ -21,4 +21,3 @@ The planned components /features are:
 
 (more will come). 
 Images will come later as well. 
-

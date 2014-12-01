@@ -13,7 +13,7 @@ namespace Samples_and_tests {
         static void Main() {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault( false );
-            Application.Run( new textboxes() );
+            Application.Run( new controls() );
         }
     }
 }

@@ -42,6 +42,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="containers\ListContainer.cs">
+      <SubType>component</SubType>
+    </Compile>
+    <Compile Include="containers\ListContainer.Designer.cs">
+      <DependentUpon>ListContainer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="lists\SimpleList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="lists\SimpleList.Designer.cs">
+      <DependentUpon>SimpleList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="lists\SimpleListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="lists\SimpleListControl.Designer.cs">
+      <DependentUpon>SimpleListControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="popup boxes\BaseAnimationForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,19 +87,22 @@
     <Compile Include="simple components\Progressbar.Designer.cs">
       <DependentUpon>Progressbar.cs</DependentUpon>
     </Compile>
-    <Compile Include="STextbox.cs">
-      <SubType>component</SubType>
-    </Compile>
-    <Compile Include="STextbox.Designer.cs">
-      <DependentUpon>STextbox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="temp.cs">
+    <Compile Include="simple components\STextbox.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="simple components\STextbox.Designer.cs">
+      <DependentUpon>STextbox.cs</DependentUpon>
     </Compile>
     <Compile Include="validator\NumberString.cs" />
     <Compile Include="validator\ValidatorType.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="lists\SimpleList.resx">
+      <DependentUpon>SimpleList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="lists\SimpleListControl.resx">
+      <DependentUpon>SimpleListControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="names.txt" />
     <EmbeddedResource Include="popup boxes\fastNoticsPopup.resx">
       <DependentUpon>fastNoticsPopup.cs</DependentUpon>
@@ -116,6 +137,12 @@
     <Content Include="Resources\icons\blue styled\1416175235_add.png" />
     <Content Include="Resources\icons\blue styled\1416175496_alert.png" />
     <Content Include="Resources\icons\blue styled\1416175596_ok.png" />
+    <Content Include="Resources\icons\div\add.png" />
+    <Content Include="Resources\icons\div\delete_32.png" />
+    <Content Include="Resources\icons\div\pencil.png" />
+    <None Include="Resources\icons\div\warning_256.png" />
+    <None Include="Resources\icons\div\warning_48.png" />
+    <None Include="Resources\icons\div\warning_32.png" />
     <None Include="Resources\icons\blue styled\License.txt" />
     <None Include="Resources\backgrounds\dark-metal-grid-3.jpg" />
   </ItemGroup>

@@ -79,7 +79,11 @@ namespace SharedFunctionalities {
             }
 
             public static string[] simpleRemoveIndexFromArray( string[] array, int index ) {
+                if ( array.Length == 1 ) {
+                    return new string[0];
+                }
                 string[] result = new string[array.Length - 1];
+
                 for ( int i = 0; i < array.Length; i++ ) {
                     if ( i != index ) {
                         if ( i > index ) {
@@ -93,6 +97,9 @@ namespace SharedFunctionalities {
             }
 
             public static string[] fastMP_RemoveIndexFromArray( string[] array, int index ) {
+                if ( array.Length == 1 ) {
+                    return new string[0];
+                }
                 string[] result = new string[array.Length - 1];
                 Parallel.For( 0, array.Length, ( int currentIndex ) => {
                     if ( currentIndex != index ) {

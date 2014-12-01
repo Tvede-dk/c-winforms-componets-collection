@@ -45,6 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="controls.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controls.Designer.cs">
+      <DependentUpon>controls.cs</DependentUpon>
+    </Compile>
     <Compile Include="textboxes.cs">
       <SubType>form</SubType>
     </Compile>
@@ -53,6 +59,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="controls.resx">
+      <DependentUpon>controls.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="textboxes.resx">
       <DependentUpon>textboxes.cs</DependentUpon>
     </EmbeddedResource>
