@@ -13,6 +13,17 @@ namespace winforms_collection.containers {
 
 
 
+        #region property DirectionHorizontal
+        private bool _DirectionHorizontal;
+
+
+        public bool DirectionHorizontal {
+            get { return _DirectionHorizontal; }
+            set { _DirectionHorizontal = value; }
+        }
+        #endregion
+
+
         #region property SplitHeight
         private int _SplitHeight;
 
@@ -84,7 +95,11 @@ namespace winforms_collection.containers {
             int counter = 0;
             foreach ( var item in heightWeight ) {
                 if ( item == 0 ) {
-                    HeightOf0WeightControls += Controls[counter].Height;
+                    if ( DirectionHorizontal ) {
+                        HeightOf0WeightControls += Controls[counter].Width;
+                    } else {
+                        HeightOf0WeightControls += Controls[counter].Height;
+                    }
                 } else {
                     WeightHeight1Weight += item;
                 }
@@ -122,26 +137,48 @@ namespace winforms_collection.containers {
         }
 
         private void handleChildControl( Control item ) {
-            if ( SplitHeight > 0 && Height > minSplitHeight || heightWeight.Count > 0 ) {
-                int newHeight = 10;
-                var ctrolIndex = Controls.GetChildIndex( item );
-                if ( heightWeight != null && heightWeight.Count > ctrolIndex ) {
-                    if ( heightWeight[ctrolIndex] > 0 ) {
-                        newHeight = (int)(((Height- HeightOf0WeightControls) * heightWeight[ctrolIndex]) / WeightHeight1Weight);
+
+            if ( DirectionHorizontal ) {
+                if ( SplitHeight > 0 && Width > minSplitHeight || heightWeight.Count > 0 ) {
+                    int newWidth = 10;
+                    var ctrolIndex = Controls.GetChildIndex( item );
+                    if ( heightWeight != null && heightWeight.Count > ctrolIndex ) {
+                        if ( heightWeight[ctrolIndex] > 0 ) {
+                            newWidth = (int)(((Width - HeightOf0WeightControls) * heightWeight[ctrolIndex]) / WeightHeight1Weight);
+                        } else {
+                            newWidth = item.Width;
+                        }
+                    } else if ( SplitHeight > 0 ) {
+                        newWidth = Width / SplitHeight;
+                    } else {
+                        newWidth = item.Width;
+                    }
+                    item.Size = new Size( newWidth, Height );
+                } else {
+                    AutoScroll = true;
+                }
+                item.Dock = DockStyle.Left;
+            } else {
+                if ( SplitHeight > 0 && Height > minSplitHeight || heightWeight.Count > 0 ) {
+                    int newHeight = 10;
+                    var ctrolIndex = Controls.GetChildIndex( item );
+                    if ( heightWeight != null && heightWeight.Count > ctrolIndex ) {
+                        if ( heightWeight[ctrolIndex] > 0 ) {
+                            newHeight = (int)(((Height - HeightOf0WeightControls) * heightWeight[ctrolIndex]) / WeightHeight1Weight);
+                        } else {
+                            newHeight = item.Height;
+                        }
+                    } else if ( SplitHeight > 0 ) {
+                        newHeight = Height / SplitHeight;
                     } else {
                         newHeight = item.Height;
                     }
-                } else if ( SplitHeight > 0 ) {
-                    newHeight = Height / SplitHeight;
+                    item.Size = new Size( Width, newHeight );
                 } else {
-                    newHeight = item.Height;
+                    AutoScroll = true;
                 }
-                item.Size = new Size( Width, newHeight );
-            } else {
-                //either use virtual space or ??
-                AutoScroll = true;
+                item.Dock = DockStyle.Top;
             }
-            item.Dock = DockStyle.Top;
             item.AutoSize = false;   //should remove auto sizing ??
         }
 

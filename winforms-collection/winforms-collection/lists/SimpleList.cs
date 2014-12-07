@@ -11,39 +11,40 @@ using System.Windows.Forms;
 namespace winforms_collection {
     public partial class SimpleList : UserControl {
 
+        private ListViewItem selectedObject;
 
 
-        #region property onAdd
-        private Func<object> _onAdd;
+        private List<object> data = new List<object>();
 
-         
-        public Func<object> onAdd {
-            get { return _onAdd; }
-            set { _onAdd = value; }
+        #region event handlers
+
+
+        public void onAdd<T>( Func<T> onAddHandler ) {
+            onAddCallback = new Func<object>( () => { return (object)onAddHandler(); } );//wrap it around.
         }
+
+        private Func<object> onAddCallback = null;
+
+        public void onEdit<T>( Func<T, T> onEditHandler ) {
+            onEditCallback = new Func<object, object>( ( object obj ) => { return (object)onEditHandler( (T)obj ); } );//wrap it around.
+        }
+
+        private Func<object, object> onEditCallback = null;
+
+        public void onRemove<T>( Action<T> onRemoveHandler ) {
+            this.onRemoveHandler = new Action<object>( ( object obj ) => { onRemoveHandler( (T)obj ); } );
+        }
+
+        private Action<object> onRemoveHandler = null;
+
         #endregion
 
 
-        #region property onDelete
-        private Func<object> _onDelete;
-
-
-        public Func<object> onDelete {
-            get { return _onDelete; }
-            set { _onDelete = value; }
+        public void onRender<T>( Func<T, ListViewItem> onRender ) {
+            onRenderCallback = new Func<object, ListViewItem>( ( object obj ) => { return onRender( (T)obj ); } );//wrap it around.
         }
-        #endregion
 
-
-        #region property onEdit
-        private Func<object> _onEdit;
-
-
-        public Func<object> onEdit {
-            get { return _onEdit; }
-            set { _onEdit = value; }
-        }
-        #endregion
+        private Func<object, ListViewItem> onRenderCallback = null;
 
         #region property title
         private String _title;
@@ -56,9 +57,50 @@ namespace winforms_collection {
         #endregion
 
         public SimpleList() {
+            onRenderCallback = new Func<object, ListViewItem>( ( object obj ) => { return new ListViewItem( obj.ToString() ); } );
             InitializeComponent();
 
         }
-       
+
+        private void simpleListControl1_SelectedIndexChanged( object sender, EventArgs e ) {
+            if ( simpleListControl1.SelectedItems.Count == 1 ) {
+                selectedObject = simpleListControl1.SelectedItems[0];
+            } else {
+                selectedObject = null;
+            }
+        }
+
+        private void button3_Click( object sender, EventArgs e ) {
+            if ( onRemoveHandler != null && selectedObject != null ) {
+                int index = simpleListControl1.SelectedIndices[0];
+                onRemoveHandler( data[index] );
+                data.RemoveAt( index );
+                simpleListControl1.Items.RemoveAt( index );
+            }
+        }
+
+        private void button4_Click( object sender, EventArgs e ) {
+            if ( onEditCallback != null && selectedObject != null ) {
+                int index = simpleListControl1.SelectedIndices[0];
+                var result = onEditCallback( data[index] );
+                if ( result != null ) {
+                    data[index] = result;
+                    //simpleListControl1.Items.RemoveAt( index );
+                    //simpleListControl1.Items.Insert( index, onRenderCallback( result ) );
+                    simpleListControl1.Items[index] = onRenderCallback( result );
+                }
+            }
+        }
+
+        private void button1_Click( object sender, EventArgs e ) {
+            if ( onAddCallback != null ) {
+                var result = onAddCallback();
+                if ( result != null ) {
+                    simpleListControl1.Items.Add( onRenderCallback( result ) );
+                    data.Add( result );
+                }
+
+            }
+        }
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace winforms_collection.lists {
-    public partial class SimpleListControl : UserControl {
+    public partial class SimpleListControl : ListView {
         public SimpleListControl() {
             InitializeComponent();
         }
