@@ -25,10 +25,6 @@
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(controls));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.listContainer1 = new winforms_collection.containers.ListContainer();
             this.button1 = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
@@ -37,6 +33,10 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.simpleList1 = new winforms_collection.SimpleList();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -60,38 +60,6 @@
             this.splitContainer1.Size = new System.Drawing.Size(783, 546);
             this.splitContainer1.SplitterDistance = 375;
             this.splitContainer1.TabIndex = 0;
-            // 
-            // label7
-            // 
-            this.label7.Location = new System.Drawing.Point(277, 414);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(100, 23);
-            this.label7.TabIndex = 4;
-            this.label7.Text = "label7";
-            // 
-            // label6
-            // 
-            this.label6.Location = new System.Drawing.Point(159, 381);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(100, 23);
-            this.label6.TabIndex = 3;
-            this.label6.Text = "label6";
-            // 
-            // label4
-            // 
-            this.label4.Location = new System.Drawing.Point(159, 316);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(100, 23);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "label4";
-            // 
-            // label2
-            // 
-            this.label2.Location = new System.Drawing.Point(150, 245);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(100, 23);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "label2";
             // 
             // listContainer1
             // 
@@ -179,7 +147,39 @@
             this.simpleList1.Name = "simpleList1";
             this.simpleList1.Size = new System.Drawing.Size(404, 546);
             this.simpleList1.TabIndex = 0;
-            this.simpleList1.title = null;
+            this.simpleList1.title = "Strauss";
+            // 
+            // label7
+            // 
+            this.label7.Location = new System.Drawing.Point(277, 414);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(100, 23);
+            this.label7.TabIndex = 4;
+            this.label7.Text = "label7";
+            // 
+            // label6
+            // 
+            this.label6.Location = new System.Drawing.Point(159, 381);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(100, 23);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "label6";
+            // 
+            // label4
+            // 
+            this.label4.Location = new System.Drawing.Point(159, 316);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(100, 23);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "label4";
+            // 
+            // label2
+            // 
+            this.label2.Location = new System.Drawing.Point(150, 245);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(100, 23);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "label2";
             // 
             // controls
             // 

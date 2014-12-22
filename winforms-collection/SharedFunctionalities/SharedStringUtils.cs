@@ -13,7 +13,6 @@ namespace SharedFunctionalities {
             } else {
                 return innerWorkings.simpleRemoveIndexFromArray( array, index );
             }
-
         }
 
         public static string[] insertValueIntoIndexInArray( string[] array, string value, int index ) {

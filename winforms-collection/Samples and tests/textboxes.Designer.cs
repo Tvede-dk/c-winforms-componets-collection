@@ -163,16 +163,16 @@
             this.progressbar1.drawOverlay = true;
             this.progressbar1.drawProcent = true;
             this.progressbar1.flashbarWidth = 40;
-            this.progressbar1.flashColor = System.Drawing.Color.LightGoldenrodYellow;
-            this.progressbar1.flashColorIntensity = 70;
+            this.progressbar1.flashColor = System.Drawing.Color.DarkGoldenrod;
+            this.progressbar1.flashColorIntensity = 200;
             this.progressbar1.ForeColor = System.Drawing.Color.Lavender;
-            this.progressbar1.fps = 45;
+            this.progressbar1.fps = 60;
             this.progressbar1.Location = new System.Drawing.Point(12, 223);
-            this.progressbar1.multiColorEnd = System.Drawing.Color.Sienna;
-            this.progressbar1.multiColorStart = System.Drawing.Color.Coral;
+            this.progressbar1.multiColorEnd = System.Drawing.Color.Blue;
+            this.progressbar1.multiColorStart = System.Drawing.Color.LightCoral;
             this.progressbar1.Name = "progressbar1";
             this.progressbar1.overlayText = "%";
-            this.progressbar1.progressInProcent = 50;
+            this.progressbar1.progressInProcent = 80;
             this.progressbar1.singleColorFilledColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             this.progressbar1.Size = new System.Drawing.Size(341, 18);
             this.progressbar1.TabIndex = 19;
@@ -184,6 +184,7 @@
             this.sTextbox8.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.sTextbox8.dataType = winforms_collection.STextbox.TextboxType.PERSON_NAME;
             this.sTextbox8.Location = new System.Drawing.Point(805, 15);
+            this.sTextbox8.MaxLength = 0;
             this.sTextbox8.Name = "sTextbox8";
             this.sTextbox8.placeHolder = "test";
             this.sTextbox8.Size = new System.Drawing.Size(100, 20);
@@ -267,10 +268,14 @@
             // 
             this.sTextbox1.dataType = winforms_collection.STextbox.TextboxType.DECIMAL;
             this.sTextbox1.Location = new System.Drawing.Point(134, 15);
+            this.sTextbox1.MaxLength = 0;
             this.sTextbox1.Name = "sTextbox1";
             this.sTextbox1.placeHolder = "";
             this.sTextbox1.Size = new System.Drawing.Size(203, 20);
             this.sTextbox1.TabIndex = 0;
+            numberString1.allowDecimal = true;
+            numberString1.allowInt = false;
+            this.sTextbox1.validator = numberString1;
             // 
             // button7
             // 

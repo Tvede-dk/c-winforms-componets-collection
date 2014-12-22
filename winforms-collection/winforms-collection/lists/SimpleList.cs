@@ -52,7 +52,10 @@ namespace winforms_collection {
 
         public String title {
             get { return _title; }
-            set { _title = value; }
+            set {
+                _title = value;
+                label1.Text = value;
+            }
         }
         #endregion
 
