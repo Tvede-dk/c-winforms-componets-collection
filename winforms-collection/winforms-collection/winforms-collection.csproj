@@ -42,6 +42,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="advanced\dropdown\Dropdown.cs">
+      <SubType>component</SubType>
+    </Compile>
+    <Compile Include="advanced\dropdown\Dropdown.Designer.cs">
+      <DependentUpon>Dropdown.cs</DependentUpon>
+    </Compile>
+    <Compile Include="advanced\dropdown\DropdownOverlay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="advanced\dropdown\DropdownOverlay.Designer.cs">
+      <DependentUpon>DropdownOverlay.cs</DependentUpon>
+    </Compile>
     <Compile Include="containers\ListContainer.cs">
       <SubType>component</SubType>
     </Compile>
@@ -97,6 +109,12 @@
     <Compile Include="validator\ValidatorType.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="advanced\dropdown\Dropdown.resx">
+      <DependentUpon>Dropdown.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="advanced\dropdown\DropdownOverlay.resx">
+      <DependentUpon>DropdownOverlay.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="lists\SimpleList.resx">
       <DependentUpon>SimpleList.cs</DependentUpon>
     </EmbeddedResource>

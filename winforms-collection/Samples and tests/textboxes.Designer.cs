@@ -23,7 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            winforms_collection.validator.NumberString numberString1 = new winforms_collection.validator.NumberString();
+            winforms_collection.validator.NumberString numberString3 = new winforms_collection.validator.NumberString();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
@@ -35,6 +35,11 @@
             this.label4 = new System.Windows.Forms.Label();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
+            this.button9 = new System.Windows.Forms.Button();
+            this.button10 = new System.Windows.Forms.Button();
+            this.dropdown1 = new winforms_collection.advanced.Dropdown();
             this.progressbar1 = new winforms_collection.simple_components.Progressbar();
             this.sTextbox8 = new winforms_collection.STextbox();
             this.sTextbox7 = new winforms_collection.STextbox();
@@ -44,10 +49,6 @@
             this.sTextbox3 = new winforms_collection.STextbox();
             this.sTextbox2 = new winforms_collection.STextbox();
             this.sTextbox1 = new winforms_collection.STextbox();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
-            this.button9 = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -153,6 +154,66 @@
             this.button6.Text = "Fast notice info";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(761, 337);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(144, 23);
+            this.button7.TabIndex = 23;
+            this.button7.Text = "Fast notice warning";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(761, 366);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(144, 23);
+            this.button8.TabIndex = 24;
+            this.button8.Text = "Fast notice error";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(761, 395);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(144, 23);
+            this.button9.TabIndex = 25;
+            this.button9.Text = "Fast notice sucess";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
+            // button10
+            // 
+            this.button10.Location = new System.Drawing.Point(12, 474);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(144, 23);
+            this.button10.TabIndex = 26;
+            this.button10.Text = "notification";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
+            // 
+            // dropdown1
+            // 
+            this.dropdown1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.dropdown1.fastShortcut = true;
+            this.dropdown1.fastShortcutModifiers = System.Windows.Forms.Keys.None;
+            this.dropdown1.FormattingEnabled = true;
+            this.dropdown1.Items.AddRange(new object[] {
+            "a",
+            "b",
+            "c",
+            "d",
+            "e",
+            "f",
+            "g"});
+            this.dropdown1.Location = new System.Drawing.Point(15, 345);
+            this.dropdown1.Name = "dropdown1";
+            this.dropdown1.fastShortcutModifiers = System.Windows.Forms.Keys.Control;
+            this.dropdown1.Size = new System.Drawing.Size(141, 21);
+            this.dropdown1.TabIndex = 27;
             // 
             // progressbar1
             // 
@@ -273,55 +334,16 @@
             this.sTextbox1.placeHolder = "";
             this.sTextbox1.Size = new System.Drawing.Size(203, 20);
             this.sTextbox1.TabIndex = 0;
-            numberString1.allowDecimal = true;
-            numberString1.allowInt = false;
-            this.sTextbox1.validator = numberString1;
-            // 
-            // button7
-            // 
-            this.button7.Location = new System.Drawing.Point(761, 337);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(144, 23);
-            this.button7.TabIndex = 23;
-            this.button7.Text = "Fast notice warning";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
-            // 
-            // button8
-            // 
-            this.button8.Location = new System.Drawing.Point(761, 366);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(144, 23);
-            this.button8.TabIndex = 24;
-            this.button8.Text = "Fast notice error";
-            this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
-            // 
-            // button9
-            // 
-            this.button9.Location = new System.Drawing.Point(761, 395);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(144, 23);
-            this.button9.TabIndex = 25;
-            this.button9.Text = "Fast notice sucess";
-            this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
-            // 
-            // button10
-            // 
-            this.button10.Location = new System.Drawing.Point(12, 474);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(144, 23);
-            this.button10.TabIndex = 26;
-            this.button10.Text = "notification";
-            this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
+            numberString3.allowDecimal = true;
+            numberString3.allowInt = false;
+            this.sTextbox1.validator = numberString3;
             // 
             // textboxes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(917, 509);
+            this.Controls.Add(this.dropdown1);
             this.Controls.Add(this.button10);
             this.Controls.Add(this.button9);
             this.Controls.Add(this.button8);
@@ -381,6 +403,7 @@
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.Button button10;
+        private winforms_collection.advanced.Dropdown dropdown1;
     }
 }
 
