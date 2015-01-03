@@ -5,8 +5,8 @@ using System.Windows.Forms;
 using System.Management;
 using Microsoft.Win32;
 
-namespace winforms_collection.popup_boxes {
-    public class SharedAnimations {
+namespace SharedFunctionalities {
+    public static class SharedAnimations {
 
         #region to refactor
         /// <summary>
@@ -27,7 +27,7 @@ namespace winforms_collection.popup_boxes {
         private const int secInMS = 1000;
 
         private static int fps = 45;
-    
+
         static SharedAnimations() {
             var speed = getCPUSpeedInMhz();
             if ( speed >= 2000 ) { //2 ghz

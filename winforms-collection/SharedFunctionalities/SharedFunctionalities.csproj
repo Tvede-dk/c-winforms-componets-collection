@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="extensions\FormExtensions.cs" />
     <Compile Include="SharedAnimations.cs" />
     <Compile Include="SharedStringUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
