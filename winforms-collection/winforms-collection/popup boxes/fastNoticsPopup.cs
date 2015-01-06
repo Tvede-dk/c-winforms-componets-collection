@@ -45,7 +45,7 @@ namespace winforms_collection {
 
 
         public void afterFadeIn() {
-            new SmartTimer { continous = false, counter = 1, interval = displayTime }.start( afterWait ); //wait some time.
+            new SmartTimer { repeate = false, counter = 1, interval = displayTime }.start( afterWait ); //wait some time.
         }
 
         public void afterWait() {

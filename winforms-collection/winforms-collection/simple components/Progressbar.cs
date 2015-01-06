@@ -191,8 +191,7 @@ namespace winforms_collection.simple_components {
         public Progressbar() {
             InitializeComponent();
             animationTimer.Interval = 1000 / fps;
-            SetStyle( ControlStyles.Opaque, true );
-            SetStyle( ControlStyles.ResizeRedraw, true );
+            SetStyle( ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true );
             backgroundRender = new DrawSingleColorStrategy( this );
             textRender = new TextRender( this );
             FlashBarRender = new FlashAnimator( this );

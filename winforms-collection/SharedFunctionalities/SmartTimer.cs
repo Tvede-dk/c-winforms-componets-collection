@@ -41,7 +41,7 @@ namespace SharedFunctionalities {
         #region property continuous
 
 
-        public bool continous {
+        public bool repeate {
             get { return innerTimer.AutoReset; }
             set { innerTimer.AutoReset = value; }
         }
@@ -57,7 +57,7 @@ namespace SharedFunctionalities {
         }
 
         private void onTimer( object sender, ElapsedEventArgs e ) {
-            if ( TimerHandler != null && currentCounter <= counter && continous ) {
+            if ( TimerHandler != null && currentCounter <= counter && repeate ) {
                 TimerHandler.Invoke( sender, e, this );
                 currentCounter++;
             } else {

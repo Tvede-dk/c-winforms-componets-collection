@@ -41,11 +41,11 @@ public static class FormExtensions {
 
     #region animations
 
-    public static void FadeIn<T>( this T frm, int displayTimeInMs, Action after ) where T : Form {
-        SharedAnimations.fadeIn( frm, displayTimeInMs, after );
+    public static void FadeIn<T>( this T frm, int displayTimeInMs, Action after, float maxVal = 1f, float startVal = 0f ) where T : Form {
+        SharedAnimations.fadeIn( frm, displayTimeInMs, after, maxVal, startVal );
     }
-    public static void FadeOut<T>( this T frm, int displayTimeInMs, Action after ) where T : Form {
-        SharedAnimations.fadeOut( frm, displayTimeInMs, after );
+    public static void FadeOut<T>( this T frm, int displayTimeInMs, Action after, float minVal = 1f, float startVal = 0f ) where T : Form {
+        SharedAnimations.fadeOut( frm, displayTimeInMs, after, minVal, startVal );
     }
 
     #endregion

@@ -7,91 +7,74 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
+using SharedFunctionalities;
 
-namespace winforms_collection.advanced {
-    public partial class Dropdown : ComboBox {
-
-        private dropdown.DropdownOverlay dropdownOverlay = new dropdown.DropdownOverlay() { ShowIcon = false, ShowInTaskbar = false };
-
-        #region property fastShortcut
-        private bool _fastShortcut;
-
-        [EditorBrowsable]
-        public bool fastShortcut {
-            get { return _fastShortcut; }
-            set { _fastShortcut = value; }
-        }
-        #endregion
+namespace winforms_collection.advanced.dropdown {
+    public partial class dropdown : CustomControl {
 
 
-        #region property fastShortcutModifiers
-        private Keys _fastShortcutModifiers;
-
-        [EditorBrowsable]
-        public Keys fastShortcutModifiers {
-            get { return _fastShortcutModifiers; }
-            set { _fastShortcutModifiers = value; }
-        }
-        #endregion
-
-
-        protected override void OnKeyDown( KeyEventArgs e ) {
-            base.OnKeyDown( e );
-            if ( e.Modifiers == fastShortcutModifiers ) {
-                if ( isNumber( e ) ) {
-                    //fast select
-                    int index = getNumber( e );
-                    if ( index >= 0 && index < Items.Count ) {
-                        SelectedIndex = index;
-                        DroppedDown = false;
-                    }
-                }
-            }
-        }
-
-        private bool isNumber( KeyEventArgs e ) {
-            if ( (e.KeyCode >= Keys.D0 && e.KeyCode <= Keys.D9) || (e.KeyCode >= Keys.NumPad0 && e.KeyCode <= Keys.NumPad9) ) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-
-
-        private int getNumber( KeyEventArgs e ) {
-            int keyVal = (int)e.KeyValue;
-            int value = -1;
-            if ( e.KeyCode >= Keys.D0 && e.KeyCode <= Keys.D9 ) {
-                value = (int)e.KeyValue - (int)Keys.D0;
-            } else if ( e.KeyCode >= Keys.NumPad0 && e.KeyCode <= Keys.NumPad9 ) {
-                value = (int)e.KeyValue - (int)Keys.NumPad0;
-            }
-            return value - 1;
-        }
-
-        public Dropdown() {
+        public dropdown() {
             InitializeComponent();
         }
 
-        protected override void OnDropDownClosed( EventArgs e ) {
-            base.OnDropDownClosed( e );
-            dropdownOverlay.Hide();
+        protected override void OnPaint( PaintEventArgs e ) {
+            base.OnPaint( e );
+            drawBackground( e );
+            drawBorder( e );
+
         }
 
-        protected override void OnDropDown( EventArgs e ) {
-            base.OnDropDown( e );
-            if ( _fastShortcut && DropDownStyle != ComboBoxStyle.Simple && (dropdownOverlay.Visible == false) ) {
-                //display all the fast shortcuts. 
-                Point pt = this.PointToScreen( Point.Empty );
-                pt.X -= dropdownOverlay.Size.Width;
-                dropdownOverlay.Location = pt;
-                //dropdownOverlay.Show();
-                //dropdownOverlay.BringToFront();
-                //this.Focus();
-                dropdownOverlay.ShowInactiveTopmost();
+
+
+        #region property BorderColor
+        private Color _BorderColor;
+
+
+        public Color BorderColor {
+            get { return _BorderColor; }
+            set { _BorderColor = value; }
+        }
+        #endregion
+
+
+        #region back color and brush
+
+        public override Color BackColor {
+            get {
+                return base.BackColor;
             }
+            set {
+                base.BackColor = value;
+                _backBrush = new SolidBrush( value );
+            }
+        }
+
+        private Brush _backBrush;
+        #endregion
+
+        protected override void OnMouseEnter( EventArgs e ) {
+            base.OnMouseEnter( e );
+            SharedFunctionalities.SharedAnimations.Highlight( this, 0.7f, 200 );
+        }
+
+        protected override void OnMouseLeave( EventArgs e ) {
+            base.OnMouseLeave( e );
+        }
+
+
+
+        #region simple draw stuff
+        private void drawBorder( PaintEventArgs e ) {
+            e.Graphics.DrawRectangle( Pens.Black, 0, 0, Width - (int)Pens.Black.Width, Height - (int)Pens.Black.Width ); // 1 px wide margin .
+        }
+
+        private void drawBackground( PaintEventArgs e ) {
+            e.Graphics.FillRectangle( _backBrush, e.ClipRectangle );
+        }
+
+        #endregion
+
+        protected override void OnPaintBackground( PaintEventArgs e ) {
         }
 
     }

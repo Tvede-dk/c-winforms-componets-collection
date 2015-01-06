@@ -42,17 +42,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="advanced\dropdown\Dropdown.cs">
+    <None Include="advanced\dropdown\Dropdow2n.cs">
+      <SubType>component</SubType>
+    </None>
+    <Compile Include="advanced\dropdown\Dropdow2n.Designer.cs">
+      <DependentUpon>Dropdow2n.cs</DependentUpon>
+    </Compile>
+    <Compile Include="advanced\dropdown\dropdown.cs">
       <SubType>component</SubType>
     </Compile>
-    <Compile Include="advanced\dropdown\Dropdown.Designer.cs">
-      <DependentUpon>Dropdown.cs</DependentUpon>
+    <Compile Include="advanced\dropdown\dropdown.Designer.cs">
+      <DependentUpon>dropdown.cs</DependentUpon>
     </Compile>
     <Compile Include="advanced\dropdown\DropdownOverlay.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="advanced\dropdown\DropdownOverlay.Designer.cs">
       <DependentUpon>DropdownOverlay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="advanced\StyleableButton.cs">
+      <SubType>component</SubType>
     </Compile>
     <Compile Include="containers\ListContainer.cs">
       <SubType>component</SubType>
@@ -109,8 +118,11 @@
     <Compile Include="validator\ValidatorType.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="advanced\dropdown\Dropdown.resx">
-      <DependentUpon>Dropdown.cs</DependentUpon>
+    <EmbeddedResource Include="advanced\dropdown\Dropdow2n.resx">
+      <DependentUpon>Dropdow2n.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="advanced\dropdown\dropdown.resx">
+      <DependentUpon>dropdown.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="advanced\dropdown\DropdownOverlay.resx">
       <DependentUpon>DropdownOverlay.cs</DependentUpon>
@@ -155,6 +167,7 @@
     <Content Include="Resources\icons\blue styled\1416175235_add.png" />
     <Content Include="Resources\icons\blue styled\1416175496_alert.png" />
     <Content Include="Resources\icons\blue styled\1416175596_ok.png" />
+    <Content Include="Resources\icons\blue styled\1420354173_arrow_down.png" />
     <Content Include="Resources\icons\div\add.png" />
     <Content Include="Resources\icons\div\delete_32.png" />
     <Content Include="Resources\icons\div\pencil.png" />

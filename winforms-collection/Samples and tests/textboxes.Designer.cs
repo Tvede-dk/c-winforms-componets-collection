@@ -23,7 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            winforms_collection.validator.NumberString numberString3 = new winforms_collection.validator.NumberString();
+            winforms_collection.validator.NumberString numberString1 = new winforms_collection.validator.NumberString();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
@@ -39,7 +39,8 @@
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
-            this.dropdown1 = new winforms_collection.advanced.Dropdown();
+            this.styleableButton1 = new winforms_collection.advanced.StyleableButton();
+            this.dropdown1 = new winforms_collection.advanced.dropdown.dropdown();
             this.progressbar1 = new winforms_collection.simple_components.Progressbar();
             this.sTextbox8 = new winforms_collection.STextbox();
             this.sTextbox7 = new winforms_collection.STextbox();
@@ -72,7 +73,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(15, 126);
+            this.button1.Location = new System.Drawing.Point(12, 150);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(168, 23);
             this.button1.TabIndex = 4;
@@ -195,46 +196,50 @@
             this.button10.UseVisualStyleBackColor = true;
             this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
+            // styleableButton1
+            // 
+            this.styleableButton1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.styleableButton1.BorderSize = 1;
+            this.styleableButton1.FlashBorderColorStart = System.Drawing.Color.Transparent;
+            this.styleableButton1.FlashBorderOnMouseOver = true;
+            this.styleableButton1.Location = new System.Drawing.Point(15, 102);
+            this.styleableButton1.Name = "styleableButton1";
+            this.styleableButton1.Size = new System.Drawing.Size(322, 23);
+            this.styleableButton1.TabIndex = 28;
+            this.styleableButton1.Text = "styleableButton1";
+            // 
             // dropdown1
             // 
-            this.dropdown1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.dropdown1.fastShortcut = true;
-            this.dropdown1.fastShortcutModifiers = System.Windows.Forms.Keys.None;
-            this.dropdown1.FormattingEnabled = true;
-            this.dropdown1.Items.AddRange(new object[] {
-            "a",
-            "b",
-            "c",
-            "d",
-            "e",
-            "f",
-            "g"});
-            this.dropdown1.Location = new System.Drawing.Point(15, 345);
+            this.dropdown1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.dropdown1.BorderColor = System.Drawing.Color.Empty;
+            this.dropdown1.BorderSize = 0;
+            this.dropdown1.FlashBorderColorStart = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(74)))), ((int)(((byte)(178)))));
+            this.dropdown1.FlashBorderOnMouseOver = false;
+            this.dropdown1.Location = new System.Drawing.Point(12, 348);
             this.dropdown1.Name = "dropdown1";
-            this.dropdown1.fastShortcutModifiers = System.Windows.Forms.Keys.Control;
-            this.dropdown1.Size = new System.Drawing.Size(141, 21);
+            this.dropdown1.Size = new System.Drawing.Size(337, 120);
             this.dropdown1.TabIndex = 27;
             // 
             // progressbar1
             // 
-            this.progressbar1.BackColor = System.Drawing.Color.Black;
-            this.progressbar1.borderSize = 1;
-            this.progressbar1.colorMethod = winforms_collection.simple_components.Progressbar.ColorDrawing.GRADIENT_LEFT_RIGHT;
+            this.progressbar1.BackColor = System.Drawing.Color.Transparent;
+            this.progressbar1.borderSize = 5;
+            this.progressbar1.colorMethod = winforms_collection.simple_components.Progressbar.ColorDrawing.SINGLE_COLOR;
             this.progressbar1.disableAnimations = false;
             this.progressbar1.drawOverlay = true;
             this.progressbar1.drawProcent = true;
-            this.progressbar1.flashbarWidth = 40;
-            this.progressbar1.flashColor = System.Drawing.Color.DarkGoldenrod;
-            this.progressbar1.flashColorIntensity = 200;
-            this.progressbar1.ForeColor = System.Drawing.Color.Lavender;
+            this.progressbar1.flashbarWidth = 20;
+            this.progressbar1.flashColor = System.Drawing.Color.Orange;
+            this.progressbar1.flashColorIntensity = 150;
+            this.progressbar1.ForeColor = System.Drawing.Color.Cyan;
             this.progressbar1.fps = 60;
             this.progressbar1.Location = new System.Drawing.Point(12, 223);
             this.progressbar1.multiColorEnd = System.Drawing.Color.Blue;
             this.progressbar1.multiColorStart = System.Drawing.Color.LightCoral;
             this.progressbar1.Name = "progressbar1";
-            this.progressbar1.overlayText = "%";
-            this.progressbar1.progressInProcent = 80;
-            this.progressbar1.singleColorFilledColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.progressbar1.overlayText = "% swag";
+            this.progressbar1.progressInProcent = 10;
+            this.progressbar1.singleColorFilledColor = System.Drawing.Color.Transparent;
             this.progressbar1.Size = new System.Drawing.Size(341, 18);
             this.progressbar1.TabIndex = 19;
             this.progressbar1.Text = "progressbar1";
@@ -334,15 +339,16 @@
             this.sTextbox1.placeHolder = "";
             this.sTextbox1.Size = new System.Drawing.Size(203, 20);
             this.sTextbox1.TabIndex = 0;
-            numberString3.allowDecimal = true;
-            numberString3.allowInt = false;
-            this.sTextbox1.validator = numberString3;
+            numberString1.allowDecimal = true;
+            numberString1.allowInt = false;
+            this.sTextbox1.validator = numberString1;
             // 
             // textboxes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(917, 509);
+            this.Controls.Add(this.styleableButton1);
             this.Controls.Add(this.dropdown1);
             this.Controls.Add(this.button10);
             this.Controls.Add(this.button9);
@@ -369,7 +375,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.sTextbox1);
             this.Name = "textboxes";
-            this.Text = "Form1";
+            this.Text = "5";
             this.Load += new System.EventHandler(this.textboxes_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
@@ -403,7 +409,8 @@
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.Button button10;
-        private winforms_collection.advanced.Dropdown dropdown1;
+        private winforms_collection.advanced.dropdown.dropdown dropdown1;
+        private winforms_collection.advanced.StyleableButton styleableButton1;
     }
 }
 

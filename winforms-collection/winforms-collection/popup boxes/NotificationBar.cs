@@ -55,7 +55,7 @@ namespace winforms_collection.popup_boxes {
 
 
         private void label1_MouseLeave( object sender, EventArgs e ) {
-            new SmartUITimer( this ) { continous = false, counter = 0, interval = TimeToDimissAfterMouseOverInMs }.start( () => { end(); } );
+            new SmartUITimer( this ) { repeate = false, counter = 0, interval = TimeToDimissAfterMouseOverInMs }.start( () => { end(); } );
         }
     }
 }

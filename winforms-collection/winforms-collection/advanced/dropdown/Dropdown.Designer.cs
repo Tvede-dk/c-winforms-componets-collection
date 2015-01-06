@@ -1,5 +1,5 @@
-﻿namespace winforms_collection.advanced {
-    partial class Dropdown {
+﻿namespace winforms_collection.advanced.dropdown {
+    partial class dropdown {
         /// <summary> 
         /// Required designer variable.
         /// </summary>
@@ -25,10 +25,10 @@
         private void InitializeComponent() {
             this.SuspendLayout();
             // 
-            // Dropdown
+            // dropdown
             // 
-            this.Name = "Dropdown";
-            this.Size = new System.Drawing.Size(257, 150);
+            this.Name = "dropdown";
+            this.Size = new System.Drawing.Size(200, 30);
             this.ResumeLayout(false);
 
         }
