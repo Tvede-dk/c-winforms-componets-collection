@@ -2,6 +2,7 @@
 using SharedFunctionalities.forms;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
@@ -20,30 +21,40 @@ namespace winforms_collection.advanced {
         }
 
 
+        private Bitmap cache;
 
 
         protected override void OnPaint( PaintEventArgs e ) {
             base.OnPaint( e );
-            drawBackground( e );
-            drawText( e );
-
-
+            HandleCache();
+            e.Graphics.DrawImage( cache, BorderSize / 2, BorderSize / 2, Width, Height );
         }
 
-        private void drawBackground( PaintEventArgs e ) {
+        private void HandleCache() {
+            if ( cache == null || cache.Height != Height || cache.Width != Width ) {
+                cache = new Bitmap( Width, Height );
+                using (Graphics g = Graphics.FromImage( cache )) {
+                    drawBackground( g );
+                    drawText( g );
+                }
+            }
+        }
+
+
+        private void drawBackground( Graphics e ) {
             if ( backgroundBrush == null ) {
                 LinearGradientBrush toUse = new LinearGradientBrush( ClientRectangle, Color.FromArgb( 255, 230, 240, 163 ), Color.FromArgb( 255, 210, 230, 56 ), 90f, true );
                 toUse.SetBlendTriangularShape( 0.5f, 1.0f );
                 backgroundBrush = toUse;
             }
-            e.Graphics.FillRectangle( backgroundBrush, ClientRectangle.InnerPart( BorderSize ) );
+            e.FillRectangle( backgroundBrush, ClientRectangle.InnerPart( BorderSize ) );
         }
 
-        private void drawText( PaintEventArgs e ) {
+        private void drawText( Graphics e ) {
             StringFormat format = new StringFormat();
             format.LineAlignment = StringAlignment.Center;
             format.Alignment = StringAlignment.Center;
-            e.Graphics.DrawString( Text, Font, Brushes.Black, ClientRectangle.InnerPart( BorderSize ), format );
+            e.DrawString( Text, Font, Brushes.Black, ClientRectangle.InnerPart( BorderSize ), format );
         }
 
         protected override void OnMouseEnter( EventArgs e ) {
@@ -63,9 +74,6 @@ namespace winforms_collection.advanced {
             overlay.FadeOut( 150, () => { overlay.Dispose(); } );
         }
 
-        protected override void OnClick( EventArgs e ) {
-            base.OnClick( e );
-        }
 
         protected override void OnKeyDown( KeyEventArgs e ) {
             base.OnKeyDown( e );

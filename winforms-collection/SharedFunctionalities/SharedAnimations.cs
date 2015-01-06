@@ -126,8 +126,6 @@ namespace SharedFunctionalities {
         #endregion
 
 
-        //public static void 
-
 
         #region cycle a color 
 
@@ -187,6 +185,8 @@ namespace SharedFunctionalities {
 
 
         #endregion
+        #region highligh 
+
 
         public static HighlightOverlay Highlight( Control controle, float maxOverlayOpacity = 1.0f, int overlayEffectTimeInMs = 250, Brush overrideBackBrush = null ) {
             var hadFocus = controle.Focused;
@@ -208,6 +208,6 @@ namespace SharedFunctionalities {
             controle.MouseLeave += ( object sender, EventArgs e ) => { if ( overlay.Disposing || overlay.IsDisposed ) { return; } overlay.FadeOut( overlayEffectTimeInMs, () => { overlay.Dispose(); } ); };
             return overlay;
         }
-
+        #endregion
     }
 }

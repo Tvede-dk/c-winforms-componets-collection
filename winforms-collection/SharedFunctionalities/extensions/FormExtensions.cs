@@ -48,6 +48,14 @@ public static class FormExtensions {
         SharedAnimations.fadeOut( frm, displayTimeInMs, after, minVal, startVal );
     }
 
+    public static void handleRemoteInvoke(this Control con, Action code ) {
+        if ( con.InvokeRequired ) {
+            con.BeginInvoke( code );
+        } else {
+            code.Invoke();
+        }
+    }
+
     #endregion
 
 }

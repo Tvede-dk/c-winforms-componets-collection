@@ -1,7 +1,8 @@
-﻿using winforms_collection.popup_boxes;
+﻿using System.Windows.Forms;
+using winforms_collection.popup_boxes;
 
 namespace winforms_collection {
-    partial class FastNoticePopup : baseForm {
+    partial class FastNoticePopup :Form {
         /// <summary>
         /// Required designer variable.
         /// </summary>

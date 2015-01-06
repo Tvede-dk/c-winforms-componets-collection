@@ -10,7 +10,6 @@ namespace SharedFunctionalities {
         #region variables and properties
         private Timer innerTimer = new Timer();
 
-
         private Action afterHandler;
 
         private int currentCounter = 0;
@@ -66,6 +65,11 @@ namespace SharedFunctionalities {
         }
 
         #region public methods
+        /// <summary>
+        /// Starts a timer with the current settings. It calls the first argument each "interval".
+        /// </summary>
+        /// <param name="handler"> the on "ticeket" function. NB: the first object is the sender.</param>
+        /// <param name="after">The event after we are done.(can be null)</param>
         public virtual void start( Action<object, ElapsedEventArgs, SmartTimer> handler, Action after ) {
             this.TimerHandler = handler;
             this.afterHandler = after;
@@ -73,12 +77,17 @@ namespace SharedFunctionalities {
             innerTimer.Enabled = true;
             innerTimer.Start();
         }
-
+        /// <summary>
+        /// Starts a timer with the current settings. When timeout it calls the onDone method. 
+        /// </summary>
+        /// <param name="onDone">Waits till the timer times out then call the onDone method</param>
         public virtual void start( Action onDone ) {
             start( ( object sender, ElapsedEventArgs e, SmartTimer timer ) => { }, onDone );
 
         }
-
+        /// <summary>
+        /// Stops the timer. and calls the after handler / onDone (if any)
+        /// </summary>
         public void stop() {
             currentCounter = 0;
             TimerHandler = null;

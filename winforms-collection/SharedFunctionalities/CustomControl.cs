@@ -10,7 +10,6 @@ using System.Windows.Forms;
 namespace SharedFunctionalities {
     public abstract class CustomControl : Control {
 
-
         private Pen borderPen;
 
         #region property BorderColor
@@ -28,7 +27,9 @@ namespace SharedFunctionalities {
         private void updateBorderPen( Color value ) {
             if ( borderPen != null ) { borderPen.Dispose(); }
             borderPen = new Pen( value, BorderSize );
-            Invalidate();
+            if ( BorderSize > 0 && borderPen.Color != Color.Transparent ) {
+                Invalidate();
+            }
         }
         #endregion
 
@@ -88,7 +89,6 @@ namespace SharedFunctionalities {
         protected override void OnPaint( PaintEventArgs e ) {
             base.OnPaint( e );
             drawBorder( e );
-
         }
 
         protected void drawBorder( PaintEventArgs e ) {
