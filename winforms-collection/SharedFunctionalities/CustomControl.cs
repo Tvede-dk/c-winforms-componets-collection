@@ -103,6 +103,7 @@ namespace SharedFunctionalities {
                     if ( !IsMouseInside() ) {
                         this.BorderColor = oldColor;
                     }
+                    Invalidate(ClientRectangle.CalculateBorder(BorderSize));
                     return IsMouseInside();
                 }, 1.0f, 0.0f, 0.05f, startCol, this );
             }
@@ -115,6 +116,10 @@ namespace SharedFunctionalities {
 
         public bool IsMouseInside() {
             return isMouseInside;
+        }
+        protected override void OnResize( EventArgs e ) {
+            base.OnResize( e );
+            DrawHandler.invalidate();
         }
 
     }

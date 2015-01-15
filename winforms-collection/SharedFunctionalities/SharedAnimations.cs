@@ -89,7 +89,7 @@ namespace SharedFunctionalities {
         }
 
         public static void fadeOut( Form f, int displayTimeInMs, Action after, float minVal = 1f, float startVal = 0f ) {
-            if ( f.IsHandleCreated ) {
+            if ( f != null && f.IsHandleCreated ) {
                 if ( startVal <= 0f ) {
                     startVal = (float)f.Opacity;
                 }

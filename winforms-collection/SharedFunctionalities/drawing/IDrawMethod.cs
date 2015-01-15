@@ -43,7 +43,10 @@ namespace SharedFunctionalities.drawing {
         /// </summary>
         /// <returns></returns>
         bool mayDraw();
-
-
+        /// <summary>
+        /// if we modify the size in draw, then we should also do it here.
+        /// </summary>
+        /// <param name="newSize"></param>
+        void modifySize( ref Rectangle newSize );
     }
 }

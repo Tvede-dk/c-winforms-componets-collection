@@ -105,5 +105,9 @@ namespace SharedFunctionalities.drawing.layers {
         public bool willFillRectangleOut() {
             return false;
         }
+
+        public void modifySize( ref Rectangle newSize ) {
+            return;
+        }
     }
 }

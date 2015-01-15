@@ -399,6 +399,10 @@ namespace winforms_collection.simple_components {
 
             public bool mayDraw() {
                 return true;
+
+            }
+            public void modifySize( ref Rectangle newSize ) {
+                return;
             }
         }
         public class DrawMultiColorStrategy : IDrawMethod {
@@ -460,6 +464,9 @@ namespace winforms_collection.simple_components {
             public bool mayDraw() {
                 return true;
             }
+            public void modifySize( ref Rectangle newSize ) {
+                return;
+            }
         }
 
         public class TextRender : IDrawMethod {
@@ -511,6 +518,10 @@ namespace winforms_collection.simple_components {
 
             public bool mayDraw() {
                 return true;
+            }
+
+            public void modifySize( ref Rectangle newSize ) {
+                return;
             }
         }
 
@@ -578,6 +589,9 @@ namespace winforms_collection.simple_components {
 
             public bool mayDraw() {
                 return shouldDraw;
+            }
+            public void modifySize( ref Rectangle newSize ) {
+                return;
             }
         }
 

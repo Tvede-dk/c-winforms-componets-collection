@@ -60,6 +60,9 @@
     <Compile Include="advanced\dropdown\DropdownOverlay.Designer.cs">
       <DependentUpon>DropdownOverlay.cs</DependentUpon>
     </Compile>
+    <Compile Include="advanced\Graph\GraphComponent.cs">
+      <SubType>component</SubType>
+    </Compile>
     <Compile Include="advanced\SearchList\SearchList.cs">
       <SubType>component</SubType>
     </Compile>

@@ -6,34 +6,18 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SharedFunctionalities.drawing.layers {
-    public class BrushBackground : IDrawMethod {
-
-
-
-        #region property Background
-        private Brush _Background;
-
-        ~BrushBackground() {
-            if ( _Background != null ) {
-                _Background.Dispose();
-            }
-        }
-
-        public Brush Background {
-            get { return _Background; }
-            set {
-                _Background = value;
-                haveChangedSinceDraw = true;
-            }
-        }
-        #endregion
-
-
+    /// <summary>
+    /// combines most of the required stuff to implement the iDrawMethod.
+    /// </summary>
+    public abstract class BaseDraw : IDrawMethod {
         private bool haveChangedSinceDraw = true;
-        public virtual void draw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
-            g.FillRectangle( Background, wholeComponent );
+        public void draw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
             haveChangedSinceDraw = false;
+            doDraw( g, ref wholeComponent, ref clippingRect );
         }
+
+        public abstract void doDraw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect );
+
 
         public bool isCacheInvalid() {
             return haveChangedSinceDraw;
@@ -54,5 +38,11 @@ namespace SharedFunctionalities.drawing.layers {
         public bool willFillRectangleOut() {
             return true;
         }
+
+        public virtual void invalidate() {
+            haveChangedSinceDraw = true;
+        }
+
+        public abstract void modifySize( ref Rectangle newSize );
     }
 }

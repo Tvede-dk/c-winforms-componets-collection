@@ -6,9 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SharedFunctionalities.drawing.layers {
-    public class BorderLayer : IDrawMethod {
-
-        private bool haveChangedSinceLastDraw = true;
+    public class BorderLayer : BaseDraw {
 
         private Pen borderPen;
 
@@ -26,7 +24,7 @@ namespace SharedFunctionalities.drawing.layers {
         private void updateBorderPen( Color value ) {
             if ( borderPen != null ) { borderPen.Dispose(); }
             borderPen = new Pen( value, BorderSize );
-            haveChangedSinceLastDraw = true;
+            invalidate();
         }
 
         #region property BorderSize
@@ -40,40 +38,23 @@ namespace SharedFunctionalities.drawing.layers {
 
         public int BorderSize {
             get { return _BorderSize; }
-            set { _BorderSize = value; haveChangedSinceLastDraw = true; updateBorderPen( BorderColor ); }
+            set { _BorderSize = value; updateBorderPen( BorderColor ); }
         }
         #endregion
 
 
-        public void draw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
+        public override void doDraw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
             if ( borderPen == null ) {
                 borderPen = new Pen( Brushes.Black, (float)BorderSize );
             }
-            Rectangle rec = wholeComponent.InnerPart( BorderSize / 2, BorderSize / 2, BorderSize, BorderSize );
+            Rectangle rec = wholeComponent.CalculateBorder( BorderSize );
             g.DrawRectangle( borderPen, rec );
-            //set the rest as the inside.
-            wholeComponent = new Rectangle( BorderSize, BorderSize, wholeComponent.Width - BorderSize, wholeComponent.Height - BorderSize );
-            haveChangedSinceLastDraw = false;
+            wholeComponent = wholeComponent.CalculateInsideBorder( BorderSize );
         }
 
-        public bool isCacheInvalid() {
-            return haveChangedSinceLastDraw;
-        }
 
-        public bool isTransperant() {
-            return true;
-        }
-
-        public bool mayCacheLayer() {
-            return true;
-        }
-
-        public bool mayDraw() {
-            return BorderSize > 0;
-        }
-
-        public bool willFillRectangleOut() {
-            return false;
+        public override void modifySize( ref Rectangle newSize ) {
+            newSize = newSize.CalculateInsideBorder( BorderSize );
         }
     }
 }

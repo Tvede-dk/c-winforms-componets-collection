@@ -63,10 +63,14 @@
     </Compile>
     <Compile Include="drawing\DrawingHandler.cs" />
     <Compile Include="drawing\IDrawMethod.cs" />
+    <Compile Include="drawing\layers\backgrounds\GridBackground.cs" />
+    <Compile Include="drawing\layers\BaseDraw.cs" />
     <Compile Include="drawing\layers\BorderLayer.cs" />
-    <Compile Include="drawing\layers\BrushBackground.cs" />
+    <Compile Include="drawing\layers\backgrounds\BrushBackground.cs" />
     <Compile Include="drawing\layers\CenterText.cs" />
+    <Compile Include="drawing\layers\DrawingGroup.cs" />
     <Compile Include="drawing\layers\TextBaseLayer.cs" />
+    <Compile Include="drawing\layers\backgrounds\TriangularShapeBackground.cs" />
     <Compile Include="extensions\FormExtensions.cs" />
     <Compile Include="extensions\RectangleExtensions.cs" />
     <Compile Include="forms\BasePassthough.cs">

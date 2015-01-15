@@ -17,14 +17,21 @@ namespace Samples_and_tests {
         }
 
         private void perfTest_Load( object sender, EventArgs e ) {
-            SmartUITimer timer = new SmartUITimer( this );
-            timer.repeate = true;
-            timer.counter = this.Width;
-            timer.interval = 4;
-            this.Width = 1;
-            timer.start( ( object obj, System.Timers.ElapsedEventArgs args, SmartTimer st ) => {
-                this.Width++;
-            }, () => { } );
+            //SmartUITimer timer = new SmartUITimer( this );
+            //timer.repeate = true;
+            //timer.counter = this.Width;
+            //timer.interval = 4;
+            //this.Width = 1;
+            //timer.start( ( object obj, System.Timers.ElapsedEventArgs args, SmartTimer st ) => {
+            //    this.Width++;
+            //}, () => { } );
+            //SmartUITimer timer = new SmartUITimer( this );
+            //timer.repeate = true;
+            //timer.counter = 200;
+            //timer.interval = 20;
+            //timer.start( ( object obj, System.Timers.ElapsedEventArgs args, SmartTimer st ) => {
+            //    graphComponent1.spaceBetween += 2;
+            //}, () => { } );
         }
     }
 }

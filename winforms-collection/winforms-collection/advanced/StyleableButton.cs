@@ -1,6 +1,7 @@
 ﻿using SharedFunctionalities;
 using SharedFunctionalities.drawing;
 using SharedFunctionalities.drawing.layers;
+using SharedFunctionalities.drawing.layers.backgrounds;
 using SharedFunctionalities.forms;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,26 @@ using System.Windows.Forms;
 namespace winforms_collection.advanced {
     public class StyleableButton : CustomControl {
 
-        private drawBackground backLayer = new drawBackground();
+        private TriangularShapeBackground backLayer = new TriangularShapeBackground() { endColor = Color.CadetBlue, startColor = Color.BlueViolet };
 
         private CenterText textLayer = new CenterText();
+
+
+
+        #region property startColor / end color delegates
+        [EditorBrowsable]
+        public Color startColor {
+            get { return backLayer.startColor; }
+            set { backLayer.startColor = value; }
+        }
+
+        [EditorBrowsable]
+        public Color endColor {
+            get { return backLayer.endColor; }
+            set { backLayer.endColor = value; }
+        }
+        #endregion
+
 
         public StyleableButton() {
             DrawHandler.addLayer( backLayer );
@@ -40,7 +58,6 @@ namespace winforms_collection.advanced {
             get {
                 return base.Text;
             }
-
             set {
                 base.Text = value;
                 textLayer.Text = value;
@@ -71,14 +88,16 @@ namespace winforms_collection.advanced {
             }
         }
 
-        private class drawBackground : BrushBackground {
+        public override Color ForeColor {
+            get {
+                return base.ForeColor;
+            }
 
-            public override void draw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
-                LinearGradientBrush toUse = new LinearGradientBrush( wholeComponent, Color.FromArgb( 255, 230, 240, 163 ), Color.FromArgb( 255, 210, 230, 56 ), 90f, true );
-                toUse.SetBlendTriangularShape( 0.5f, 1.0f );
-                Background = toUse;
-                base.draw( g, ref wholeComponent, ref clippingRect );
+            set {
+                base.ForeColor = value;
+                textLayer.displayBrush = new SolidBrush( value );
             }
         }
+
     }
 }

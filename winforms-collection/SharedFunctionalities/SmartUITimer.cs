@@ -29,7 +29,7 @@ namespace SharedFunctionalities {
         }
 
         private void handleInvoke( Action act ) {
-            if ( act == null ) {
+            if ( act == null || ui.Disposing || ui.IsDisposed || (!ui.IsHandleCreated) ) {
                 return;
             }
             if ( ui.InvokeRequired ) {
