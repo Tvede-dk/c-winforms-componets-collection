@@ -1,7 +1,10 @@
 ﻿using SharedFunctionalities;
+using SharedFunctionalities.drawing;
+using SharedFunctionalities.drawing.layers;
 using SharedFunctionalities.forms;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -13,48 +16,35 @@ using System.Windows.Forms;
 namespace winforms_collection.advanced {
     public class StyleableButton : CustomControl {
 
-        private Brush backgroundBrush;
+        private drawBackground backLayer = new drawBackground();
+
+        private CenterText textLayer = new CenterText();
 
         public StyleableButton() {
-            BorderSize = 1;
-            FlashBorderColorStart = Color.Transparent;
+            DrawHandler.addLayer( backLayer );
+            DrawHandler.addLayer( textLayer );
         }
 
+        public override Font Font {
+            get {
+                return base.Font;
+            }
 
-        private Bitmap cache;
-
-
-        protected override void OnPaint( PaintEventArgs e ) {
-            base.OnPaint( e );
-            HandleCache();
-            e.Graphics.DrawImage( cache, BorderSize / 2, BorderSize / 2, Width, Height );
-        }
-
-        private void HandleCache() {
-            if ( cache == null || cache.Height != Height || cache.Width != Width ) {
-                cache = new Bitmap( Width, Height );
-                using (Graphics g = Graphics.FromImage( cache )) {
-                    drawBackground( g );
-                    drawText( g );
-                }
+            set {
+                base.Font = value;
+                textLayer.font = value;
             }
         }
 
-
-        private void drawBackground( Graphics e ) {
-            if ( backgroundBrush == null ) {
-                LinearGradientBrush toUse = new LinearGradientBrush( ClientRectangle, Color.FromArgb( 255, 230, 240, 163 ), Color.FromArgb( 255, 210, 230, 56 ), 90f, true );
-                toUse.SetBlendTriangularShape( 0.5f, 1.0f );
-                backgroundBrush = toUse;
+        public override string Text {
+            get {
+                return base.Text;
             }
-            e.FillRectangle( backgroundBrush, ClientRectangle.InnerPart( BorderSize ) );
-        }
 
-        private void drawText( Graphics e ) {
-            StringFormat format = new StringFormat();
-            format.LineAlignment = StringAlignment.Center;
-            format.Alignment = StringAlignment.Center;
-            e.DrawString( Text, Font, Brushes.Black, ClientRectangle.InnerPart( BorderSize ), format );
+            set {
+                base.Text = value;
+                textLayer.Text = value;
+            }
         }
 
         protected override void OnMouseEnter( EventArgs e ) {
@@ -74,7 +64,6 @@ namespace winforms_collection.advanced {
             overlay.FadeOut( 150, () => { overlay.Dispose(); } );
         }
 
-
         protected override void OnKeyDown( KeyEventArgs e ) {
             base.OnKeyDown( e );
             if ( e.KeyCode == Keys.Space || e.KeyCode == Keys.Enter ) {
@@ -82,5 +71,14 @@ namespace winforms_collection.advanced {
             }
         }
 
+        private class drawBackground : BrushBackground {
+
+            public override void draw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
+                LinearGradientBrush toUse = new LinearGradientBrush( wholeComponent, Color.FromArgb( 255, 230, 240, 163 ), Color.FromArgb( 255, 210, 230, 56 ), 90f, true );
+                toUse.SetBlendTriangularShape( 0.5f, 1.0f );
+                Background = toUse;
+                base.draw( g, ref wholeComponent, ref clippingRect );
+            }
+        }
     }
 }

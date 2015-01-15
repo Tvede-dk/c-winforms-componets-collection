@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SharedFunctionalities.drawing;
+using SharedFunctionalities.drawing.layers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -8,30 +10,27 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SharedFunctionalities {
-    public abstract class CustomControl : Control {
+    public class CustomControl : Control {
 
-        private Pen borderPen;
 
-        #region property BorderColor
-        private Color _BorderColor;
+
+        #region property DrawHandler
+        private readonly DrawingHandler _DrawHandler = new DrawingHandler();
+
+
+        public DrawingHandler DrawHandler {
+            get { return _DrawHandler; }
+        }
+        #endregion
+
 
         [EditorBrowsable]
         public Color BorderColor {
-            get { return _BorderColor; }
+            get { return borderLayer.BorderColor; }
             set {
-                _BorderColor = value;
-                updateBorderPen( value );
+                borderLayer.BorderColor = value;
             }
         }
-
-        private void updateBorderPen( Color value ) {
-            if ( borderPen != null ) { borderPen.Dispose(); }
-            borderPen = new Pen( value, BorderSize );
-            if ( BorderSize > 0 && borderPen.Color != Color.Transparent ) {
-                Invalidate();
-            }
-        }
-        #endregion
 
 
 
@@ -59,24 +58,17 @@ namespace SharedFunctionalities {
 
 
         #region property BorderSize
-        private int _BorderSize;
 
         [EditorBrowsable]
         public int BorderSize {
-            get { return _BorderSize; }
-            set {
-                _BorderSize = value;
-                updateBorderPen( BorderColor );
-            }
+            get { return borderLayer.BorderSize; }
+            set { borderLayer.BorderSize = value; }
         }
         #endregion
 
         private bool isMouseInside = false;
 
-
-        ~CustomControl() {
-            borderPen.Dispose();
-        }
+        private BorderLayer borderLayer = new BorderLayer();
 
         //to consider :
         // provide an automatic cleanup of brushes ? 
@@ -84,21 +76,14 @@ namespace SharedFunctionalities {
 
         public CustomControl() {
             SetStyle( ControlStyles.SupportsTransparentBackColor | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.CacheText | ControlStyles.ResizeRedraw | ControlStyles.UserPaint, true );
+            DrawHandler.addLayer( borderLayer );
         }
 
         protected override void OnPaint( PaintEventArgs e ) {
-            base.OnPaint( e );
-            drawBorder( e );
+            base.OnPaint( e ); //in some sence, waht the heck does this one do ?? ..
+            DrawHandler.draw( e.Graphics, ClientRectangle, e.ClipRectangle );
         }
 
-        protected void drawBorder( PaintEventArgs e ) {
-            if ( BorderSize > 0 ) {
-                if ( borderPen == null ) {
-                    borderPen = new Pen( Brushes.Black, (float)BorderSize );
-                }
-                e.Graphics.DrawRectangle( borderPen, ClientRectangle.InnerPart( BorderSize / 2, BorderSize / 2, BorderSize, BorderSize ) );
-            }
-        }
 
         protected override void OnMouseEnter( EventArgs e ) {
             base.OnMouseEnter( e );

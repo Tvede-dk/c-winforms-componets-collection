@@ -102,7 +102,6 @@ namespace winforms_collection {
                     simpleListControl1.Items.Add( onRenderCallback( result ) );
                     data.Add( result );
                 }
-
             }
         }
     }

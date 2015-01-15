@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using winforms_collection.drawParts;
+using SharedFunctionalities.drawing;
 
 namespace winforms_collection.simple_components {
 
@@ -24,9 +26,9 @@ namespace winforms_collection.simple_components {
         #endregion
 
         #region instance variables( not shared).
-        private IDrawningStrategy backgroundRender;
-        private IDrawningStrategy textRender;
-        private IDrawningStrategy FlashBarRender;
+        private IDrawMethod backgroundRender;
+        private IDrawMethod textRender;
+        private IDrawMethod FlashBarRender;
 
 
         #endregion
@@ -197,6 +199,9 @@ namespace winforms_collection.simple_components {
             FlashBarRender = new FlashAnimator( this );
             this.DoubleBuffered = true;
             startAnimations();
+            drawH.addLayer( backgroundRender );
+            drawH.addLayer( textRender );
+            drawH.addLayer( FlashBarRender );
         }
 
 
@@ -242,7 +247,9 @@ namespace winforms_collection.simple_components {
             if ( (timerCount * MOVING_PIXLES_FRAME) - flashbarWidth >= (ClientRectangle.Width * progressInProcent / 100) ) {
                 timerCount = 0;
             }
-            this.Invalidate( true );
+            int maxInvalidTo = (int)(ClientRectangle.Width * ((float)Math.Max( 60, progressInProcent ) / 100f));
+            Rectangle maxInvalid = new Rectangle( borderSize, borderSize, maxInvalidTo, Height - (borderSize * 2) );
+            this.Invalidate( maxInvalid );
         }
         private string _overlayText;
         #endregion
@@ -300,15 +307,18 @@ namespace winforms_collection.simple_components {
             }
         }
         #endregion
+        DrawingHandler drawH = new DrawingHandler();
 
         #region paint methods
         protected override void OnPaint( PaintEventArgs e ) {
             base.OnPaint( e );
-            backgroundRender.draw( e, this );
-            textRender.draw( e, this );
-            if ( disableAnimations == false ) {
-                FlashBarRender.draw( e, this );
-            }
+            //backgroundRender.draw( e, this );
+            //textRender.draw( e, this );
+            //if ( disableAnimations == false ) {
+            //    FlashBarRender.draw( e, this );
+            //}
+            drawH.draw( e.Graphics, ClientRectangle, e.ClipRectangle );
+
         }
 
         protected override void OnPaintBackground( PaintEventArgs pevent ) {
@@ -337,41 +347,67 @@ namespace winforms_collection.simple_components {
             GRADIENT_LEFT_RIGHT
         }
 
-        //TODO eventually factor this into its own thing to be used multiple places.
-        public interface IDrawningStrategy {
-            void draw( PaintEventArgs e, Progressbar prog );
-        }
-
-        public class DrawSingleColorStrategy : IDrawningStrategy {
+        public class DrawSingleColorStrategy : IDrawMethod {
             private Brush drawingBrush;
             private Brush backColorBrush;
+            private Progressbar prog;
+            private bool isCacheValid = false;
             public DrawSingleColorStrategy( Progressbar prog ) {
                 prog._singleColorFilledColorChangeListners.Add( onNewColor );
                 onNewColor( prog.singleColorFilledColor );
                 prog._backColorListners.Add( onNewBackColor );
                 onNewBackColor( prog.BackColor );
+                this.prog = prog;
             }
 
             public void onNewColor( Color col ) {
                 drawingBrush = new SolidBrush( col );
+                isCacheValid = false;
             }
 
             public void onNewBackColor( Color col ) {
                 backColorBrush = new SolidBrush( col );
+                isCacheValid = false;
             }
 
-            public void draw( PaintEventArgs e, Progressbar prog ) {
-                e.Graphics.FillRectangle( backColorBrush, prog.ClientRectangle );
-                e.Graphics.FillRectangle( drawingBrush, prog.calculateFilledPart() );
+            //public void draw( PaintEventArgs e, Progressbar prog ) {
+            //    e.Graphics.FillRectangle( backColorBrush, prog.ClientRectangle );
+            //    e.Graphics.FillRectangle( drawingBrush, prog.calculateFilledPart() );
+            //}
+
+            public void draw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
+                g.FillRectangle( backColorBrush, prog.ClientRectangle );
+                g.FillRectangle( drawingBrush, prog.calculateFilledPart() );
+                isCacheValid = true;
             }
 
+            public bool isTransperant() {
+                return true;
+            }
+
+            public bool willFillRectangleOut() {
+                return true;
+            }
+
+            public bool mayCacheLayer() {
+                return true;
+            }
+
+            public bool isCacheInvalid() {
+                return !isCacheValid;
+            }
+
+            public bool mayDraw() {
+                return true;
+            }
         }
-        public class DrawMultiColorStrategy : IDrawningStrategy {
-
+        public class DrawMultiColorStrategy : IDrawMethod {
+            private Progressbar prog;
             private Brush backColor;
             public DrawMultiColorStrategy( Progressbar prog ) {
                 prog._backColorListners.Add( onNewColor );
                 onNewColor( prog.BackColor );
+                this.prog = prog;
             }
 
             public void onNewColor( Color col ) {
@@ -392,26 +428,76 @@ namespace winforms_collection.simple_components {
                 e.Graphics.FillRectangle( linGrBrush, rf );
             }
 
+            public void draw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
+                Rectangle rf = prog.calculateFilledPart();
+                //determine if we can offload this calculation as well.
+                LinearGradientBrush linGrBrush = new LinearGradientBrush(
+                  new Point( 0, 0 ),
+                   new Point( (int)rf.Width + rf.X, 0 ),
+                      prog.multiColorStart
+                    , prog.multiColorEnd );
+
+                g.FillRectangle( backColor, prog.ClientRectangle );
+                g.FillRectangle( linGrBrush, rf );
+            }
+
+            public bool isTransperant() {
+                return true;
+            }
+
+            public bool willFillRectangleOut() {
+                return true;
+            }
+
+            public bool mayCacheLayer() {
+                return true;
+            }
+
+            public bool isCacheInvalid() {
+                return false;
+            }
+
+            public bool mayDraw() {
+                return true;
+            }
         }
 
-        public class TextRender : IDrawningStrategy {
-
+        public class TextRender : IDrawMethod {
+            private bool isCacheValid = false;
             private Brush textColorBrush;
             private StringFormat format;
+            private Progressbar prog;
             public TextRender( Progressbar prog ) {
                 prog._foreColorListners.Add( onNewColor );
                 onNewColor( prog.ForeColor );
                 format = new StringFormat();
                 format.LineAlignment = StringAlignment.Center;
                 format.Alignment = StringAlignment.Center;
+                this.prog = prog;
             }
 
             public void onNewColor( Color col ) {
                 textColorBrush = new SolidBrush( col );
+                isCacheValid = false;
             }
 
-            public void draw( PaintEventArgs e, Progressbar prog ) {
+            public bool isTransperant() {
+                return true;
+            }
 
+            public bool willFillRectangleOut() {
+                return true;
+            }
+
+            public bool mayCacheLayer() {
+                return true;
+            }
+
+            public bool isCacheInvalid() {
+                return !isCacheValid;
+            }
+
+            public void draw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
                 string toDislpay = "";
                 if ( prog.drawProcent ) {
                     toDislpay += prog.progressInProcent;
@@ -419,21 +505,28 @@ namespace winforms_collection.simple_components {
                 if ( prog.drawOverlay ) {
                     toDislpay += prog.overlayText;
                 }
-                e.Graphics.DrawString( toDislpay, prog.Font, textColorBrush, prog.ClientRectangle, format );
+                g.DrawString( toDislpay, prog.Font, textColorBrush, prog.ClientRectangle, format );
+                isCacheValid = true;
+            }
+
+            public bool mayDraw() {
+                return true;
             }
         }
 
-        public class FlashAnimator : IDrawningStrategy {
+        public class FlashAnimator : IDrawMethod {
 
             private SolidBrush highlighterBrush;
-
             private int colorIntensity = 70;
+            private Progressbar prog;
+            public bool shouldDraw = true;
 
             public FlashAnimator( Progressbar prog ) {
                 prog._flashColorChangeListners.Add( onNewColor );
                 prog._flashColorIntensityChangeListners.Add( onNewIntensity );
                 this.colorIntensity = prog.flashColorIntensity;
                 onNewColor( prog.flashColor );
+                this.prog = prog;
             }
 
             public void onNewIntensity( int val ) {
@@ -447,7 +540,7 @@ namespace winforms_collection.simple_components {
                 highlighterBrush = new SolidBrush( newColor );
             }
 
-            public void draw( PaintEventArgs e, Progressbar prog ) {
+            public void draw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
                 Rectangle inner = prog.calculateFilledPart();
                 inner.Height -= 4;
                 inner.Y += 2; //it looks so much more cool.. 
@@ -464,7 +557,27 @@ namespace winforms_collection.simple_components {
                     high.Width = (timerVal * MOVING_PIXLES_FRAME) - (prog.borderSize);
                     high.X = prog.borderSize;
                 }
-                e.Graphics.FillRectangle( highlighterBrush, high );
+                g.FillRectangle( highlighterBrush, high );
+            }
+
+            public bool isTransperant() {
+                return true;
+            }
+
+            public bool willFillRectangleOut() {
+                return false;
+            }
+
+            public bool mayCacheLayer() {
+                return true;
+            }
+
+            public bool isCacheInvalid() {
+                return true;
+            }
+
+            public bool mayDraw() {
+                return shouldDraw;
             }
         }
 

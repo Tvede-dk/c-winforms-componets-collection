@@ -23,7 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            winforms_collection.validator.NumberString numberString1 = new winforms_collection.validator.NumberString();
+            winforms_collection.validator.NumberString numberString2 = new winforms_collection.validator.NumberString();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
@@ -39,6 +39,8 @@
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
+            this.testDraw1 = new winforms_collection.drawParts.testDraw();
+            this.styleableButton2 = new winforms_collection.advanced.StyleableButton();
             this.styleableButton1 = new winforms_collection.advanced.StyleableButton();
             this.dropdown1 = new winforms_collection.advanced.dropdown.dropdown();
             this.progressbar1 = new winforms_collection.simple_components.Progressbar();
@@ -196,6 +198,26 @@
             this.button10.UseVisualStyleBackColor = true;
             this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
+            // testDraw1
+            // 
+            this.testDraw1.Location = new System.Drawing.Point(369, 395);
+            this.testDraw1.Name = "testDraw1";
+            this.testDraw1.Size = new System.Drawing.Size(184, 102);
+            this.testDraw1.TabIndex = 30;
+            this.testDraw1.Text = "testDraw1";
+            // 
+            // styleableButton2
+            // 
+            this.styleableButton2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.styleableButton2.BorderSize = 1;
+            this.styleableButton2.FlashBorderColorStart = System.Drawing.Color.Transparent;
+            this.styleableButton2.FlashBorderOnMouseOver = false;
+            this.styleableButton2.Location = new System.Drawing.Point(186, 150);
+            this.styleableButton2.Name = "styleableButton2";
+            this.styleableButton2.Size = new System.Drawing.Size(151, 39);
+            this.styleableButton2.TabIndex = 29;
+            this.styleableButton2.Text = "styleableButton2";
+            // 
             // styleableButton1
             // 
             this.styleableButton1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
@@ -207,6 +229,7 @@
             this.styleableButton1.Size = new System.Drawing.Size(322, 23);
             this.styleableButton1.TabIndex = 28;
             this.styleableButton1.Text = "styleableButton1";
+            this.styleableButton1.Click += new System.EventHandler(this.styleableButton1_Click);
             // 
             // dropdown1
             // 
@@ -339,15 +362,17 @@
             this.sTextbox1.placeHolder = "";
             this.sTextbox1.Size = new System.Drawing.Size(203, 20);
             this.sTextbox1.TabIndex = 0;
-            numberString1.allowDecimal = true;
-            numberString1.allowInt = false;
-            this.sTextbox1.validator = numberString1;
+            numberString2.allowDecimal = true;
+            numberString2.allowInt = false;
+            this.sTextbox1.validator = numberString2;
             // 
             // textboxes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(917, 509);
+            this.Controls.Add(this.testDraw1);
+            this.Controls.Add(this.styleableButton2);
             this.Controls.Add(this.styleableButton1);
             this.Controls.Add(this.dropdown1);
             this.Controls.Add(this.button10);
@@ -411,6 +436,8 @@
         private System.Windows.Forms.Button button10;
         private winforms_collection.advanced.dropdown.dropdown dropdown1;
         private winforms_collection.advanced.StyleableButton styleableButton1;
+        private winforms_collection.advanced.StyleableButton styleableButton2;
+        private winforms_collection.drawParts.testDraw testDraw1;
     }
 }
 

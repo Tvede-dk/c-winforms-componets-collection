@@ -15,23 +15,23 @@ namespace Samples_and_tests {
             t.Enabled = true;
             t.Start();
             t.Tick += T_Tick;
-
+            new controls().Show();
         }
 
         private void button1_Click( object sender, EventArgs e ) {
 
-            bool isSingleFasterThanMultithreaded = true;
-            string[] array;
+            //bool isSingleFasterThanMultithreaded = true;
+            //string[] array;
 
-            int size = 20000;
-            while ( isSingleFasterThanMultithreaded ) {
-                array = new string[size + 1];
-                double timeSingle = profile( 1, () => { SharedStringUtils.innerWorkings.simpleRemoveIndexFromArray( array, array.Length / 2 ); } );
-                double timeMulti = profile( 1, () => { SharedStringUtils.innerWorkings.fastMP_RemoveIndexFromArray( array, array.Length / 2 ); } );
-                size += 5;
-                isSingleFasterThanMultithreaded = timeMulti >= timeSingle;
-            }
-            MessageBox.Show( "value was: " + size );
+            //int size = 20000;
+            //while ( isSingleFasterThanMultithreaded ) {
+            //    array = new string[size + 1];
+            //    double timeSingle = profile( 1, () => { SharedStringUtils.innerWorkings.simpleRemoveIndexFromArray( array, array.Length / 2 ); } );
+            //    double timeMulti = profile( 1, () => { SharedStringUtils.innerWorkings.fastMP_RemoveIndexFromArray( array, array.Length / 2 ); } );
+            //    size += 5;
+            //    isSingleFasterThanMultithreaded = timeMulti >= timeSingle;
+            //}
+            //MessageBox.Show( "value was: " + size );
 
 
         }
@@ -107,7 +107,7 @@ namespace Samples_and_tests {
 
         private void button6_Click( object sender, EventArgs e ) {
             FastNoticePopup.ShowInfo( "test", this );
-            
+
         }
 
         private void button7_Click( object sender, EventArgs e ) {
@@ -124,6 +124,10 @@ namespace Samples_and_tests {
 
         private void button10_Click( object sender, EventArgs e ) {
             winforms_collection.popup_boxes.NotificationBar.showAtLocation( "test text", new System.Drawing.Point { Y = 50, X = 50 } );
+        }
+
+        private void styleableButton1_Click( object sender, EventArgs e ) {
+            MessageBox.Show( "i love it" );
         }
     }
 }

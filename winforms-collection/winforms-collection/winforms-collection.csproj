@@ -60,6 +60,9 @@
     <Compile Include="advanced\dropdown\DropdownOverlay.Designer.cs">
       <DependentUpon>DropdownOverlay.cs</DependentUpon>
     </Compile>
+    <Compile Include="advanced\SearchList\SearchList.cs">
+      <SubType>component</SubType>
+    </Compile>
     <Compile Include="advanced\StyleableButton.cs">
       <SubType>component</SubType>
     </Compile>
@@ -68,6 +71,12 @@
     </Compile>
     <Compile Include="containers\ListContainer.Designer.cs">
       <DependentUpon>ListContainer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="drawParts\RenderThreadExample.cs">
+      <SubType>component</SubType>
+    </Compile>
+    <Compile Include="drawParts\testDraw.cs">
+      <SubType>component</SubType>
     </Compile>
     <Compile Include="lists\SimpleList.cs">
       <SubType>UserControl</SubType>
@@ -84,11 +93,11 @@
     <Compile Include="popup boxes\BaseAnimationForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="popup boxes\fastNoticsPopup.cs">
+    <Compile Include="popup boxes\FastNoticePopup.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="popup boxes\fastNoticsPopup.Designer.cs">
-      <DependentUpon>fastNoticsPopup.cs</DependentUpon>
+    <Compile Include="popup boxes\FastNoticePopup.Designer.cs">
+      <DependentUpon>FastNoticePopup.cs</DependentUpon>
     </Compile>
     <Compile Include="popup boxes\NotificationBar.cs">
       <SubType>Form</SubType>
@@ -134,8 +143,8 @@
       <DependentUpon>SimpleListControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="names.txt" />
-    <EmbeddedResource Include="popup boxes\fastNoticsPopup.resx">
-      <DependentUpon>fastNoticsPopup.cs</DependentUpon>
+    <EmbeddedResource Include="popup boxes\FastNoticePopup.resx">
+      <DependentUpon>FastNoticePopup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="popup boxes\NotificationBar.resx">
       <DependentUpon>NotificationBar.cs</DependentUpon>
@@ -177,7 +186,9 @@
     <None Include="Resources\icons\blue styled\License.txt" />
     <None Include="Resources\backgrounds\dark-metal-grid-3.jpg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="drawParts\simpleDrawers\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
