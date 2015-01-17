@@ -55,9 +55,30 @@ namespace SharedFunctionalities.drawing.layers.backgrounds {
         }
 
         public override void doDraw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
-            int totalSize = (12 * SpaceBetween) - ((SpaceBetween * SpaceBetween) / 14);
+            wholeComponent = drawUsingBitblt( g, wholeComponent );
+        }
+
+        private Rectangle drawUsingBitblt( Graphics g, Rectangle wholeComponent ) {
+            Bitmap pattern = createPattern();
+            pattern.bitbltRepeat( g, wholeComponent.Width, wholeComponent.Height );
+
+            return wholeComponent;
+        }
+
+        private Bitmap createPattern() {
+            #region a far, close, and standard distance mode based on simple benchmarking.
+            int preFactor = 10;
+            int divisionFactor = 20;
+            if ( SpaceBetween > 150 ) {
+                preFactor = 8;
+            }
+            if ( SpaceBetween < 20 ) {
+                preFactor = 20;
+            }
+            #endregion
+            int totalSize = (preFactor * SpaceBetween) - ((SpaceBetween * SpaceBetween) / divisionFactor);
             totalSize = totalSize - (totalSize % SpaceBetween);
-            totalSize = Math.Max( totalSize, SpaceBetween * 2 );
+            totalSize = Math.Max( totalSize, SpaceBetween * 1 );
             Bitmap pattern = new Bitmap( (int)((totalSize)), (int)((totalSize)), PixelFormat.Format32bppPArgb );
             using (var gg = Graphics.FromImage( pattern )) {
                 Stopwatch sw = new Stopwatch();
@@ -73,7 +94,8 @@ namespace SharedFunctionalities.drawing.layers.backgrounds {
                 sw.Stop();
                 Console.WriteLine( "time for making pattern:" + sw.Elapsed.TotalMilliseconds );
             }
-            pattern.bitbltRepeat( g, wholeComponent.Width, wholeComponent.Height );
+
+            return pattern;
         }
 
         public override void modifySize( ref Rectangle newSize ) {
