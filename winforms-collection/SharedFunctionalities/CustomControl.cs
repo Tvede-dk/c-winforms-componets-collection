@@ -80,7 +80,6 @@ namespace SharedFunctionalities {
         }
 
         protected override void OnPaint( PaintEventArgs e ) {
-            base.OnPaint( e ); //in some sence, waht the heck does this one do ?? ..
             DrawHandler.draw( e.Graphics, ClientRectangle, e.ClipRectangle );
         }
 

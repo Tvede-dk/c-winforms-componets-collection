@@ -62,6 +62,7 @@
       <SubType>component</SubType>
     </Compile>
     <Compile Include="drawing\DrawingHandler.cs" />
+    <Compile Include="drawing\GDIHelper.cs" />
     <Compile Include="drawing\IDrawMethod.cs" />
     <Compile Include="drawing\layers\backgrounds\GridBackground.cs" />
     <Compile Include="drawing\layers\BaseDraw.cs" />

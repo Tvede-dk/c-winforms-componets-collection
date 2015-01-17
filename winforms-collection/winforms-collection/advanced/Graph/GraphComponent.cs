@@ -5,9 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace winforms_collection.advanced.Graph {
     public class GraphComponent : CustomControl {
+
+        private const int WHEEL_DELTA = 120;
 
 
         #region property spaceBetween
@@ -23,10 +26,24 @@ namespace winforms_collection.advanced.Graph {
         GridBackground back = new GridBackground();
 
         public GraphComponent() {
+            DrawHandler.removeLayer( 0 );
             DrawHandler.addLayer( back );
+            DrawHandler.disableCommCache();
+        }
+
+        protected override void OnMouseWheel( MouseEventArgs e ) {
+            base.OnMouseWheel( e );
+            int zoom = e.Delta / WHEEL_DELTA;
+            if ( spaceBetween + zoom > 5  && spaceBetween + zoom < 200 ) {
+                spaceBetween += zoom;
+            }
+        }
+        protected override void OnMouseClick( MouseEventArgs e ) {
+            base.OnMouseClick( e );
+            Invalidate();//well for testing
         }
         /**
-        zooming:
+        zooming effect:
                     SmartUITimer timer = new SmartUITimer( this );
             timer.repeate = true;
             timer.counter = 200;

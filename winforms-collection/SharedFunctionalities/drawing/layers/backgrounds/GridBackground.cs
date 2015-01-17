@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
@@ -11,7 +13,7 @@ namespace SharedFunctionalities.drawing.layers.backgrounds {
 
 
         #region property SpaceBetween
-        private int _SpaceBetween = 15*5;
+        private int _SpaceBetween = 15 * 5;
 
 
         public int SpaceBetween {
@@ -52,27 +54,26 @@ namespace SharedFunctionalities.drawing.layers.backgrounds {
             invalidate();
         }
 
-        private TextureBrush cachedBrush = null;
-
         public override void doDraw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
-            handleCachedBrush();
-            //g.ScaleTransform( 5, 5, System.Drawing.Drawing2D.MatrixOrder.Append );
-            g.FillRectangle( cachedBrush, wholeComponent );
-            
-        }
-
-        private void handleCachedBrush() {
-            if ( cachedBrush == null ) {
-                Bitmap pattern = new Bitmap( (int)((SpaceBetween)), (int)((SpaceBetween)), PixelFormat.Format32bppPArgb );
-
-                using (var gg = Graphics.FromImage( pattern )) {
-                    Pen blackPen = new Pen( Color.Black, lineSize );
-                    Rectangle rec = new Rectangle( 0, 0, pattern.Width, pattern.Height );
-                    gg.DrawRectangle( blackPen, rec );
+            int totalSize = (12 * SpaceBetween) - ((SpaceBetween * SpaceBetween) / 14);
+            totalSize = totalSize - (totalSize % SpaceBetween);
+            totalSize = Math.Max( totalSize, SpaceBetween * 2 );
+            Bitmap pattern = new Bitmap( (int)((totalSize)), (int)((totalSize)), PixelFormat.Format32bppPArgb );
+            using (var gg = Graphics.FromImage( pattern )) {
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                Pen blackPen = new Pen( Color.Black, lineSize );
+                for ( int i = 0; i < totalSize / SpaceBetween; i++ ) {
+                    gg.DrawLine( Pens.Black, 0, SpaceBetween * i, pattern.Width, SpaceBetween * i );
+                }
+                for ( int i = 0; i < totalSize / SpaceBetween; i++ ) {
+                    gg.DrawLine( Pens.Black, SpaceBetween * i, 0, SpaceBetween * i, pattern.Height );
                 }
 
-                cachedBrush = new TextureBrush( pattern, System.Drawing.Drawing2D.WrapMode.Tile, new Rectangle( 0, 0, pattern.Width, pattern.Height ) );
+                sw.Stop();
+                Console.WriteLine( "time for making pattern:" + sw.Elapsed.TotalMilliseconds );
             }
+            pattern.bitbltRepeat( g, wholeComponent.Width, wholeComponent.Height );
         }
 
         public override void modifySize( ref Rectangle newSize ) {
@@ -80,7 +81,6 @@ namespace SharedFunctionalities.drawing.layers.backgrounds {
         }
         public override void invalidate() {
             base.invalidate();
-            cachedBrush = null;
         }
     }
 }
