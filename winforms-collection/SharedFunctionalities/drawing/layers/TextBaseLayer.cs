@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
@@ -8,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SharedFunctionalities.drawing.layers {
-    public class TextBaseLayer : IDrawMethod {
+    public class TextBaseLayer : BaseDraw {
 
 
 
@@ -23,7 +24,7 @@ namespace SharedFunctionalities.drawing.layers {
                     _displayBrush.Dispose();
                 }
                 _displayBrush = value;
-                haveChangedSinceLastDraw = true;
+                invalidate();
             }
         }
         #endregion
@@ -48,7 +49,7 @@ namespace SharedFunctionalities.drawing.layers {
             get { return _Text; }
             set {
                 _Text = value;
-                haveChangedSinceLastDraw = true;
+                invalidate();
             }
         }
         #endregion
@@ -62,13 +63,12 @@ namespace SharedFunctionalities.drawing.layers {
             get { return _Font; }
             set {
                 _Font = value;
-                haveChangedSinceLastDraw = true;
+                invalidate();
             }
         }
         #endregion
 
 
-        private bool haveChangedSinceLastDraw = true;
 
 
         public TextBaseLayer() {
@@ -76,37 +76,24 @@ namespace SharedFunctionalities.drawing.layers {
             displayBrush = Brushes.Black;
         }
 
-        public void draw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
+        public override void doDraw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
             //the following is NESSARY for transperant backgrounds, which we always want..
+            //TextRender is slower (on my machine), this seems odd, but then again, windows 10 <3
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
-            // 
             g.DrawString( Text, font, displayBrush, wholeComponent, stringFormat );
-            haveChangedSinceLastDraw = false;
-
         }
 
-        public bool isCacheInvalid() {
-            return haveChangedSinceLastDraw;
-        }
 
-        public bool isTransperant() {
-            return true;
-        }
-
-        public bool mayCacheLayer() {
-            return true;
-        }
-
-        public bool mayDraw() {
+        public override bool mayDraw() {
             return Text != null && Text.Length > 0 && font != null;
         }
 
-        public bool willFillRectangleOut() {
+        public override bool willFillRectangleOut() {
             return false;
         }
 
-        public void modifySize( ref Rectangle newSize ) {
+        public override void modifySize( ref Rectangle newSize ) {
             return;
         }
     }

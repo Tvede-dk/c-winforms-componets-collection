@@ -61,7 +61,7 @@ namespace SharedFunctionalities.drawing.layers.backgrounds {
         private Rectangle drawUsingBitblt( Graphics g, Rectangle wholeComponent ) {
             Bitmap pattern = createPattern();
             pattern.bitbltRepeat( g, wholeComponent.Width, wholeComponent.Height );
-
+            pattern.Dispose();
             return wholeComponent;
         }
 
@@ -92,7 +92,7 @@ namespace SharedFunctionalities.drawing.layers.backgrounds {
                 }
 
                 sw.Stop();
-                Console.WriteLine( "time for making pattern:" + sw.Elapsed.TotalMilliseconds );
+                //Console.WriteLine( "time for making pattern:" + sw.Elapsed.TotalMilliseconds );
             }
 
             return pattern;

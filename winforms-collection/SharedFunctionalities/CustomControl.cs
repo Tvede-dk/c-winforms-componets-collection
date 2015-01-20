@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -77,11 +78,26 @@ namespace SharedFunctionalities {
         public CustomControl() {
             SetStyle( ControlStyles.SupportsTransparentBackColor | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.CacheText | ControlStyles.ResizeRedraw | ControlStyles.UserPaint, true );
             DrawHandler.addLayer( borderLayer );
+
+        }
+        protected override void OnPaint( PaintEventArgs e ) {
+            //result = new Bitmap( Width, Height, PixelFormat.Format32bppPArgb );
+            //using (var g = Graphics.FromImage( result )) {
+            //    testThis( g, e );
+            //}
+            //Console.WriteLine( "in OnPaint" );
+            //DrawHandler.draw( e.Graphics, ClientRectangle, e.ClipRectangle );
+            //testThis( e );
+
+            DrawHandler.drawAsync( this.CreateGraphics(), ClientRectangle, e.ClipRectangle, this );
         }
 
-        protected override void OnPaint( PaintEventArgs e ) {
-            DrawHandler.draw( e.Graphics, ClientRectangle, e.ClipRectangle );
-        }
+        //private async void testThis(Graphics g, PaintEventArgs e ) {
+        //    Console.WriteLine( "in testThis" );
+        //    await Task.Run( () => { DrawHandler.drawAsync( g, ClientRectangle, e.ClipRectangle ); } );
+        //    this.BeginInvoke( (MethodInvoker)(() => { result.bitbltRepeat( e.Graphics, result.Width, result.Height ); }) );
+        //    //e.Graphics.DrawImage( result, 0, 0 );
+        //}
 
 
         protected override void OnMouseEnter( EventArgs e ) {
@@ -102,7 +118,7 @@ namespace SharedFunctionalities {
                     if ( !IsMouseInside() ) {
                         this.BorderColor = oldColor;
                     }
-                    Invalidate(ClientRectangle.CalculateBorder(BorderSize));
+                    Invalidate( ClientRectangle.CalculateBorder( BorderSize ) );
                     return IsMouseInside();
                 }, 1.0f, 0.0f, 0.05f, startCol, this );
             }

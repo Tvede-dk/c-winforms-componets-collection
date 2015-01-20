@@ -23,19 +23,19 @@ namespace SharedFunctionalities.drawing.layers {
             return haveChangedSinceDraw;
         }
 
-        public bool isTransperant() {
+        public virtual bool isTransperant() {
             return true;
         }
 
-        public bool mayCacheLayer() {
+        public virtual bool mayCacheLayer() {
             return true;
         }
 
-        public bool mayDraw() {
+        public virtual bool mayDraw() {
             return true;
         }
 
-        public bool willFillRectangleOut() {
+        public virtual bool willFillRectangleOut() {
             return true;
         }
 

@@ -41,6 +41,7 @@ namespace winforms_collection.advanced {
         public StyleableButton() {
             DrawHandler.addLayer( backLayer );
             DrawHandler.addLayer( textLayer );
+            textLayer.font = Font;
         }
 
         public override Font Font {

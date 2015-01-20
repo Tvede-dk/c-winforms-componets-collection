@@ -4,11 +4,17 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Windows.Media.Imaging;
 
 namespace SharedFunctionalities.drawing {
     public class DrawingHandler {
+
+        [DllImport("msvcrt.dll", EntryPoint = "memcpy", CallingConvention = CallingConvention.Cdecl, SetLastError = false)]
+        public static extern IntPtr memcpy( IntPtr dest, IntPtr src, UIntPtr count );
 
         private List<IDrawMethod> layers = new List<IDrawMethod>();
 
@@ -25,7 +31,10 @@ namespace SharedFunctionalities.drawing {
 
         private int notInvalidatedFor = 0;
 
+        private WriteableBitmap bmpTest;
+
         private void doDraw( Graphics g, Rectangle wholeComponent, Rectangle clipRect ) {
+
             var orgRectangle = new Rectangle( wholeComponent.X, wholeComponent.Y, wholeComponent.Width, wholeComponent.Height );
             int startDrawAt = useCommCache( g, orgRectangle, false );
 
@@ -41,15 +50,16 @@ namespace SharedFunctionalities.drawing {
                     sw.Start();
                     drawLayer( g, ref wholeComponent, ref clipRect, i, orgRectangle );
                     sw.Stop();
-                    Console.WriteLine( "\tLayer {0}:{1}", i, sw.Elapsed.TotalMilliseconds );
+                    //Console.WriteLine( "\tLayer {0}:{1}", i, sw.Elapsed.TotalMilliseconds );
                 }
             }
 
             notInvalidatedFor++;
-            Console.WriteLine( "not invalidated for:{0}", notInvalidatedFor );
+            //Console.WriteLine( "not invalidated for:{0}", notInvalidatedFor );
         }
 
         public void disableCommCache() {
+
             allowCommCache = false;
             invalidate();
         }
@@ -61,7 +71,10 @@ namespace SharedFunctionalities.drawing {
             sw.Stop();
             totalDraws++;
             totalTime += sw.Elapsed.TotalMilliseconds;
-            Console.WriteLine( "time:{0}, average:{1}", sw.Elapsed.TotalMilliseconds, (totalTime / (double)totalDraws) );
+            if ( sw.Elapsed.TotalMilliseconds > 16 ) {
+                Console.WriteLine( "time:{0}, average:{1}", sw.Elapsed.TotalMilliseconds, (totalTime / (double)totalDraws) );
+            }
+
         }
 
 
@@ -87,6 +100,30 @@ namespace SharedFunctionalities.drawing {
                 return 0;
             }
         }
+
+        public async void drawAsync( Graphics g, Rectangle clientRectangle, Rectangle clipRectangle, Control caller ) {
+            Bitmap asyncRes = new Bitmap( clientRectangle.Width, clientRectangle.Height, PixelFormat.Format32bppPArgb );
+
+            using (var gg = Graphics.FromImage( asyncRes )) {
+                //await asyncDraw( gg, clientRectangle, clipRectangle );,
+                await Task.Run( () => {
+                    doDraw( gg, clientRectangle, clipRectangle );
+                } );
+
+            }
+
+            lock (asyncRes) {
+                caller.BeginInvoke( (MethodInvoker)(() => {
+                    lock (asyncRes) {
+                        g.DrawImage( new Bitmap( asyncRes ), 0, 0 );
+                    }
+                }) );
+            }
+
+        }
+        //private async void asyncDraw( Graphics gg, Rectangle clientRectangle, Rectangle clipRectangle ) {
+
+        //}
 
         private void createCommCache( Rectangle orgComponent ) {
             if ( notInvalidatedFor > 10 ) {
