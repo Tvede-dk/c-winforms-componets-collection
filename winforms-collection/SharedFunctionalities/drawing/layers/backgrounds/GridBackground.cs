@@ -34,10 +34,10 @@ namespace SharedFunctionalities.drawing.layers.backgrounds {
         }
         #endregion
 
-
+        public int translateX = 0;
         #region property LineColor
         private Color _LineColor = Color.LightSlateGray;
-
+        
 
         public Color LineColor {
             get { return _LineColor; }
@@ -55,13 +55,17 @@ namespace SharedFunctionalities.drawing.layers.backgrounds {
         }
 
         public override void doDraw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
-            wholeComponent = drawUsingBitblt( g, wholeComponent );
+            Rectangle newRec = wholeComponent;
+            //newRec.X = translateX;
+            //g.
+            wholeComponent = drawUsingBitblt( g, newRec );
         }
 
         private Rectangle drawUsingBitblt( Graphics g, Rectangle wholeComponent ) {
             Bitmap pattern = createPattern();
-            pattern.bitbltRepeat( g, wholeComponent.Width, wholeComponent.Height );
+            pattern.bitbltRepeat( g, wholeComponent.Width-translateX, wholeComponent.Height );
             pattern.Dispose();
+            //g.TranslateClip( translateX, 0 );
             return wholeComponent;
         }
 

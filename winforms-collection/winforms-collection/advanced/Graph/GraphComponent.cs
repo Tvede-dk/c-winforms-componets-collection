@@ -34,7 +34,7 @@ namespace winforms_collection.advanced.Graph {
         protected override void OnMouseWheel( MouseEventArgs e ) {
             base.OnMouseWheel( e );
             int zoom = e.Delta / WHEEL_DELTA;
-            if ( spaceBetween + zoom > 5  && spaceBetween + zoom < 200 ) {
+            if ( spaceBetween + zoom > 5 && spaceBetween + zoom < 200 ) {
                 spaceBetween += zoom;
             }
         }
@@ -52,5 +52,15 @@ namespace winforms_collection.advanced.Graph {
                 graphComponent1.spaceBetween += 2;
             }, () => { } );
         */
+
+        //panning
+
+        protected override void OnMouseMove( MouseEventArgs e ) {
+            base.OnMouseMove( e );
+            if ( IsMouseInside() ) {
+                back.translateX = e.X;
+                Invalidate();
+            }
+        }
     }
 }

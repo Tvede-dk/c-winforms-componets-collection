@@ -86,18 +86,12 @@ namespace SharedFunctionalities {
             //    testThis( g, e );
             //}
             //Console.WriteLine( "in OnPaint" );
-            //DrawHandler.draw( e.Graphics, ClientRectangle, e.ClipRectangle );
+            DrawHandler.draw( e.Graphics, ClientRectangle, e.ClipRectangle );
             //testThis( e );
 
-            DrawHandler.drawAsync( this.CreateGraphics(), ClientRectangle, e.ClipRectangle, this );
-        }
+            //DrawHandler.drawAsync( this.CreateGraphics(), ClientRectangle, e.ClipRectangle, this ); // this is kinda slow (so far).
 
-        //private async void testThis(Graphics g, PaintEventArgs e ) {
-        //    Console.WriteLine( "in testThis" );
-        //    await Task.Run( () => { DrawHandler.drawAsync( g, ClientRectangle, e.ClipRectangle ); } );
-        //    this.BeginInvoke( (MethodInvoker)(() => { result.bitbltRepeat( e.Graphics, result.Width, result.Height ); }) );
-        //    //e.Graphics.DrawImage( result, 0, 0 );
-        //}
+        }
 
 
         protected override void OnMouseEnter( EventArgs e ) {

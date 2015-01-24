@@ -101,26 +101,26 @@ namespace SharedFunctionalities.drawing {
             }
         }
 
-        public async void drawAsync( Graphics g, Rectangle clientRectangle, Rectangle clipRectangle, Control caller ) {
-            Bitmap asyncRes = new Bitmap( clientRectangle.Width, clientRectangle.Height, PixelFormat.Format32bppPArgb );
+        //public async void drawAsync( Graphics g, Rectangle clientRectangle, Rectangle clipRectangle, Control caller ) {
+        //    Bitmap asyncRes = new Bitmap( clientRectangle.Width, clientRectangle.Height, PixelFormat.Format32bppPArgb );
 
-            using (var gg = Graphics.FromImage( asyncRes )) {
-                //await asyncDraw( gg, clientRectangle, clipRectangle );,
-                await Task.Run( () => {
-                    doDraw( gg, clientRectangle, clipRectangle );
-                } );
+        //    using (var gg = Graphics.FromImage( asyncRes )) {
+        //        //await asyncDraw( gg, clientRectangle, clipRectangle );,
+        //        await Task.Run( () => {
+        //            doDraw( gg, clientRectangle, clipRectangle );
+        //        } );
 
-            }
+        //    }
 
-            lock (asyncRes) {
-                caller.BeginInvoke( (MethodInvoker)(() => {
-                    lock (asyncRes) {
-                        g.DrawImage( new Bitmap( asyncRes ), 0, 0 );
-                    }
-                }) );
-            }
+        //    lock (asyncRes) {
+        //        caller.BeginInvoke( (MethodInvoker)(() => {
+        //            lock (asyncRes) {
+        //                g.DrawImage( new Bitmap( asyncRes ), 0, 0 );
+        //            }
+        //        }) );
+        //    }
 
-        }
+        //}
         //private async void asyncDraw( Graphics gg, Rectangle clientRectangle, Rectangle clipRectangle ) {
 
         //}
