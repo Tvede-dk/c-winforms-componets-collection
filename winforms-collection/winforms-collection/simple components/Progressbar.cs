@@ -593,6 +593,7 @@ namespace winforms_collection.simple_components {
             public void modifySize( ref Rectangle newSize ) {
                 return;
             }
+
         }
 
         #endregion

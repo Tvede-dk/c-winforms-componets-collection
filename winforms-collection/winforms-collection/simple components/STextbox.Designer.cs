@@ -13,6 +13,9 @@
             if ( disposing && (components != null) ) {
                 components.Dispose();
             }
+            if ( _placeHolderBrush != null ) {
+                _placeHolderBrush.Dispose();
+            }
             base.Dispose( disposing );
         }
 

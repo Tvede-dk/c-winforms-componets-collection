@@ -57,10 +57,10 @@ namespace winforms_collection.advanced.Graph {
 
         protected override void OnMouseMove( MouseEventArgs e ) {
             base.OnMouseMove( e );
-            if ( IsMouseInside() ) {
-                back.translateX = e.X;
-                Invalidate();
-            }
+            //if ( IsMouseInside() ) {
+            //    back.translateX = e.X;
+            //    Invalidate();
+            //}
         }
     }
 }

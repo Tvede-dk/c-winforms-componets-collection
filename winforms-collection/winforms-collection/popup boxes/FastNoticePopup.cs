@@ -28,17 +28,17 @@ namespace winforms_collection {
         }
 
         private void handleLocation( Form parrent ) {
-            //parrent.handleRemoteInvoke( () => {
+            parrent.handleRemoteInvoke( () => {
+                Screen parrentScreen = Screen.FromControl( parrent );
+                this.handleRemoteInvoke( () => {
 
-            this.handleRemoteInvoke( () => {
-                Screen thisScreen = Screen.FromControl( parrent );
-                Rectangle screen = thisScreen.Bounds;
-                Rectangle work = thisScreen.WorkingArea;
-                this.Top = (work.Bottom - (this.Height * 2) - 25) - 50;
-                this.Left = work.Right - (screen.Width / 2) - (this.Width / 2);
-                int nTaskBarHeight = screen.Bottom - thisScreen.WorkingArea.Bottom;
+                    Rectangle screen = parrentScreen.Bounds;
+                    Rectangle work = parrentScreen.WorkingArea;
+                    this.Top = (work.Bottom - (this.Height * 2) - 25) - 50;
+                    this.Left = work.Right - (screen.Width / 2) - (this.Width / 2);
+                    int nTaskBarHeight = screen.Bottom - parrentScreen.WorkingArea.Bottom;
+                } );
             } );
-            //} );
         }
 
 
