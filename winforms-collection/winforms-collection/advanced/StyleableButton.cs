@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace winforms_collection.advanced {
-    public class StyleableButton : CustomControl {
+    public class StyleableButton : CustomControl, IButtonControl {
 
         private TriangularShapeBackground backLayer = new TriangularShapeBackground() { endColor = Color.CadetBlue, startColor = Color.BlueViolet };
 
@@ -72,6 +72,19 @@ namespace winforms_collection.advanced {
 
         private HighlightOverlay overlay;
 
+        protected override void OnGotFocus(EventArgs e)
+        {
+            base.OnGotFocus(e);
+            overlay = SharedAnimations.Highlight(this, 0.1f, 100, Brushes.Blue);
+        }
+
+        protected override void OnLostFocus(EventArgs e)
+        {
+            base.OnLostFocus(e);
+            overlay.FadeOut(50, () => { overlay.Dispose(); });
+        }
+
+
         protected override void OnMouseDown( MouseEventArgs e ) {
             base.OnMouseDown( e );
             //make an "insert" effect.
@@ -89,6 +102,19 @@ namespace winforms_collection.advanced {
             }
         }
 
+        public void NotifyDefault(bool value)
+        {
+            if (value)
+            {
+
+            }
+        }
+
+        public void PerformClick()
+        {
+            OnClick(new EventArgs());
+        }
+
         public override Color ForeColor {
             get {
                 return base.ForeColor;
@@ -100,5 +126,6 @@ namespace winforms_collection.advanced {
             }
         }
 
+        public DialogResult DialogResult { get;set;}
     }
 }

@@ -11,7 +11,7 @@ namespace SharedFunctionalities.drawing.layers {
         private Pen borderPen;
 
         #region property BorderColor
-        private Color _BorderColor;
+        private Color _BorderColor = Color.Black;
 
         public Color BorderColor {
             get { return _BorderColor; }
@@ -28,13 +28,15 @@ namespace SharedFunctionalities.drawing.layers {
         }
 
         #region property BorderSize
-        private int _BorderSize;
+        private int _BorderSize = 10;
 
         ~BorderLayer() {
             if ( borderPen != null ) {
                 borderPen.Dispose();
             }
         }
+
+
 
         public int BorderSize {
             get { return _BorderSize; }
@@ -45,7 +47,7 @@ namespace SharedFunctionalities.drawing.layers {
 
         public override void doDraw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
             if ( borderPen == null ) {
-                borderPen = new Pen( Brushes.Black, (float)BorderSize );
+                borderPen = new Pen( BorderColor, (float)BorderSize );
             }
             Rectangle rec = wholeComponent.CalculateBorder( BorderSize );
             g.DrawRectangle( borderPen, rec );

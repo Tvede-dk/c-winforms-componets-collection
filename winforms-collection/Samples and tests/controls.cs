@@ -13,9 +13,9 @@ namespace Samples_and_tests {
         public controls() {
             InitializeComponent();
                 
-            simpleList1.onAdd( new Func<string>( () => { return "swag"; } ) );
-            simpleList1.onEdit( new Func<string, string>( ( string str ) => { return str + "- yolo"; } ) );
-            simpleList1.onRemove<string>( new Action<string>( ( string st ) => { MessageBox.Show( "Test of " + st ); } ) );
+            //simpleList1.onAdd( new Func<string>( () => { return "swag"; } ) );
+            //simpleList1.onEdit( new Func<string, string>( ( string str ) => { return str + "- yolo"; } ) );
+            //simpleList1.onRemove<string>( new Action<string>( ( string st ) => { MessageBox.Show( "Test of " + st ); } ) );
         }
         
     }

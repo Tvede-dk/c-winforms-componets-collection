@@ -73,7 +73,7 @@ namespace SharedFunctionalities.drawing.layers {
 
         public TextBaseLayer() {
             stringFormat = StringFormat.GenericDefault;
-            displayBrush = Brushes.Black;
+            displayBrush = new SolidBrush(Color.Black);
         }
 
         public override void doDraw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {

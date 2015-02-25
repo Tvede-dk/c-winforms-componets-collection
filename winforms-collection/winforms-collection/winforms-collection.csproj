@@ -103,6 +103,7 @@
     <Compile Include="popup boxes\FastNoticePopup.Designer.cs">
       <DependentUpon>FastNoticePopup.cs</DependentUpon>
     </Compile>
+    <Compile Include="popup boxes\FormDialogExtensions.cs" />
     <Compile Include="popup boxes\NotificationBar.cs">
       <SubType>Form</SubType>
     </Compile>

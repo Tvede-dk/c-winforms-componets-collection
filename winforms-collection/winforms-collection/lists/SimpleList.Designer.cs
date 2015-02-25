@@ -1,4 +1,6 @@
-﻿namespace winforms_collection {
+﻿using System;
+
+namespace winforms_collection {
     partial class SimpleList {
         /// <summary> 
         /// Required designer variable.
@@ -15,6 +17,10 @@
             }
             base.Dispose( disposing );
         }
+
+      
+
+
 
         #region Component Designer generated code
 
@@ -132,6 +138,7 @@
             this.simpleListControl1.Size = new System.Drawing.Size(287, 311);
             this.simpleListControl1.TabIndex = 2;
             this.simpleListControl1.UseCompatibleStateImageBehavior = false;
+            this.simpleListControl1.View = System.Windows.Forms.View.List;
             this.simpleListControl1.SelectedIndexChanged += new System.EventHandler(this.simpleListControl1_SelectedIndexChanged);
             // 
             // label1
