@@ -75,20 +75,20 @@ namespace winforms_collection.advanced {
         protected override void OnGotFocus(EventArgs e)
         {
             base.OnGotFocus(e);
-            overlay = SharedAnimations.Highlight(this, 0.1f, 100, Brushes.Blue);
+            overlay = SharedAnimations.Highlight(this, 0.1f, 50, Brushes.Blue);
         }
 
         protected override void OnLostFocus(EventArgs e)
         {
             base.OnLostFocus(e);
-            overlay.FadeOut(50, () => { overlay.Dispose(); });
+            overlay.FadeOut(0, () => { overlay.Dispose(); });
         }
 
 
         protected override void OnMouseDown( MouseEventArgs e ) {
             base.OnMouseDown( e );
             //make an "insert" effect.
-            overlay = SharedAnimations.Highlight( this, 0.5f, 100, Brushes.White );
+            overlay = SharedAnimations.Highlight( this, 0.4f, 100, Brushes.White );
         }
         protected override void OnMouseUp( MouseEventArgs e ) {
             base.OnMouseUp( e );

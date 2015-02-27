@@ -21,7 +21,13 @@ namespace winforms_collection
         #region event handlers
 
 
-        public void addData<T>(T dataObj)
+        public void SetData<T>(IEnumerable<T> dataLst)
+        {
+            Clear();
+            AddData(dataLst);
+        }
+
+        public void AddData<T>(T dataObj)
         {
             data.Add(dataObj);
             if (onRenderCallback != null)
@@ -31,6 +37,15 @@ namespace winforms_collection
             }
 
         }
+
+        public void AddData<T>(IEnumerable<T> dataLst)
+        {
+            foreach (var item in dataLst)
+            {
+                AddData(item);
+            }
+        }
+
 
         public void removeAt(int index)
         {
@@ -123,6 +138,27 @@ namespace winforms_collection
             return new ListViewItem(obj.ToString());
         };
 
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            if (Width < 280) { //approx 
+                button1.Text = "";
+                button1.ImageAlign = ContentAlignment.MiddleCenter;
+                button3.Text = "";
+                button3.ImageAlign = ContentAlignment.MiddleCenter;
+                button4.Text = "";
+                button4.ImageAlign = ContentAlignment.MiddleCenter;
+            } else {
+                button1.Text = "Add";
+                button1.ImageAlign = ContentAlignment.MiddleLeft;
+                button3.Text = "Remove";
+                button3.ImageAlign = ContentAlignment.MiddleLeft;
+                button4.Text = "Edit";
+                button4.ImageAlign = ContentAlignment.MiddleLeft;
+            }
+        }
+
         #region property title
         private String _title;
 
@@ -145,6 +181,16 @@ namespace winforms_collection
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Clears the data in this list. 
+        /// </summary>
+        public void Clear()
+        {
+            data.Clear();
+            selectedObject = null;
+            simpleListControl1.Clear();
+        }
+
         [EditorBrowsable]
         [DefaultValue(View.List)]
         [Description("The way the listview gets rendered")]
@@ -160,6 +206,7 @@ namespace winforms_collection
             }
         }
 
+        #region events / click handlers internal 
         private void simpleListControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (simpleListControl1.SelectedItems.Count == 1)
@@ -191,6 +238,8 @@ namespace winforms_collection
             }
         }
 
+
+
         private void button1_Click(object sender, EventArgs e)
         {
             if (onAddCallback != null)
@@ -198,5 +247,6 @@ namespace winforms_collection
                 onAddCallback();
             }
         }
+        #endregion
     }
 }

@@ -55,7 +55,7 @@ namespace winforms_collection {
             this.listContainer1.Location = new System.Drawing.Point(0, 0);
             this.listContainer1.minSplitHeight = 0;
             this.listContainer1.Name = "listContainer1";
-            this.listContainer1.Size = new System.Drawing.Size(287, 395);
+            this.listContainer1.Size = new System.Drawing.Size(280, 395);
             this.listContainer1.SplitHeight = 0;
             this.listContainer1.TabIndex = 0;
             // 
@@ -65,7 +65,7 @@ namespace winforms_collection {
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 343);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(287, 52);
+            this.panel1.Size = new System.Drawing.Size(280, 52);
             this.panel1.TabIndex = 3;
             // 
             // listContainer2
@@ -80,7 +80,7 @@ namespace winforms_collection {
             this.listContainer2.Location = new System.Drawing.Point(0, 0);
             this.listContainer2.minSplitHeight = 0;
             this.listContainer2.Name = "listContainer2";
-            this.listContainer2.Size = new System.Drawing.Size(287, 52);
+            this.listContainer2.Size = new System.Drawing.Size(280, 52);
             this.listContainer2.SplitHeight = 3;
             this.listContainer2.TabIndex = 6;
             // 
@@ -89,10 +89,10 @@ namespace winforms_collection {
             this.button1.Dock = System.Windows.Forms.DockStyle.Left;
             this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
             this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.Location = new System.Drawing.Point(190, 0);
-            this.button1.MinimumSize = new System.Drawing.Size(50, 0);
+            this.button1.Location = new System.Drawing.Point(186, 0);
+            this.button1.MinimumSize = new System.Drawing.Size(45, 0);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(95, 52);
+            this.button1.Size = new System.Drawing.Size(93, 52);
             this.button1.TabIndex = 6;
             this.button1.Text = "Add";
             this.button1.UseVisualStyleBackColor = true;
@@ -103,10 +103,10 @@ namespace winforms_collection {
             this.button4.Dock = System.Windows.Forms.DockStyle.Left;
             this.button4.Image = global::winforms_collection.Properties.Resources.pencil;
             this.button4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button4.Location = new System.Drawing.Point(95, 0);
-            this.button4.MinimumSize = new System.Drawing.Size(70, 0);
+            this.button4.Location = new System.Drawing.Point(93, 0);
+            this.button4.MinimumSize = new System.Drawing.Size(45, 0);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(95, 52);
+            this.button4.Size = new System.Drawing.Size(93, 52);
             this.button4.TabIndex = 7;
             this.button4.Text = "Edit";
             this.button4.UseVisualStyleBackColor = true;
@@ -118,9 +118,9 @@ namespace winforms_collection {
             this.button3.Image = ((System.Drawing.Image)(resources.GetObject("button3.Image")));
             this.button3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button3.Location = new System.Drawing.Point(0, 0);
-            this.button3.MinimumSize = new System.Drawing.Size(90, 0);
+            this.button3.MinimumSize = new System.Drawing.Size(45, 0);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(95, 52);
+            this.button3.Size = new System.Drawing.Size(93, 52);
             this.button3.TabIndex = 8;
             this.button3.Text = "  Remove";
             this.button3.UseVisualStyleBackColor = true;
@@ -135,7 +135,7 @@ namespace winforms_collection {
             this.simpleListControl1.MultiSelect = false;
             this.simpleListControl1.Name = "simpleListControl1";
             this.simpleListControl1.ShowItemToolTips = true;
-            this.simpleListControl1.Size = new System.Drawing.Size(287, 311);
+            this.simpleListControl1.Size = new System.Drawing.Size(280, 311);
             this.simpleListControl1.TabIndex = 2;
             this.simpleListControl1.UseCompatibleStateImageBehavior = false;
             this.simpleListControl1.View = System.Windows.Forms.View.List;
@@ -147,7 +147,7 @@ namespace winforms_collection {
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(287, 32);
+            this.label1.Size = new System.Drawing.Size(280, 32);
             this.label1.TabIndex = 1;
             this.label1.Text = "TITEL";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -158,7 +158,7 @@ namespace winforms_collection {
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.listContainer1);
             this.Name = "SimpleList";
-            this.Size = new System.Drawing.Size(287, 395);
+            this.Size = new System.Drawing.Size(280, 395);
             this.listContainer1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.listContainer2.ResumeLayout(false);
@@ -166,9 +166,11 @@ namespace winforms_collection {
 
         }
 
+        
+
         #endregion
 
-		private containers.ListContainer listContainer1;
+        private containers.ListContainer listContainer1;
 		private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel1;
         private containers.ListContainer listContainer2;
