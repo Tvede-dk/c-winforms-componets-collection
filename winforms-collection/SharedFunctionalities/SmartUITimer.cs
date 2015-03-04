@@ -21,7 +21,7 @@ namespace SharedFunctionalities {
 
 
         private void handleInvoke(Action<object , ElapsedEventArgs , SmartTimer> act , object sender , ElapsedEventArgs e , SmartTimer timer) {
-            if (ui.IsHandleCreated && !ui.IsDisposed) {
+            if (isFormAccessiable()) {
                 if (ui.InvokeRequired) {
                     ui.BeginInvoke((MethodInvoker) (() => { act.Invoke(sender , e , timer); }));
                 } else {
@@ -30,8 +30,16 @@ namespace SharedFunctionalities {
             }
         }
 
+        private bool isFormAccessiable() {
+            if (ui == null || ui.Disposing || ui.IsDisposed || (!ui.IsHandleCreated)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
         private void handleInvoke(Action act) {
-            if (act == null || ui.Disposing || ui.IsDisposed || (!ui.IsHandleCreated)) {
+            if (!isFormAccessiable() || act == null) {
                 return;
             }
             if (ui.InvokeRequired) {
