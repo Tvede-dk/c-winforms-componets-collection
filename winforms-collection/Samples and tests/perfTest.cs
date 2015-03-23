@@ -16,7 +16,7 @@ namespace Samples_and_tests {
             InitializeComponent();
         }
 
-        private void perfTest_Load( object sender, EventArgs e ) {
+        private void perfTest_Load(object sender, EventArgs e) {
             //SmartUITimer timer = new SmartUITimer( this );
             //timer.repeate = true;
             //timer.counter = this.Width;
@@ -25,13 +25,17 @@ namespace Samples_and_tests {
             //timer.start( ( object obj, System.Timers.ElapsedEventArgs args, SmartTimer st ) => {
             //    this.Width++;
             //}, () => { } );
-            //SmartUITimer timer = new SmartUITimer( this );
-            //timer.repeate = true;
-            //timer.counter = 200;
-            //timer.interval = 20;
-            //timer.start( ( object obj, System.Timers.ElapsedEventArgs args, SmartTimer st ) => {
-            //    graphComponent1.spaceBetween += 2;
-            //}, () => { } );
+            SmartUITimer timer = new SmartUITimer(this);
+            timer.repeate = true;
+            timer.counter = 280;
+            timer.interval = 8;
+            timer.start((object obj, System.Timers.ElapsedEventArgs args, SmartTimer st) => {
+                graphComponent1.spaceBetween += 1;
+            }, () => { });
+        }
+
+        private void graphComponent1_Click(object sender, EventArgs e) {
+
         }
     }
 }

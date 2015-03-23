@@ -28,17 +28,17 @@
             // 
             // graphComponent1
             // 
-            this.graphComponent1.BorderColor = System.Drawing.Color.Empty;
-            this.graphComponent1.BorderSize = 0;
-            this.graphComponent1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.graphComponent1.BorderColor = System.Drawing.Color.Black;
+            this.graphComponent1.BorderSize = 10;
             this.graphComponent1.FlashBorderColorStart = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(74)))), ((int)(((byte)(178)))));
             this.graphComponent1.FlashBorderOnMouseOver = false;
-            this.graphComponent1.Location = new System.Drawing.Point(0, 0);
+            this.graphComponent1.Location = new System.Drawing.Point(12, 12);
             this.graphComponent1.Name = "graphComponent1";
-            this.graphComponent1.Size = new System.Drawing.Size(1010, 398);
+            this.graphComponent1.Size = new System.Drawing.Size(986, 374);
             this.graphComponent1.spaceBetween = 75;
-            this.graphComponent1.TabIndex = 1;
+            this.graphComponent1.TabIndex = 0;
             this.graphComponent1.Text = "graphComponent1";
+            this.graphComponent1.Click += new System.EventHandler(this.graphComponent1_Click);
             // 
             // perfTest
             // 
@@ -54,6 +54,7 @@
         }
 
         #endregion
+
         private winforms_collection.advanced.Graph.GraphComponent graphComponent1;
     }
 }
