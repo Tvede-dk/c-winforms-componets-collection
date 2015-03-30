@@ -11,14 +11,15 @@ namespace winforms_collection {
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose( bool disposing ) {
-            if ( disposing && (components != null) ) {
+        protected override void Dispose(bool disposing) {
+            if (disposing && (components != null)) {
                 components.Dispose();
             }
-            base.Dispose( disposing );
+            base.Dispose(disposing);
         }
 
-      
+
+
 
 
 
@@ -166,12 +167,12 @@ namespace winforms_collection {
 
         }
 
-        
+
 
         #endregion
 
         private containers.ListContainer listContainer1;
-		private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel1;
         private containers.ListContainer listContainer2;
         private System.Windows.Forms.Button button1;

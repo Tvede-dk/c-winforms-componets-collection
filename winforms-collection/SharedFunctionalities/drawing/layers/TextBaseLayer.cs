@@ -20,7 +20,7 @@ namespace SharedFunctionalities.drawing.layers {
         public Brush displayBrush {
             get { return _displayBrush; }
             set {
-                if ( _displayBrush != null ) {
+                if (_displayBrush != null) {
                     _displayBrush.Dispose();
                 }
                 _displayBrush = value;
@@ -76,12 +76,12 @@ namespace SharedFunctionalities.drawing.layers {
             displayBrush = new SolidBrush(Color.Black);
         }
 
-        public override void doDraw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
+        public override void doDraw(Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect) {
             //the following is NESSARY for transperant backgrounds, which we always want..
             //TextRender is slower (on my machine), this seems odd, but then again, windows 10 <3
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
-            g.DrawString( Text, font, displayBrush, wholeComponent, stringFormat );
+            g.DrawString(Text, font, displayBrush, wholeComponent, stringFormat);
         }
 
 
@@ -93,7 +93,7 @@ namespace SharedFunctionalities.drawing.layers {
             return false;
         }
 
-        public override void modifySize( ref Rectangle newSize ) {
+        public override void modifySize(ref Rectangle newSize) {
             return;
         }
     }

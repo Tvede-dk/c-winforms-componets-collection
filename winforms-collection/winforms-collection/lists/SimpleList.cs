@@ -21,7 +21,7 @@ namespace winforms_collection {
 
         public void SetData<T>(IEnumerable<T> dataLst) {
             Clear();
-            AddData(dataLst);
+            AddDataCollection(dataLst);
         }
 
         public void AddData<T>(T dataObj) {
@@ -52,6 +52,22 @@ namespace winforms_collection {
             if (onEditCallback != null) {
                 onEditCallback(obj, v);
             }
+        }
+
+
+        private Action<object, int> onSelectionChangedCallback;
+
+        public void OnSelection<T>(Action<T, int> callback) {
+            onSelectionChangedCallback = (object obj, int index) => { callback((T)obj, index); };
+            simpleListControl1.ItemSelectionChanged += onChanged;
+
+        }
+
+        private void onChanged(object sender, System.Windows.Forms.ListViewItemSelectionChangedEventArgs e) {
+            if (onSelectionChangedCallback != null) {
+                onSelectionChangedCallback(data[e.ItemIndex], e.ItemIndex);
+            }
+
         }
 
 

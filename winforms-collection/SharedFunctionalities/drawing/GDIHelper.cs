@@ -13,18 +13,18 @@ public static class GDIHelper {
     [DllImport("gdi32.dll", EntryPoint = "SelectObject")]
     public static extern System.IntPtr SelectObject(
         [In()] System.IntPtr hdc,
-        [In()] System.IntPtr h );
+        [In()] System.IntPtr h);
 
     [DllImport("gdi32.dll", EntryPoint = "DeleteObject")]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static extern bool DeleteObject(
-        [In()] System.IntPtr ho );
+        [In()] System.IntPtr ho);
 
     [DllImport("gdi32.dll", EntryPoint = "BitBlt")]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static extern bool BitBlt(
         [In()] System.IntPtr hdc, int x, int y, int cx, int cy,
-        [In()] System.IntPtr hdcSrc, int x1, int y1, uint rop );
+        [In()] System.IntPtr hdcSrc, int x1, int y1, uint rop);
 
 
     //public static void bitblt( this Graphics grSrc, Graphics grDest, int width, int height ) {
@@ -51,9 +51,9 @@ public static class GDIHelper {
     //    Console.WriteLine( "bitblt:{0}", sw.Elapsed.TotalMilliseconds );
     //}
 
-    public static void bitbltRepeat( this Bitmap bmp, Graphics grDest, int desiredWith, int desiredHeight, int offsetX = 0, int offsetY = 0 ) {
+    public static void bitbltRepeat(this Bitmap bmp, Graphics grDest, int desiredWith, int desiredHeight, int offsetX = 0, int offsetY = 0) {
 
-        using (Graphics grSrc = Graphics.FromImage( bmp )) {
+        using (Graphics grSrc = Graphics.FromImage(bmp)) {
             IntPtr hdcDest = IntPtr.Zero;
             IntPtr hdcSrc = IntPtr.Zero;
             IntPtr hBitmap = IntPtr.Zero;
@@ -62,20 +62,20 @@ public static class GDIHelper {
                 hdcDest = grDest.GetHdc();
                 hdcSrc = grSrc.GetHdc();
                 hBitmap = bmp.GetHbitmap();
-                hOldObject = SelectObject( hdcSrc, hBitmap );
-                if ( hOldObject == IntPtr.Zero )
+                hOldObject = SelectObject(hdcSrc, hBitmap);
+                if (hOldObject == IntPtr.Zero)
                     throw new Win32Exception();
 
 
 
-                for ( int i = 0; i < (desiredHeight / bmp.Height) + 1; i++ ) {
+                for (int i = 0; i < Math.Ceiling(desiredHeight / (double)bmp.Height) + 1; i++) {
                     //    BitBlt( hdcDest, 0, bmp.Height * i, bmp.Width, bmp.Height,
                     //hdcSrc, 0, 0, 0x00CC0020U );
                     //   BitBlt( hdcDest, 0, bmp.Height * i, bmp.Width, bmp.Height,
                     //hdcSrc, 0, 0, 0x00CC0020U );
-                    for ( int j = 0; j < (desiredWith / bmp.Width); j++ ) {
-                        BitBlt( hdcDest, bmp.Width * j, bmp.Height * i, bmp.Width, bmp.Height,
-                        hdcSrc, 0, 0, 0x00CC0020U );
+                    for (int j = 0; j < Math.Ceiling(desiredWith / (double)bmp.Width); j++) {
+                        BitBlt(hdcDest, bmp.Width * j, bmp.Height * i, bmp.Width, bmp.Height,
+                        hdcSrc, 0, 0, 0x00CC0020U);
                     }
                     //BitBlt( hdcDest, bmp.Width * (desiredWith / bmp.Width) + 1, bmp.Height * i, bmp.Width, bmp.Height,
                     //hdcSrc, 0, 0, 0x00CC0020U );
@@ -85,10 +85,14 @@ public static class GDIHelper {
                 //    hdcSrc, 0, 0, 0x00CC0020U ) )
                 //    throw new Win32Exception();
             } finally {
-                if ( hOldObject != IntPtr.Zero ) SelectObject( hdcSrc, hOldObject );
-                if ( hBitmap != IntPtr.Zero ) DeleteObject( hBitmap );
-                if ( hdcDest != IntPtr.Zero ) grDest.ReleaseHdc( hdcDest );
-                if ( hdcSrc != IntPtr.Zero ) grSrc.ReleaseHdc( hdcSrc );
+                if (hOldObject != IntPtr.Zero)
+                    SelectObject(hdcSrc, hOldObject);
+                if (hBitmap != IntPtr.Zero)
+                    DeleteObject(hBitmap);
+                if (hdcDest != IntPtr.Zero)
+                    grDest.ReleaseHdc(hdcDest);
+                if (hdcSrc != IntPtr.Zero)
+                    grSrc.ReleaseHdc(hdcSrc);
             }
         }
 

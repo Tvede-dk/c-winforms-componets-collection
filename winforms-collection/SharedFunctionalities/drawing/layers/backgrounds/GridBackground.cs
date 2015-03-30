@@ -59,15 +59,16 @@ namespace SharedFunctionalities.drawing.layers.backgrounds {
             watch.Start();
             Rectangle newRec = wholeComponent;
             int maxVal = Math.Max(wholeComponent.Width, wholeComponent.Height);
-            if ((SpaceBetween / maxVal) <= 16) {
-                wholeComponent = drawUsingBitblt(g, newRec); //TODO make it into lines drawing.
+            if ((maxVal / SpaceBetween) <= 16) {
+                g.Clear(Color.White);
+                drawGridOnGraphics(g, wholeComponent.Width, wholeComponent.Height);
                 //draw the lines ourself.
             } else {
                 wholeComponent = drawUsingBitblt(g, newRec);
             }
             watch.Stop();
             Console.WriteLine("time is:" + watch.Elapsed.TotalMilliseconds + "ms");
-            
+
 
         }
 
@@ -75,7 +76,6 @@ namespace SharedFunctionalities.drawing.layers.backgrounds {
             Bitmap pattern = createPattern();
             pattern.bitbltRepeat(g, wholeComponent.Width, wholeComponent.Height);
             pattern.Dispose();
-            //g.TranslateClip( translateX, 0 );
             return wholeComponent;
         }
 
@@ -92,24 +92,31 @@ namespace SharedFunctionalities.drawing.layers.backgrounds {
             #endregion
             int totalSize = (preFactor * SpaceBetween) - ((SpaceBetween * SpaceBetween) / divisionFactor);
             totalSize = totalSize - (totalSize % SpaceBetween);
-            totalSize = Math.Max(totalSize, SpaceBetween * 1);
+            totalSize = Math.Max(totalSize, SpaceBetween);
             Bitmap pattern = new Bitmap((int)((totalSize)), (int)((totalSize)), PixelFormat.Format32bppPArgb);
             using (var gg = Graphics.FromImage(pattern)) {
+
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                Pen blackPen = new Pen(Color.Black, lineSize);
-                for (int i = 0; i < totalSize / SpaceBetween; i++) {
-                    gg.DrawLine(Pens.Black, 0, SpaceBetween * i, pattern.Width, SpaceBetween * i);
-                }
-                for (int i = 0; i < totalSize / SpaceBetween; i++) {
-                    gg.DrawLine(Pens.Black, SpaceBetween * i, 0, SpaceBetween * i, pattern.Height);
-                }
+                gg.Clear(Color.White);
+                drawGridOnGraphics(gg, totalSize, totalSize);
 
                 sw.Stop();
                 Console.WriteLine("time for making pattern:" + sw.Elapsed.TotalMilliseconds);
             }
 
             return pattern;
+        }
+
+        private void drawGridOnGraphics(Graphics gg, int width, int height) {
+
+            Pen blackPen = new Pen(Color.Black, lineSize);
+            for (int i = 0; i < Math.Ceiling((double)height / (double)SpaceBetween); i++) {
+                gg.DrawLine(Pens.Black, 0, SpaceBetween * i, width, SpaceBetween * i);
+            }
+            for (int i = 0; i < Math.Ceiling((double)width / (double)SpaceBetween); i++) {
+                gg.DrawLine(Pens.Black, SpaceBetween * i, 0, SpaceBetween * i, height);
+            }
         }
 
         public override void modifySize(ref Rectangle newSize) {
