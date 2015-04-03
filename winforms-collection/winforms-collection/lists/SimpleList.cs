@@ -54,6 +54,9 @@ namespace winforms_collection {
             }
         }
 
+        public List<T> GetData<T>() {
+            return data.Cast<T>().ToList();
+        }
 
         private Action<object, int> onSelectionChangedCallback;
 

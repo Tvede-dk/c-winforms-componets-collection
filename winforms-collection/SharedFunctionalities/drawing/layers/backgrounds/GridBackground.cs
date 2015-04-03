@@ -62,14 +62,11 @@ namespace SharedFunctionalities.drawing.layers.backgrounds {
             if ((maxVal / SpaceBetween) <= 16) {
                 g.Clear(Color.White);
                 drawGridOnGraphics(g, wholeComponent.Width, wholeComponent.Height);
-                //draw the lines ourself.
             } else {
                 wholeComponent = drawUsingBitblt(g, newRec);
             }
             watch.Stop();
             Console.WriteLine("time is:" + watch.Elapsed.TotalMilliseconds + "ms");
-
-
         }
 
         private Rectangle drawUsingBitblt(Graphics g, Rectangle wholeComponent) {
@@ -104,7 +101,6 @@ namespace SharedFunctionalities.drawing.layers.backgrounds {
                 sw.Stop();
                 Console.WriteLine("time for making pattern:" + sw.Elapsed.TotalMilliseconds);
             }
-
             return pattern;
         }
 
