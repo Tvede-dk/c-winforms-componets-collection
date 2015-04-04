@@ -48,7 +48,9 @@
             this.ClientSize = new System.Drawing.Size(1260, 816);
             this.Controls.Add(this.graphComponent1);
             this.Name = "perfTest";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "5";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.perfTest_Load);
             this.ResumeLayout(false);
 

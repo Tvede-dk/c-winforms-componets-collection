@@ -10,7 +10,6 @@ using System.Windows.Forms;
 
 namespace winforms_collection {
     public partial class SimpleList : UserControl {
-
         private ListViewItem selectedObject;
 
 

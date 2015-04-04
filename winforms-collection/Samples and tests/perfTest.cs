@@ -27,11 +27,11 @@ namespace Samples_and_tests {
             //}, () => { } );
             SmartUITimer timer = new SmartUITimer(this);
             timer.repeate = true;
-            timer.counter = 280;
+            timer.counter = 250;
             timer.interval = 8;
             timer.start((object obj, System.Timers.ElapsedEventArgs args, SmartTimer st) => {
                 graphComponent1.spaceBetween += 1;
-            }, () => { });
+            }, () => { Dispose(); });
         }
 
         private void graphComponent1_Click(object sender, EventArgs e) {

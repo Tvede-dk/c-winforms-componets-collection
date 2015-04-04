@@ -59,14 +59,16 @@ namespace SharedFunctionalities.drawing.layers.backgrounds {
             watch.Start();
             Rectangle newRec = wholeComponent;
             int maxVal = Math.Max(wholeComponent.Width, wholeComponent.Height);
-            if ((maxVal / SpaceBetween) <= 16) {
-                g.Clear(Color.White);
-                drawGridOnGraphics(g, wholeComponent.Width, wholeComponent.Height);
-            } else {
+            //if ((maxVal / SpaceBetween) <= 16) {
+            //    g.Clear(Color.White);
+            //    drawGridOnGraphics(g, wholeComponent.Width, wholeComponent.Height);
+            //} else {
                 wholeComponent = drawUsingBitblt(g, newRec);
-            }
+            //}
             watch.Stop();
-            Console.WriteLine("time is:" + watch.Elapsed.TotalMilliseconds + "ms");
+            if (watch.Elapsed.TotalMilliseconds > 1) {
+                Console.WriteLine("time is:" + watch.Elapsed.TotalMilliseconds + "ms");
+            }
         }
 
         private Rectangle drawUsingBitblt(Graphics g, Rectangle wholeComponent) {
