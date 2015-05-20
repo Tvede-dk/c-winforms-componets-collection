@@ -17,6 +17,7 @@ namespace winforms_collection {
 
         #region event handlers
 
+        private Object lastAdded;
 
         public void SetData<T>(IEnumerable<T> dataLst) {
             Clear();
@@ -25,6 +26,7 @@ namespace winforms_collection {
 
         public void AddData<T>(T dataObj) {
             data.Add(dataObj);
+            lastAdded = dataObj;
             if (onRenderCallback != null) {
                 ListViewItem lvi = onRenderCallback((T)dataObj);
                 simpleListControl1.Items.Add(lvi);
@@ -77,6 +79,7 @@ namespace winforms_collection {
             bool addedInstead = false;
             if (data.Count == 0 || index < 0 || index > data.Count) {
                 data.Add(newObj);
+                lastAdded = newObj;
                 addedInstead = true;
                 index = data.Count - 1;
             } else {
@@ -223,5 +226,10 @@ namespace winforms_collection {
             }
         }
         #endregion
+
+
+        public T GetLastAdded<T>() {
+            return (T)lastAdded;
+        }
     }
 }

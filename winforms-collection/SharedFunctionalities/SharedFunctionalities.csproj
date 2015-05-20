@@ -62,6 +62,7 @@
     <Compile Include="CustomControl.cs">
       <SubType>component</SubType>
     </Compile>
+    <Compile Include="DragDrop\DragDropHandler.cs" />
     <Compile Include="drawing\DrawingHandler.cs" />
     <Compile Include="drawing\GDIHelper.cs" />
     <Compile Include="drawing\IDrawMethod.cs" />
