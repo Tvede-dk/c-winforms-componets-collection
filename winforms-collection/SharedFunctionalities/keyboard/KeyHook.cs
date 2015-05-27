@@ -18,7 +18,7 @@ namespace SharedFunctionalities.keyboard {
         /// <param name="threadId">The thread you want to attach the event to, can be null</param>
         /// <returns>a handle to the desired hook</returns>
         [DllImport("user32.dll")]
-        static extern IntPtr SetWindowsHookEx( int idHook, keyboardHookProc callback, IntPtr hInstance, uint threadId );
+        static extern IntPtr SetWindowsHookEx(int idHook, keyboardHookProc callback, IntPtr hInstance, uint threadId);
 
         /// <summary>
         /// Unhooks the windows hook.
@@ -26,7 +26,7 @@ namespace SharedFunctionalities.keyboard {
         /// <param name="hInstance">The hook handle that was returned from SetWindowsHookEx</param>
         /// <returns>True if successful, false otherwise</returns>
         [DllImport("user32.dll")]
-        static extern bool UnhookWindowsHookEx( IntPtr hInstance );
+        static extern bool UnhookWindowsHookEx(IntPtr hInstance);
 
         /// <summary>
         /// Calls the next hook.
@@ -37,7 +37,7 @@ namespace SharedFunctionalities.keyboard {
         /// <param name="lParam">The lparam.</param>
         /// <returns></returns>
         [DllImport("user32.dll")]
-        static extern int CallNextHookEx( IntPtr idHook, int nCode, int wParam, ref keyboardHookStruct lParam );
+        static extern int CallNextHookEx(IntPtr idHook, int nCode, int wParam, ref keyboardHookStruct lParam);
 
         /// <summary>
         /// Loads the library.
@@ -45,7 +45,16 @@ namespace SharedFunctionalities.keyboard {
         /// <param name="lpFileName">Name of the library</param>
         /// <returns>A handle to the library</returns>
         [DllImport("kernel32.dll")]
-        static extern IntPtr LoadLibrary( string lpFileName );
+        static extern IntPtr LoadLibrary(string lpFileName);
+
+
+        private const int VK_SHIFT = 0x10;
+        private const int VK_CONTROL = 0x11;
+        private const int VK_MENU = 0x12;
+        private const int VK_CAPITAL = 0x14;
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        public static extern short GetKeyState(int keyCode);
         #endregion
 
 
@@ -53,7 +62,7 @@ namespace SharedFunctionalities.keyboard {
         /// <summary>
         /// defines the callback type for the hook
         /// </summary>
-        public delegate int keyboardHookProc( int code, int wParam, ref keyboardHookStruct lParam );
+        public delegate int keyboardHookProc(int code, int wParam, ref keyboardHookStruct lParam);
 
         public struct keyboardHookStruct {
             public int vkCode;
@@ -72,21 +81,15 @@ namespace SharedFunctionalities.keyboard {
 
         #region Instance Variables
 
-        #region property WatchingKeys
-        private List<Keys> _WatchingKeys;
 
-
-        public List<Keys> WatchingKeys {
-            get { return _WatchingKeys; }
-            set {
-                _WatchingKeys = value;
-                reHook();
-            }
-        }
-
-        public void addHook( Keys k, Action onKey ) {
+        public void addHook(Keys k, Action onKey) {
+            keyToAction.Add(k, onKey);
 
         }
+
+        private Dictionary<Keys, Action> keyToAction = new Dictionary<Keys, Action>();
+
+        private keyboardHookProc callback;
 
 
 
@@ -94,7 +97,6 @@ namespace SharedFunctionalities.keyboard {
             unhook();
             hook();
         }
-        #endregion
 
         /// <summary>
         /// Handle to the hook, need this to unhook and call the next hook
@@ -106,6 +108,9 @@ namespace SharedFunctionalities.keyboard {
 
 
 
+        public KeyHook() {
+            callback = new keyboardHookProc(hookProc);
+        }
 
         ~KeyHook() {
             unhook();
@@ -117,15 +122,15 @@ namespace SharedFunctionalities.keyboard {
         /// Installs the global hook
         /// </summary>
         public void hook() {
-            IntPtr hInstance = LoadLibrary( "User32" );
-            hhook = SetWindowsHookEx( WH_KEYBOARD_LL, hookProc, hInstance, 0 );
+            IntPtr hInstance = LoadLibrary("User32");
+            hhook = SetWindowsHookEx(WH_KEYBOARD_LL, callback, hInstance, 0);
         }
 
         /// <summary>
         /// Uninstalls the global hook
         /// </summary>
         public void unhook() {
-            UnhookWindowsHookEx( hhook );
+            UnhookWindowsHookEx(hhook);
         }
 
         /// <summary>
@@ -135,23 +140,58 @@ namespace SharedFunctionalities.keyboard {
         /// <param name="wParam">The event type</param>
         /// <param name="lParam">The keyhook event information</param>
         /// <returns></returns>
-        public int hookProc( int code, int wParam, ref keyboardHookStruct lParam ) {
-            if ( code >= 0 ) {
+        public int hookProc(int code, int wParam, ref keyboardHookStruct lParam) {
+            if (code >= 0) {
                 Keys key = (Keys)lParam.vkCode;
-                //if ( HookedKeys.Contains( key ) ) {
-                //    KeyEventArgs kea = new KeyEventArgs( key );
-                //    if ( (wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN) && (KeyDown != null) ) {
-                //        KeyDown( this, kea );
-                //    } else if ( (wParam == WM_KEYUP || wParam == WM_SYSKEYUP) && (KeyUp != null) ) {
-                //        KeyUp( this, kea );
-                //    }
-                //    if ( kea.Handled )
-                //        return 1;
-                //}
+                key = handleModifiers(key);
+                if (keyToAction.ContainsKey(key)) {
+                    KeyEventArgs kea = new KeyEventArgs(key);
+                    if ((wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN)) {
+                        onKeyDown(this, kea);
+                    } else if ((wParam == WM_KEYUP || wParam == WM_SYSKEYUP)) {
+                        onKeyUp(this, kea);
+                    }
+                    if (kea.Handled) {
+                        return 1;
+                    }
+                }
             }
-            return CallNextHookEx( hhook, code, wParam, ref lParam );
+            return CallNextHookEx(hhook, code, wParam, ref lParam);
+        }
+
+        private Keys handleModifiers(Keys key) {
+            //if ((NativeMethods.GetKeyState(VK_CAPITAL) & 0x0001) != 0) {
+            //}
+
+            if ((GetKeyState(VK_SHIFT) & 0x8000) != 0) {
+                //SHIFT is pressed
+                key |= Keys.Shift;
+            }
+            if ((GetKeyState(VK_CONTROL) & 0x8000) != 0) {
+                //CONTROL is pressed
+                key |= Keys.Control;
+            }
+            if ((GetKeyState(VK_MENU) & 0x8000) != 0) {
+                //ALT is pressed
+                key |= Keys.Alt;
+            }
+            return key;
         }
         #endregion
+
+        private void onKeyDown(object sender, KeyEventArgs key) {
+            if (keyToAction.ContainsKey(key.KeyData)) {
+                keyToAction[key.KeyData]();
+            }
+            key.Handled = true;
+        }
+        private void onKeyUp(object sender, KeyEventArgs key) {
+            if (keyToAction.ContainsKey(key.KeyData)) {
+                keyToAction[key.KeyData]();
+            }
+            key.Handled = true;
+        }
     }
+
 
 }

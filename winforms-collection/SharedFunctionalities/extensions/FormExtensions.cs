@@ -17,10 +17,13 @@ public static class FormExtensions {
     private const int SW_SHOWNOACTIVATE = 4;
     private const int HWND_TOPMOST = -1;
     private const uint SWP_NOACTIVATE = 0x0010;
+    const UInt32 SWP_NOSIZE = 0x0001;
+    const UInt32 SWP_NOMOVE = 0x0002;
+    const UInt32 SWP_SHOWWINDOW = 0x0040;
 
     [DllImport("user32.dll", EntryPoint = "SetWindowPos")]
     static extern bool SetWindowPos(
-         int hWnd,             // Window handle
+         IntPtr hWnd,             // Window handle
          int hWndInsertAfter,  // Placement-order handle
          int X,                // Horizontal position
          int Y,                // Vertical position
@@ -33,11 +36,16 @@ public static class FormExtensions {
 
     public static void ShowInactiveTopmost<T>( this T frm ) where T : Form {
         ShowWindow( frm.Handle, SW_SHOWNOACTIVATE );
-        SetWindowPos( frm.Handle.ToInt32(), HWND_TOPMOST,
+        SetWindowPos( frm.Handle, HWND_TOPMOST,
         frm.Left, frm.Top, frm.Width, frm.Height,
         SWP_NOACTIVATE );
     }
     #endregion
+
+    public static void setTopMost<T>(this T f) where T: Form {
+        SetWindowPos(f.Handle, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
+
+    }
 
     #region animations
 

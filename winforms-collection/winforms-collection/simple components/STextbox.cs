@@ -16,7 +16,7 @@ namespace winforms_collection {
         private string _placeHolder = "";
 
         private Font _placeHolderFont;
-        private SolidBrush _placeHolderBrush = new SolidBrush( Color.FromArgb( 150, 205, 205, 205 ) ); // #cccccc with 50% transperency
+        private SolidBrush _placeHolderBrush = new SolidBrush(Color.FromArgb(150, 205, 205, 205)); // #cccccc with 50% transperency
 
         [EditorBrowsable()]
         [Description("This is also known as a hint, or watermark. Its a hint to the user about what this textfield should contain.")]
@@ -48,15 +48,15 @@ namespace winforms_collection {
             }
             set {
                 _dataType = value;
-                onTextboxTypeChange( value );
+                onTextboxTypeChange(value);
             }
         }
 
 
-        protected override void OnTextChanged( EventArgs e ) {
-            base.OnTextChanged( e );
+        protected override void OnTextChanged(EventArgs e) {
+            base.OnTextChanged(e);
             //run validation in background.
-            if ( _validator != null ) {
+            if (_validator != null) {
                 runValidator();
             }
         }
@@ -66,15 +66,15 @@ namespace winforms_collection {
         private void runValidator() {
             //propperly a threadpool , given that it is a cpu intensitive validation, and we might want this multiple places and alike..
             //TODO make in another thread
-            if ( !validate() ) {
-                var loc = PointToScreen( Point.Empty );
-                Point displayPoint = new Point( loc.X + Width, loc.Y );
-                popup_boxes.NotificationBar.showAtLocation( validator.getErrorMessage(), displayPoint );
+            if (!validate()) {
+                var loc = PointToScreen(Point.Empty);
+                Point displayPoint = new Point(loc.X + Width, loc.Y);
+                popup_boxes.NotificationBar.showAtLocation(validator.getErrorMessage(), displayPoint);
             }
         }
         public bool validate() {
-            if ( _validator != null ) {
-                return _validator.Validate( Text );
+            if (_validator != null) {
+                return _validator.Validate(Text);
             } else {
                 return true;
             }
@@ -85,17 +85,17 @@ namespace winforms_collection {
             MaxLength = 0;
             _placeHolderFont = DefaultFont;
             InitializeComponent();
-            SetStyle( ControlStyles.Opaque, true );
-            SetStyle( ControlStyles.ResizeRedraw, true );
+            //SetStyle(ControlStyles.SupportsTransparentBackColor | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.CacheText | ControlStyles.ResizeRedraw, true); // | ControlStyles.UserPaint
+
         }
 
-        protected override void OnKeyDown( KeyEventArgs e ) {
+        protected override void OnKeyDown(KeyEventArgs e) {
             bool handled = false;
             #region ctrl + back => delete word
-            if ( e.Control && e.KeyCode == Keys.Back ) {
+            if (e.Control && e.KeyCode == Keys.Back) {
                 handled = true;
-                if ( SelectionLength > 1 ) {
-                    slice( SelectionStart, SelectionStart + SelectionLength );
+                if (SelectionLength > 1) {
+                    slice(SelectionStart, SelectionStart + SelectionLength);
                 } else {
                     deleteFromCursorToLeftWord();
                 }
@@ -103,79 +103,83 @@ namespace winforms_collection {
 
             #endregion
 
-            if ( e.KeyCode == Keys.Delete && e.Shift ) {
+            if (e.KeyCode == Keys.Delete && e.Shift) {
                 handled = true;
-                if ( this.Multiline ) {
+                if (this.Multiline) {
                     int preStart = SelectionStart;
-                    int lineIndex = GetLineFromCharIndex( preStart );
-                    Lines = SharedFunctionalities.SharedStringUtils.removeIndexFromArray( Lines, lineIndex );
-                    SelectionStart = Math.Max( GetFirstCharIndexFromLine( lineIndex ), preStart - 1 );
+                    int lineIndex = GetLineFromCharIndex(preStart);
+                    Lines = SharedFunctionalities.SharedStringUtils.removeIndexFromArray(Lines, lineIndex);
+                    SelectionStart = Math.Max(GetFirstCharIndexFromLine(lineIndex), preStart - 1);
                 } else {
                     Text = "";
                 }
             }
 
-            if ( e.KeyCode == Keys.A && e.Control ) {
+            if (e.KeyCode == Keys.A && e.Control) {
                 SelectionStart = 0;
                 SelectionLength = Text.Length;
                 handled = true;
             }
-            if ( e.KeyCode == Keys.Down && e.Control && e.Shift && Multiline ) {
+            if (e.KeyCode == Keys.Down && e.Control && e.Shift && Multiline) {
                 int lineIndex = getCurrentLine();
-                this.Lines = SharedFunctionalities.SharedStringUtils.insertValueIntoIndexInArray( Lines, Lines[GetLineFromCharIndex( SelectionStart )], GetLineFromCharIndex( SelectionStart ) );
-                setCurrentLine( lineIndex + 1 );
+                this.Lines = SharedFunctionalities.SharedStringUtils.insertValueIntoIndexInArray(Lines, Lines[GetLineFromCharIndex(SelectionStart)], GetLineFromCharIndex(SelectionStart));
+                setCurrentLine(lineIndex + 1);
                 handled = true;
             }
-            if ( e.KeyCode == Keys.Up && e.Control && e.Shift && Multiline ) {
+            if (e.KeyCode == Keys.Up && e.Control && e.Shift && Multiline) {
                 int lineIndex = getCurrentLine();
-                this.Lines = SharedFunctionalities.SharedStringUtils.insertValueIntoIndexInArray( Lines, Lines[GetLineFromCharIndex( SelectionStart )], GetLineFromCharIndex( SelectionStart ) );
-                setCurrentLine( lineIndex - 1 );
+                this.Lines = SharedFunctionalities.SharedStringUtils.insertValueIntoIndexInArray(Lines, Lines[GetLineFromCharIndex(SelectionStart)], GetLineFromCharIndex(SelectionStart));
+                setCurrentLine(lineIndex - 1);
                 handled = true;
             }
-            if ( handled ) {
+            if (handled) {
                 e.Handled = true;
                 e.SuppressKeyPress = true;
                 return;
             }
 
-            base.OnKeyDown( e );
+            base.OnKeyDown(e);
         }
 
-        public void setCurrentLine( int line ) {
-            this.SelectionStart = GetFirstCharIndexFromLine( line );
+        public void setCurrentLine(int line) {
+            this.SelectionStart = GetFirstCharIndexFromLine(line);
         }
 
         public int getCurrentLine() {
-            return GetLineFromCharIndex( SelectionStart );
+            return GetLineFromCharIndex(SelectionStart);
         }
 
         public void deleteFromCursorToLeftWord() {
             int end = SelectionStart;
             int lineStart = GetFirstCharIndexOfCurrentLine();
-            int start = Text.LastIndexOf( ' ', end - 1 );
+            int start = Text.LastIndexOf(' ', end - 1);
 
-            if ( start == -1 ) {
+            if (start == -1) {
                 start = 0;
             }
-            slice( Math.Max( start, lineStart - 1 ), end );
+            slice(Math.Max(start, lineStart - 1), end);
             SelectionStart = Text.Length;
         }
 
 
-        public void showTextHint( String hint ) {
+        public void showTextHint(String hint) {
 
         }
 
-        protected override void OnGotFocus( EventArgs e ) {
-            base.OnGotFocus( e );
+        protected override void OnGotFocus(EventArgs e) {
+            base.OnGotFocus(e);
         }
 
-        protected override void OnLostFocus( EventArgs e ) {
-            base.OnLostFocus( e );
+        protected override void OnLostFocus(EventArgs e) {
+            base.OnLostFocus(e);
         }
 
-        private void slice( int sliceStart, int sliceEnd ) {
-            Text = Text.Substring( 0, sliceStart ) + Text.Substring( sliceEnd );
+        private void slice(int sliceStart, int sliceEnd) {
+            var secoundPart = "";
+            if (sliceEnd < Text.Length) {
+                secoundPart = Text.Substring(sliceEnd);
+            }
+            Text = Text.Substring(0, sliceStart) + secoundPart;
         }
         private void loadNames() {
             AutoCompleteCustomSource = StaticsLoads.getAutocompleteNames();
@@ -184,16 +188,16 @@ namespace winforms_collection {
         private static class StaticsLoads {
             static AutoCompleteStringCollection autoCompleteNames;
             public static AutoCompleteStringCollection getAutocompleteNames() {
-                if ( autoCompleteNames == null && isDesignMode() == false && IsInDesignMode() == false ) {
+                if (autoCompleteNames == null && isDesignMode() == false && IsInDesignMode() == false) {
                     autoCompleteNames = new AutoCompleteStringCollection();
-                    autoCompleteNames.AddRange( Properties.Resources.names.Split( new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries ) );
+                    autoCompleteNames.AddRange(Properties.Resources.names.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries));
                 }
                 return autoCompleteNames;
             }
         }
 
-        private void onTextboxTypeChange( TextboxType value ) {
-            switch ( value ) {
+        private void onTextboxTypeChange(TextboxType value) {
+            switch (value) {
                 case TextboxType.REGULAR_TEXT:
                     this.AutoCompleteCustomSource = null;
                     break;
@@ -215,7 +219,7 @@ namespace winforms_collection {
             }
         }
         public static bool IsInDesignMode() {
-            if ( Application.ExecutablePath.IndexOf( "devenv.exe", StringComparison.OrdinalIgnoreCase ) > -1 ) {
+            if (Application.ExecutablePath.IndexOf("devenv.exe", StringComparison.OrdinalIgnoreCase) > -1) {
                 return true;
             }
             return false;
@@ -224,13 +228,13 @@ namespace winforms_collection {
 
         private bool getDesignMode() {
             IDesignerHost host;
-            if ( Site != null ) {
-                host = Site.GetService( typeof(IDesignerHost) ) as IDesignerHost;
-                if ( host != null ) {
+            if (Site != null) {
+                host = Site.GetService(typeof(IDesignerHost)) as IDesignerHost;
+                if (host != null) {
                     return host.RootComponent.Site.DesignMode;
                 }
             }
-            MessageBox.Show( "Runtime Mode" );
+            MessageBox.Show("Runtime Mode");
             return false;
         }
         private static bool isDesignMode() {
