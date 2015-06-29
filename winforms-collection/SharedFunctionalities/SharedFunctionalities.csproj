@@ -101,7 +101,6 @@
     <Compile Include="drawing\layers\backgrounds\TriangularShapeBackground.cs" />
     <Compile Include="extensions\FormExtensions.cs" />
     <Compile Include="extensions\RectangleExtensions.cs" />
-    <Compile Include="FileHandling\FastFiles.cs" />
     <Compile Include="forms\BasePassthough.cs">
       <SubType>form</SubType>
     </Compile>
