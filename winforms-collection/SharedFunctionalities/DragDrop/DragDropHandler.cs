@@ -16,7 +16,7 @@ namespace SharedFunctionalities.DragDrop {
             filename = String.Empty;
 
             if ((e.AllowedEffect & DragDropEffects.Copy) == DragDropEffects.Copy) {
-                Array data = ((IDataObject)e.Data).GetData("FileName") as Array;
+                Array data = ((IDataObject)e.Data).GetData("FileNameW") as Array;
                 if (data != null) {
                     if ((data.Length == 1) && (data.GetValue(0) is String)) {
                         filename = ((string[])data)[0];
