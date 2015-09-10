@@ -16,6 +16,7 @@ using System.Windows.Forms;
 
 namespace winforms_collection.advanced {
     public class StyleableButton : CustomControl, IButtonControl {
+        private static readonly Color initColor = Color.FromArgb(255, 9, 74, 178); //a simple blue.
 
         private TriangularShapeBackground backLayer = new TriangularShapeBackground() { endColor = Color.CadetBlue, startColor = Color.BlueViolet };
 
@@ -28,6 +29,7 @@ namespace winforms_collection.advanced {
         public Color startColor {
             get { return backLayer.startColor; }
             set { backLayer.startColor = value; }
+
         }
 
         [EditorBrowsable]
@@ -39,9 +41,13 @@ namespace winforms_collection.advanced {
 
 
         public StyleableButton() {
-            DrawHandler.addLayer( backLayer );
-            DrawHandler.addLayer( textLayer );
+            DrawHandler.addLayer(backLayer);
+            DrawHandler.addLayer(textLayer);
             textLayer.font = Font;
+            ForeColor = Color.Cornsilk;
+            startColor = initColor;
+            endColor = initColor;
+
         }
 
         public override Font Font {
@@ -65,53 +71,48 @@ namespace winforms_collection.advanced {
             }
         }
 
-        protected override void OnMouseEnter( EventArgs e ) {
-            base.OnMouseEnter( e );
-            SharedAnimations.Highlight( this, 0.1f, 120 );
+        protected override void OnMouseEnter(EventArgs e) {
+            base.OnMouseEnter(e);
+            //  SharedAnimations.Highlight( this, 0.1f, 120 );
         }
 
         private HighlightOverlay overlay;
 
-        protected override void OnGotFocus(EventArgs e)
-        {
+        protected override void OnGotFocus(EventArgs e) {
             base.OnGotFocus(e);
-            overlay = SharedAnimations.Highlight(this, 0.1f, 50, Brushes.Blue);
+            //overlay = SharedAnimations.Highlight(this, 0.1f, 50, Brushes.Blue);
         }
 
-        protected override void OnLostFocus(EventArgs e)
-        {
+        protected override void OnLostFocus(EventArgs e) {
             base.OnLostFocus(e);
-            overlay.FadeOut(0, () => { overlay.Dispose(); });
+            //  overlay.FadeOut(0, () => { overlay.Dispose(); });
         }
 
 
-        protected override void OnMouseDown( MouseEventArgs e ) {
-            base.OnMouseDown( e );
+        protected override void OnMouseDown(MouseEventArgs e) {
+            base.OnMouseDown(e);
             //make an "insert" effect.
-            overlay = SharedAnimations.Highlight( this, 0.4f, 100, Brushes.White );
+            //overlay = SharedAnimations.Highlight(this, 0.4f, 100, Brushes.White);
         }
-        protected override void OnMouseUp( MouseEventArgs e ) {
-            base.OnMouseUp( e );
-            overlay.FadeOut( 150, () => { overlay.Dispose(); } );
+        protected override void OnMouseUp(MouseEventArgs e) {
+            base.OnMouseUp(e);
+            // overlay.FadeOut(150, () => { overlay.Dispose(); });
         }
 
-        protected override void OnKeyDown( KeyEventArgs e ) {
-            base.OnKeyDown( e );
-            if ( e.KeyCode == Keys.Space || e.KeyCode == Keys.Enter ) {
-                OnClick( e );
+        protected override void OnKeyDown(KeyEventArgs e) {
+            base.OnKeyDown(e);
+            if (e.KeyCode == Keys.Space || e.KeyCode == Keys.Enter) {
+                OnClick(e);
             }
         }
 
-        public void NotifyDefault(bool value)
-        {
-            if (value)
-            {
+        public void NotifyDefault(bool value) {
+            if (value) {
 
             }
         }
 
-        public void PerformClick()
-        {
+        public void PerformClick() {
             OnClick(new EventArgs());
         }
 
@@ -122,10 +123,10 @@ namespace winforms_collection.advanced {
 
             set {
                 base.ForeColor = value;
-                textLayer.displayBrush = new SolidBrush( value );
+                textLayer.displayBrush = new SolidBrush(value);
             }
         }
 
-        public DialogResult DialogResult { get;set;}
+        public DialogResult DialogResult { get; set; }
     }
 }

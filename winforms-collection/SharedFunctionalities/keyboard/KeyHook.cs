@@ -84,7 +84,6 @@ namespace SharedFunctionalities.keyboard {
 
         public void addHook(Keys k, Action onKey) {
             keyToAction.Add(k, onKey);
-
         }
 
         private Dictionary<Keys, Action> keyToAction = new Dictionary<Keys, Action>();
@@ -147,6 +146,7 @@ namespace SharedFunctionalities.keyboard {
                 if (keyToAction.ContainsKey(key)) {
                     KeyEventArgs kea = new KeyEventArgs(key);
                     if ((wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN)) {
+                        
                         onKeyDown(this, kea);
                     } else if ((wParam == WM_KEYUP || wParam == WM_SYSKEYUP)) {
                         onKeyUp(this, kea);
@@ -181,6 +181,7 @@ namespace SharedFunctionalities.keyboard {
 
         private void onKeyDown(object sender, KeyEventArgs key) {
             if (keyToAction.ContainsKey(key.KeyData)) {
+
                 keyToAction[key.KeyData]();
             }
             key.Handled = true;
@@ -192,6 +193,5 @@ namespace SharedFunctionalities.keyboard {
             key.Handled = true;
         }
     }
-
-
+    
 }

@@ -9,12 +9,8 @@ namespace SharedFunctionalities.forms {
     /// <summary>
     /// a form that simply doesnt respond to mouse or keyboard events (pass though).
     /// </summary>
-    public class BasePassthough : Form {
+    public class BasePassthough : TransperantForm {
 
-
-        public BasePassthough() {
-            SetStyle( ControlStyles.SupportsTransparentBackColor | ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw | ControlStyles.UserPaint | ControlStyles.Opaque, true );
-        }
 
         protected override void WndProc( ref Message m ) {
             const int WM_NCHITTEST = 0x0084;
