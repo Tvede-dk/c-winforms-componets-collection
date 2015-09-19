@@ -9,7 +9,6 @@ public static class FormDialogExtensionss {
 
     public static void ShowDialog<T>(this T form, Action<T> onSucess, Action<T> onFailed) where T : Form {
         DialogCommenCode.HandleResult(form, form.ShowDialog(), onSucess, onFailed);
-
     }
 
     public static void ShowDialog<T>(this T form, Form parrent, Action<T> onSucess, Action<T> onFailed) where T : Form {
@@ -44,16 +43,16 @@ public static class CommenDialogExt {
 }
 
 static class DialogCommenCode {
-    public static void HandleResult<T>(T dialog, DialogResult result, Action<T> success, Action<T> error) {
+    public static void HandleResult<T>(T dialog, DialogResult result, Action<T> success, Action<T> error) where T : IDisposable{
         if (result == DialogResult.OK || result == DialogResult.Yes) {
             if (success != null) {
-                success(dialog);
+                success?.Invoke(dialog);
             }
         } else {
             if (error != null) {
-                error(dialog);
+                error?.Invoke(dialog);
             }
         }
-
+        dialog.Dispose();
     }
 }

@@ -64,9 +64,9 @@ namespace winforms_collection {
         }
 
 
-        public static void ShowInfo(string text, Form parret) {
+        public static void ShowInfo(string text, Form parret,int startTimeInMs = 500) {
             //IN ORder to use the showtopmostinactivce, we would have to schedual the timers on the parent form..  SO this is a "WIP" / TODO.
-            new FastNoticePopup(text, 1200 + (text.Length / 6 * 100), Properties.Resources._1416174868_info, parret).Show();
+            new FastNoticePopup(text, startTimeInMs + (text.Length / 6 * 100), Properties.Resources._1416174868_info, parret).Show();
         }
 
         public static void ShowSucess(string text, Form parret) {

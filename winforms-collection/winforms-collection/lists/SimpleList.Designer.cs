@@ -141,6 +141,8 @@ namespace winforms_collection {
             this.simpleListControl1.UseCompatibleStateImageBehavior = false;
             this.simpleListControl1.View = System.Windows.Forms.View.List;
             this.simpleListControl1.SelectedIndexChanged += new System.EventHandler(this.simpleListControl1_SelectedIndexChanged);
+            this.simpleListControl1.DoubleClick += new System.EventHandler(this.simpleListControl1_DoubleClick);
+            this.simpleListControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.simpleListControl1_KeyDown);
             // 
             // label1
             // 

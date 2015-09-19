@@ -106,6 +106,12 @@
     <Compile Include="advanced\StyleableButton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="containers\DropTargetContainer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="containers\DropTargetContainer.Designer.cs">
+      <DependentUpon>DropTargetContainer.cs</DependentUpon>
+    </Compile>
     <Compile Include="containers\ListContainer.cs">
       <SubType>component</SubType>
     </Compile>
@@ -146,6 +152,12 @@
     <Compile Include="popup boxes\NotificationBar.Designer.cs">
       <DependentUpon>NotificationBar.cs</DependentUpon>
     </Compile>
+    <Compile Include="popup boxes\SelectionPopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="popup boxes\SelectionPopup.Designer.cs">
+      <DependentUpon>SelectionPopup.cs</DependentUpon>
+    </Compile>
     <Compile Include="powerAssist\PowerAssister.cs" />
     <Compile Include="powerAssist\PowerAssistBox.cs">
       <SubType>Form</SubType>
@@ -158,6 +170,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="simple components\DescriptionValue.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="simple components\DescriptionValue.Designer.cs">
+      <DependentUpon>DescriptionValue.cs</DependentUpon>
     </Compile>
     <Compile Include="simple components\Progressbar.cs">
       <SubType>component</SubType>
@@ -184,6 +202,9 @@
     <EmbeddedResource Include="advanced\dropdown\DropdownOverlay.resx">
       <DependentUpon>DropdownOverlay.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="containers\DropTargetContainer.resx">
+      <DependentUpon>DropTargetContainer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="lists\SimpleList.resx">
       <DependentUpon>SimpleList.cs</DependentUpon>
     </EmbeddedResource>
@@ -197,8 +218,14 @@
     <EmbeddedResource Include="popup boxes\NotificationBar.resx">
       <DependentUpon>NotificationBar.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="popup boxes\SelectionPopup.resx">
+      <DependentUpon>SelectionPopup.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="powerAssist\PowerAssistBox.resx">
       <DependentUpon>PowerAssistBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="simple components\descriptionValue.resx">
+      <DependentUpon>DescriptionValue.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="simple components\Progressbar.resx">
       <DependentUpon>Progressbar.cs</DependentUpon>

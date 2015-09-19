@@ -28,7 +28,7 @@ namespace SharedFunctionalities.drawing.layers {
         }
 
         #region property BorderSize
-        private int _BorderSize = 10;
+        private int _BorderSize = 1;
 
         ~BorderLayer() {
             if ( borderPen != null ) {

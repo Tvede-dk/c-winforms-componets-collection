@@ -34,7 +34,11 @@ namespace winforms_collection.powerAssist {
 
         private bool haveShown = false;
 
-        private Dictionary<Control, PowerAssistBox> controlToShownBox = new Dictionary<Control, PowerAssistBox>();
+
+        private Dictionary<Control, PowerAssistBox> controlToShownBox = new Dictionary<Control, PowerAssistBox>(4);
+
+        private Dictionary<Keys, Control> focusDict = new Dictionary<Keys, Control>(4);
+
 
         public void show() {
             if (haveShown) {
@@ -115,6 +119,7 @@ namespace winforms_collection.powerAssist {
             form.Margin = margin;
             form.InnerShortcut = shortcutKey;
             controlToShownBox.Add(control, form);
+            focusDict.Add(shortcutKey, control);
         }
 
         public void registerForKeyEventsHandler(KeyEventHandler keyDown, KeyEventHandler keyUp) {
@@ -125,20 +130,13 @@ namespace winforms_collection.powerAssist {
         }
 
         public void registerForKeysWithPreviewKey(Keys previewKey = Keys.Menu) {
-
-            Dictionary<Keys, Control> focusDict = new Dictionary<Keys, Control>(controlToShownBox.Count);
-
             foreach (var item in controlToShownBox) {
-                focusDict.Add(item.Value.InnerShortcut, item.Key);
                 item.Key.KeyDown += (object obj, KeyEventArgs e) => {
                     if (previewKey == e.KeyCode) {
                         e.Handled = true;
                         show();
                     }
-
-                    if (focusDict.ContainsKey(e.KeyData)) {
-                        trySetFocus(focusDict[e.KeyData]);
-                        hide();
+                    if (handleOnKeyPress(e.KeyData)) {
                         e.SuppressKeyPress = true;
                         e.Handled = true;
                     }
@@ -162,6 +160,27 @@ namespace winforms_collection.powerAssist {
             } else {
                 control.Focus();
             }
+        }
+
+        public bool isVisable() {
+            return haveShown;
+        }
+
+        public void toogleVisable() {
+            if (isVisable()) {
+                hide();
+            } else {
+                show();
+            }
+        }
+
+        public bool handleOnKeyPress(Keys keyData) {
+            if (focusDict.ContainsKey(keyData)) {
+                trySetFocus(focusDict[keyData]);
+                hide();
+                return true;
+            }
+            return false;
         }
     }
 }

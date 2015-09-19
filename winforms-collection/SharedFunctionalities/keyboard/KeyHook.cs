@@ -81,14 +81,27 @@ namespace SharedFunctionalities.keyboard {
 
         #region Instance Variables
 
-
-        public void addHook(Keys k, Action onKey) {
-            keyToAction.Add(k, onKey);
-        }
-
-        private Dictionary<Keys, Action> keyToAction = new Dictionary<Keys, Action>();
+        private Dictionary<Keys, CallbackHandler> keyToAction = new Dictionary<Keys, CallbackHandler>();
 
         private keyboardHookProc callback;
+
+        /// <summary>
+        /// Handle to the hook, need this to unhook and call the next hook
+        /// </summary>
+        private IntPtr hhook = IntPtr.Zero;
+        #endregion
+
+        public void addHook(Keys k, Action onKey) {
+            addHook(k, onKey, false);
+        }
+
+        public void addHook(Keys k, Action<KEY_STATE> onKey) {
+            keyToAction.Add(k, new CallbackHandler(onKey));
+        }
+
+        public void addHook(Keys k, Action onKey, bool onlyCallOneTime) {
+            keyToAction.Add(k, new CallbackHandler(onKey, onlyCallOneTime));
+        }
 
 
 
@@ -97,11 +110,7 @@ namespace SharedFunctionalities.keyboard {
             hook();
         }
 
-        /// <summary>
-        /// Handle to the hook, need this to unhook and call the next hook
-        /// </summary>
-        private IntPtr hhook = IntPtr.Zero;
-        #endregion
+
 
         #region Constructors and Destructors
 
@@ -146,7 +155,7 @@ namespace SharedFunctionalities.keyboard {
                 if (keyToAction.ContainsKey(key)) {
                     KeyEventArgs kea = new KeyEventArgs(key);
                     if ((wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN)) {
-                        
+
                         onKeyDown(this, kea);
                     } else if ((wParam == WM_KEYUP || wParam == WM_SYSKEYUP)) {
                         onKeyUp(this, kea);
@@ -182,16 +191,53 @@ namespace SharedFunctionalities.keyboard {
         private void onKeyDown(object sender, KeyEventArgs key) {
             if (keyToAction.ContainsKey(key.KeyData)) {
 
-                keyToAction[key.KeyData]();
+                keyToAction[key.KeyData].handle(KEY_STATE.KEY_DOWN);
             }
             key.Handled = true;
         }
         private void onKeyUp(object sender, KeyEventArgs key) {
             if (keyToAction.ContainsKey(key.KeyData)) {
-                keyToAction[key.KeyData]();
+                keyToAction[key.KeyData].handle(KEY_STATE.KEY_UP);
             }
             key.Handled = true;
         }
+
     }
-    
+    public enum KEY_STATE {
+        KEY_DOWN = 0,
+        KEY_UP = 1
+    }
+
+    public struct CallbackHandler {
+        public Action toRun { get; set; }
+        /// <summary>
+        /// the expanded version where we want the keystate.
+        /// </summary>
+        public Action<KEY_STATE> onKeyPressedWithState;
+        private bool onlyCallOneTime;
+
+        public CallbackHandler(Action onKey) : this() {
+            this.toRun = onKey;
+        }
+
+        public CallbackHandler(Action<KEY_STATE> onKey) : this() {
+            this.onKeyPressedWithState = onKey;
+        }
+
+        public CallbackHandler(Action onKey, bool onlyCallOneTime) : this() {
+            this.toRun = onKey;
+            this.onlyCallOneTime = onlyCallOneTime;
+        }
+
+        public void handle(KEY_STATE state) {
+            if (onKeyPressedWithState == null) {
+                if (!onlyCallOneTime || onlyCallOneTime && state == KEY_STATE.KEY_DOWN) {
+                    toRun();
+                }
+            } else {
+                onKeyPressedWithState(state);
+            }
+        }
+    }
+
 }
