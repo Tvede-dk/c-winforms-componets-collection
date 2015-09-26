@@ -129,7 +129,7 @@ namespace winforms_collection.powerAssist {
             }
         }
 
-        public void registerForKeysWithPreviewKey(Keys previewKey = Keys.Menu) {
+        public void registerForKeysWithPreviewKey(Form form = null, Keys previewKey = Keys.Menu) {
             foreach (var item in controlToShownBox) {
                 item.Key.KeyDown += (object obj, KeyEventArgs e) => {
                     if (previewKey == e.KeyCode) {
@@ -150,7 +150,18 @@ namespace winforms_collection.powerAssist {
                     }
                 };
             }
+            if (form != null) {
+                form.KeyPreview = true;
+                form.KeyUp += (object sender, KeyEventArgs e) => {
+                    if (e.KeyCode.HasFlag(previewKey)) {
+                        hide();
+                    }
+                };
+                form.Leave += (sender, theEvent) => { hide(); };
+                form.Deactivate += (sender, theEvent) => { hide(); };
+            }
         }
+
 
         private void trySetFocus(Control control) {
             var asComboBox = control as ComboBox;
