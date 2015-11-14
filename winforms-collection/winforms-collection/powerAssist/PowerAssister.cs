@@ -113,6 +113,17 @@ namespace winforms_collection.powerAssist {
             form.Location = inner;
         }
 
+        public void Clear() {
+            foreach (var item in controlToShownBox) {
+                item.Value.Hide();
+                item.Value.Dispose();
+                item.Key.Dispose();
+            }
+            controlToShownBox.Clear();
+            focusDict.Clear();
+            haveShown = false;
+        }
+
         public void AddControl(Control control, string text, Keys shortcutKey = Keys.None, DisplayToControl where = PowerAssister.DisplayToControl.RIGHT, int margin = 5) {
             var form = new PowerAssistBox(text);
             form.WhereToDisplayAt = where;
