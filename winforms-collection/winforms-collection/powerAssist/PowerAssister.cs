@@ -81,12 +81,18 @@ namespace winforms_collection.powerAssist {
             testControl.Move += (sender, e) => {
                 showTo(testControl, form);
             };
-            testControl.FindForm().Move += (sender, e) => {
-                showTo(testControl, form);
-            };
-            testControl.FindForm().Resize += (sender, e) => {
-                showTo(testControl, form);
-            };
+
+            var pform = testControl.FindForm();
+            if (pform != null) {
+                pform.Move += (sender, e) => {
+                    showTo(testControl, form);
+                };
+                pform.Resize += (sender, e) => {
+                    showTo(testControl, form);
+                };
+            }
+
+
             showTo(testControl, form);
         }
 
@@ -114,11 +120,6 @@ namespace winforms_collection.powerAssist {
         }
 
         public void Clear() {
-            foreach (var item in controlToShownBox) {
-                item.Value.Hide();
-                item.Value.Dispose();
-                item.Key.Dispose();
-            }
             controlToShownBox.Clear();
             focusDict.Clear();
             haveShown = false;
