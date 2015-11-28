@@ -204,11 +204,5 @@ namespace winforms_collection.powerAssist {
             }
             return false;
         }
-
-
-        public void Clear() {
-            focusDict.Clear();
-            controlToShownBox.Clear();
-        }
     }
 }
