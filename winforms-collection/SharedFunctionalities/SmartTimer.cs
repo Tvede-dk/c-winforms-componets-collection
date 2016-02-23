@@ -17,7 +17,8 @@ namespace SharedFunctionalities {
         private Action<object, System.Timers.ElapsedEventArgs, SmartTimer> TimerHandler;
         #region property interval 
 
-        public int interval {
+        public int interval
+        {
             get { return (int)innerTimer.Interval; }
             set { innerTimer.Interval = value; }
         }
@@ -29,7 +30,8 @@ namespace SharedFunctionalities {
         private int _counter = int.MaxValue;
 
 
-        public int counter {
+        public int counter
+        {
             get { return _counter; }
             set { _counter = value; }
         }
@@ -40,7 +42,8 @@ namespace SharedFunctionalities {
         #region property continuous
 
 
-        public bool repeate {
+        public bool repeate
+        {
             get { return innerTimer.AutoReset; }
             set { innerTimer.AutoReset = value; }
         }
@@ -55,12 +58,12 @@ namespace SharedFunctionalities {
             innerTimer.Elapsed += onTimer;
         }
 
-        private void onTimer( object sender, ElapsedEventArgs e ) {
-            if ( TimerHandler != null && currentCounter <= counter && repeate ) {
-                TimerHandler.Invoke( sender, e, this );
+        private void onTimer(object sender, ElapsedEventArgs e) {
+            if (TimerHandler != null && currentCounter <= counter && repeate) {
+                TimerHandler.Invoke(sender, e, this);
                 currentCounter++;
             } else {
-                stop();
+                Stop();
             }
         }
 
@@ -70,7 +73,7 @@ namespace SharedFunctionalities {
         /// </summary>
         /// <param name="handler"> the on "ticeket" function. NB: the first object is the sender.</param>
         /// <param name="after">The event after we are done.(can be null)</param>
-        public virtual void start( Action<object, ElapsedEventArgs, SmartTimer> handler, Action after ) {
+        public virtual void start(Action<object, ElapsedEventArgs, SmartTimer> handler, Action after) {
             this.TimerHandler = handler;
             this.afterHandler = after;
             currentCounter = 0;
@@ -81,20 +84,21 @@ namespace SharedFunctionalities {
         /// Starts a timer with the current settings. When timeout it calls the onDone method. 
         /// </summary>
         /// <param name="onDone">Waits till the timer times out then call the onDone method</param>
-        public virtual void start( Action onDone ) {
-            start( ( object sender, ElapsedEventArgs e, SmartTimer timer ) => { }, onDone );
+        public virtual void start(Action onDone) {
+            start((object sender, ElapsedEventArgs e, SmartTimer timer) => { }, onDone);
 
         }
         /// <summary>
         /// Stops the timer. and calls the after handler / onDone (if any)
         /// </summary>
-        public void stop() {
+        /// <param name="mayCallAfterHandler">set to false if afterHandler may not be called. defaults to true.</param>
+        public void Stop(bool mayCallAfterHandler = true) {
             currentCounter = 0;
             TimerHandler = null;
             innerTimer.Enabled = false;
             innerTimer.Stop();
-            if ( afterHandler != null ) {
-                afterHandler.Invoke();
+            if (mayCallAfterHandler) {
+                afterHandler?.Invoke();
             }
         }
         #endregion

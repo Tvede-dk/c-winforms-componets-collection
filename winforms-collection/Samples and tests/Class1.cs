@@ -23,6 +23,7 @@ namespace MyNamespace {
         Bitmap bitmap;
         Stopwatch stopwatch;
         float first;
+        private winforms_collection.navigation.CollapsableSplitContainer collapsableSplitContainer1;
         float second;
         public MyForm() {
             bitmap = new Bitmap( 55, 55 );
@@ -85,6 +86,32 @@ namespace MyNamespace {
             new SolidBrush( Color.Black ),
             new Point( 5, 200 )
             );
+
+        }
+
+        private void InitializeComponent() {
+            this.collapsableSplitContainer1 = new winforms_collection.navigation.CollapsableSplitContainer();
+            ((System.ComponentModel.ISupportInitialize)(this.collapsableSplitContainer1)).BeginInit();
+            this.collapsableSplitContainer1.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // collapsableSplitContainer1
+            // 
+            this.collapsableSplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.collapsableSplitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.collapsableSplitContainer1.Name = "collapsableSplitContainer1";
+            this.collapsableSplitContainer1.Size = new System.Drawing.Size(284, 261);
+            this.collapsableSplitContainer1.SplitterDistance = 48;
+            this.collapsableSplitContainer1.TabIndex = 0;
+            // 
+            // MyForm
+            // 
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Controls.Add(this.collapsableSplitContainer1);
+            this.Name = "MyForm";
+            ((System.ComponentModel.ISupportInitialize)(this.collapsableSplitContainer1)).EndInit();
+            this.collapsableSplitContainer1.ResumeLayout(false);
+            this.ResumeLayout(false);
 
         }
         //[System.STAThread]

@@ -25,6 +25,41 @@ namespace SharedFunctionalities {
                 return 1500;
             }
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ui"></param>
+        /// <param name="fromValue"></param>
+        /// <param name="toValue"></param>
+        /// <param name="durationInMs"></param>
+        /// <param name="callbackWithDifference"></param>
+        /// <param name="onCompleted"></param>
+        /// <returns> null if unable to start animation. otherwise the ui timer </returns>
+        public static SmartUITimer animateProperty(Control ui, int fromValue, int toValue, int durationInMs, Action<int> callbackWithDifference, Action onCompleted)  {
+            if (ui != null && ui.IsHandleCreated) {
+                int newSizeDiff = toValue - fromValue;
+                int numOfSteps = getNumberOfFramesByTimeAndFps(durationInMs, fps);
+                int difference = (int)(newSizeDiff / (float)(numOfSteps + 1));
+                return startTimer(durationInMs, () => {
+                    callbackWithDifference(difference);
+                }, onCompleted, ui);
+            }
+            return null;
+        }
+
+        public static void animateWidth(Control ui, int animateTo, int displayTimeInMs, Action onCompleted) {
+            if (ui != null && ui.IsHandleCreated) {
+                int newSizeDiff = animateTo - ui.Width;
+                int numOfSteps = getNumberOfFramesByTimeAndFps(displayTimeInMs, fps);
+                int difference = (int)(newSizeDiff / (float)(numOfSteps + 1));
+                startTimer(displayTimeInMs, () => {
+                    ui.Width += (int)difference;
+                }, onCompleted, ui);
+            }
+
+        }
         #endregion
         #region constants & static variables
         private const int secInMS = 1000;
@@ -128,10 +163,11 @@ namespace SharedFunctionalities {
         }
 
         #region internal calculation
-        private static void startTimer(int displayTimeInMs, Action handler, Action after, Control con) {
+        private static SmartUITimer startTimer(int displayTimeInMs, Action handler, Action after, Control con) {
             int numOfSteps = getNumberOfFramesByTimeAndFps(displayTimeInMs, fps);
             SmartUITimer timer = new SmartUITimer(con) { repeate = true, interval = getIntervalFromFpsInMs(), counter = numOfSteps };
             timer.start((object sender, ElapsedEventArgs e, SmartTimer st) => { handler.Invoke(); }, after);
+            return timer;
         }
         /// <summary>
         /// calculates the duration in time from the fps value.
@@ -170,7 +206,7 @@ namespace SharedFunctionalities {
 
                 handlecycleColorLightingValue(cycleMax, cycleMin, increase, ref currentVal, ref isGoingUp);
                 if (onCycle(ControlPaint.Light(startColor, currentVal)) == false) {
-                    timer.stop();
+                    timer.Stop();
                 }
             }, null);
         }
