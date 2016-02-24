@@ -145,6 +145,9 @@ namespace winforms_collection.powerAssist {
             foreach (var item in controlToShownBox) {
                 item.Key.KeyDown += (object obj, KeyEventArgs e) => {
                     if (previewKey == e.KeyCode) {
+                        if (form != null) {
+                            form.ActiveControl = null;
+                        }
                         e.Handled = true;
                         show();
                     }
@@ -152,10 +155,13 @@ namespace winforms_collection.powerAssist {
                         e.SuppressKeyPress = true;
                         e.Handled = true;
                     }
-
+                    
                 };
                 item.Key.KeyUp += (object obj, KeyEventArgs e) => {
                     if (e.KeyCode.HasFlag(previewKey)) {
+                        if (form != null) {
+                            form.ActiveControl = null;
+                        }
                         e.Handled = true;
                         e.SuppressKeyPress = true;
                         hide();
@@ -166,6 +172,8 @@ namespace winforms_collection.powerAssist {
                 form.KeyPreview = true;
                 form.KeyUp += (object sender, KeyEventArgs e) => {
                     if (e.KeyCode.HasFlag(previewKey)) {
+                        e.Handled = true;
+                        e.SuppressKeyPress = true;
                         hide();
                     }
                 };
