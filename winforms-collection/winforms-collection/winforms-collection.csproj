@@ -211,6 +211,9 @@
     <Compile Include="drawParts\testDraw.cs">
       <SubType>component</SubType>
     </Compile>
+    <Compile Include="extendedComponents\DraggableTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="lists\SimpleList.cs">
       <SubType>UserControl</SubType>
     </Compile>
