@@ -17,7 +17,7 @@ namespace SharedFunctionalities.FileHandling {
         /// <param name="src"></param>
         /// <param name="dest"></param>
         /// <param name="overrideIfExists"></param>
-        public async static void moveFileAsync(string src, string dest, bool overrideIfExists) {
+        public async static Task moveFileAsync(string src, string dest, bool overrideIfExists) {
             if ((overrideIfExists || !File.Exists(dest)) && File.Exists(src)) {
                 var destFile = MemoryMappedFile.CreateFromFile(src, FileMode.Create);
                 var srcFile = MemoryMappedFile.CreateFromFile(src, FileMode.Open);
