@@ -28,6 +28,12 @@ public static class FunctionalHelpers {
         }
     }
 
+    public static void Foreach<T, U>(this IEnumerable<T> list, Func<T, U> onEach) {
+        foreach (var item in list) {
+            onEach(item);
+        }
+    }
+
     public static void PerformEachTime(this int times, Action<int> callback) {
         for (int i = 0; i < times; i++) {
             callback(i);
