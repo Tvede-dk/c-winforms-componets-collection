@@ -201,6 +201,7 @@
     <Compile Include="forms\TransperantForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="helpers\FunctionHelper.cs" />
     <Compile Include="keyboard\KeyHook.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
