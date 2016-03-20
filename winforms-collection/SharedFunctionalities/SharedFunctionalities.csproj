@@ -213,6 +213,8 @@
     <Compile Include="SmartTimer.cs" />
     <Compile Include="SmartUITimer.cs" />
     <Compile Include="TextPrediction.cs" />
+    <Compile Include="UiInterfaceHandlerPattern\UiHandleableBase.cs" />
+    <Compile Include="UiInterfaceHandlerPattern\UiToObjectHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
