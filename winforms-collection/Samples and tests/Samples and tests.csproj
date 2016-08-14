@@ -157,6 +157,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\CommonSenseCSharp\CommonSenseCSharp.csproj">
+      <Project>{F17A4DA7-B390-4AF9-AAE6-125406F7FDDB}</Project>
+      <Name>CommonSenseCSharp</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Graph\Graph.csproj">
       <Project>{E4CC63D8-127D-4BC9-80E0-CCB3E9DA06DC}</Project>
       <Name>Graph</Name>

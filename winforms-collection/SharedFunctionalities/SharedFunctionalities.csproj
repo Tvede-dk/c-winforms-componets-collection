@@ -232,6 +232,12 @@
   <ItemGroup>
     <None Include="Resources\topleveldomains.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\CommonSenseCSharp\CommonSenseCSharp.csproj">
+      <Project>{f17a4da7-b390-4af9-aae6-125406f7fddb}</Project>
+      <Name>CommonSenseCSharp</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

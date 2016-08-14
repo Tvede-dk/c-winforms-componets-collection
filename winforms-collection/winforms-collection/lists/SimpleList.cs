@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CommonSenseCSharp.datastructures;
 
 namespace winforms_collection {
     public partial class SimpleList : UserControl {
@@ -54,8 +55,8 @@ namespace winforms_collection {
             }
         }
 
-        public List<T> GetData<T>() {
-            return data.Cast<T>().ToList();
+        public NonNullList<T> GetData<T>() {
+            return new NonNullList<T>(data.Cast<T>());
         }
 
         private Action<object, int> onSelectionChangedCallback;
@@ -129,7 +130,8 @@ namespace winforms_collection {
             onRenderCallback = new Func<object, ListViewItem>((object obj) => { return onRender?.Invoke((T)obj); });//wrap it around.
         }
 
-        private Func<object, ListViewItem> onRenderCallback = (object obj) => {
+        private Func<object, ListViewItem> onRenderCallback = (object obj) =>
+        {
             return new ListViewItem(obj.ToString());
         };
 
