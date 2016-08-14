@@ -109,6 +109,10 @@ namespace winforms_collection {
             onAddCallback = onAddHandler;
         }
 
+        public void onAddClick() {
+            onAddCallback?.Invoke();
+        }
+
         private Action onAddCallback = null;
 
         public void onEdit<T>(Action<T, int> onEditHandler) {
