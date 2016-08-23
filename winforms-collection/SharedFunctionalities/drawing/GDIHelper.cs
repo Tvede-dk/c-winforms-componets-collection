@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.Permissions;
-using System.Text;
-using System.Threading.Tasks;
 
 public static class GDIHelper {
     private const uint SRCCOPY = 0x00CC0020;

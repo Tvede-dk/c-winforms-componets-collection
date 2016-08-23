@@ -1,17 +1,10 @@
 ﻿using SharedFunctionalities;
-using SharedFunctionalities.drawing;
 using SharedFunctionalities.drawing.layers;
 using SharedFunctionalities.drawing.layers.backgrounds;
 using SharedFunctionalities.forms;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace winforms_collection.advanced {

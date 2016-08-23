@@ -1,10 +1,5 @@
 ﻿using SharedFunctionalities;
 using SharedFunctionalities.drawing.layers.backgrounds;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace winforms_collection.advanced.Graph {

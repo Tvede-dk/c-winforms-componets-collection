@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Timers;
-using Timer = System.Timers.Timer;
-using winforms_collection.popup_boxes;
 using SharedFunctionalities;
 
 namespace winforms_collection {

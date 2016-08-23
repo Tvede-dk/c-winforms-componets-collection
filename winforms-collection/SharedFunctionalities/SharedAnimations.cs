@@ -1,9 +1,7 @@
-﻿using SharedFunctionalities;
-using System;
+﻿using System;
 using System.Timers;
 
 using System.Windows.Forms;
-using System.Management;
 using System.Drawing;
 using Microsoft.Win32;
 using SharedFunctionalities.forms;

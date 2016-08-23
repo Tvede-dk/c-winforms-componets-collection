@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SharedFunctionalities.UiInterfaceHandlerPattern {
+﻿namespace SharedFunctionalities.UiInterfaceHandlerPattern {
     /// <summary>
     /// intention: to be able to pair a ui with an object of a required / given type.
     /// </summary>
