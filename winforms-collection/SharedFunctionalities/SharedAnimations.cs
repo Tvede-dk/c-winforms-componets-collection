@@ -37,9 +37,9 @@ namespace SharedFunctionalities {
         /// <returns> null if unable to start animation. otherwise the ui timer </returns>
         public static SmartUITimer animateProperty(Control ui, int fromValue, int toValue, int durationInMs, Action<int> callbackWithDifference, Action onCompleted)  {
             if (ui != null && ui.IsHandleCreated) {
-                int newSizeDiff = toValue - fromValue;
-                int numOfSteps = getNumberOfFramesByTimeAndFps(durationInMs, fps);
-                int difference = (int)(newSizeDiff / (float)(numOfSteps + 1));
+                var newSizeDiff = toValue - fromValue;
+                var numOfSteps = getNumberOfFramesByTimeAndFps(durationInMs, fps);
+                var difference = (int)(newSizeDiff / (float)(numOfSteps + 1));
                 return startTimer(durationInMs, () => {
                     callbackWithDifference(difference);
                 }, onCompleted, ui);
@@ -49,9 +49,9 @@ namespace SharedFunctionalities {
 
         public static void animateWidth(Control ui, int animateTo, int displayTimeInMs, Action onCompleted) {
             if (ui != null && ui.IsHandleCreated) {
-                int newSizeDiff = animateTo - ui.Width;
-                int numOfSteps = getNumberOfFramesByTimeAndFps(displayTimeInMs, fps);
-                int difference = (int)(newSizeDiff / (float)(numOfSteps + 1));
+                var newSizeDiff = animateTo - ui.Width;
+                var numOfSteps = getNumberOfFramesByTimeAndFps(displayTimeInMs, fps);
+                var difference = (int)(newSizeDiff / (float)(numOfSteps + 1));
                 startTimer(displayTimeInMs, () => {
                     ui.Width += (int)difference;
                 }, onCompleted, ui);
@@ -112,9 +112,9 @@ namespace SharedFunctionalities {
         #region fade effects 
         public static void fadeIn(Form f, int displayTimeInMs, Action after, float maxVal = 1f, float startVal = 0f) {
             if (f != null && f.IsHandleCreated) {
-                int numOfSteps = getNumberOfFramesByTimeAndFps(displayTimeInMs, fps);
+                var numOfSteps = getNumberOfFramesByTimeAndFps(displayTimeInMs, fps);
                 f.BeginInvoke((MethodInvoker)(() => { f.Opacity = startVal; }));
-                float difference = maxVal / (float)numOfSteps;
+                var difference = maxVal / (float)numOfSteps;
                 startTimer(displayTimeInMs, () => {
                     f.Opacity += difference;
                 }, after, f);
@@ -127,8 +127,8 @@ namespace SharedFunctionalities {
                     startVal = (float)f.Opacity;
                 }
                 f.BeginInvoke((MethodInvoker)(() => { f.Opacity = startVal; }));
-                int numOfSteps = getNumberOfFramesByTimeAndFps(displayTimeInMs, fps);
-                double diff = minVal / (double)numOfSteps;
+                var numOfSteps = getNumberOfFramesByTimeAndFps(displayTimeInMs, fps);
+                var diff = minVal / (double)numOfSteps;
                 startTimer(displayTimeInMs, () => {
                     f.Opacity -= diff;
                 }, after, f);
@@ -141,9 +141,9 @@ namespace SharedFunctionalities {
 
         public static void expandY(Form f, int displayTimeInMs, Action after, int newSizeY) {
             if (f != null && f.IsHandleCreated) {
-                int newSizeDiff = newSizeY - f.Height;
-                int numOfSteps = getNumberOfFramesByTimeAndFps(displayTimeInMs, fps);
-                int difference = (int)(newSizeDiff / (float)(numOfSteps + 1));
+                var newSizeDiff = newSizeY - f.Height;
+                var numOfSteps = getNumberOfFramesByTimeAndFps(displayTimeInMs, fps);
+                var difference = (int)(newSizeDiff / (float)(numOfSteps + 1));
                 startTimer(displayTimeInMs, () => {
                     f.Height += (int)difference;
                 }, after, f);
@@ -152,8 +152,8 @@ namespace SharedFunctionalities {
 
         public static void collapsY(Form f, int displayTimeInMs, Action after, int newSizeY) {
             if (f != null && f.IsHandleCreated) {
-                int numOfSteps = getNumberOfFramesByTimeAndFps(displayTimeInMs, fps);
-                float difference = newSizeY / (float)(numOfSteps + 1);
+                var numOfSteps = getNumberOfFramesByTimeAndFps(displayTimeInMs, fps);
+                var difference = newSizeY / (float)(numOfSteps + 1);
                 startTimer(displayTimeInMs, () => {
                     f.Height -= (int)difference;
                 }, after, f);
@@ -162,8 +162,8 @@ namespace SharedFunctionalities {
 
         #region internal calculation
         private static SmartUITimer startTimer(int displayTimeInMs, Action handler, Action after, Control con) {
-            int numOfSteps = getNumberOfFramesByTimeAndFps(displayTimeInMs, fps);
-            SmartUITimer timer = new SmartUITimer(con) { repeate = true, interval = getIntervalFromFpsInMs(), counter = numOfSteps };
+            var numOfSteps = getNumberOfFramesByTimeAndFps(displayTimeInMs, fps);
+            var timer = new SmartUITimer(con) { repeate = true, interval = getIntervalFromFpsInMs(), counter = numOfSteps };
             timer.start((object sender, ElapsedEventArgs e, SmartTimer st) => { handler.Invoke(); }, after);
             return timer;
         }
@@ -198,8 +198,8 @@ namespace SharedFunctionalities {
         private static void cycleColorLightingWithTimerWithFunction(Func<Color, Boolean> onCycle, float cycleMax, float cycleMin, float increase, Color startColor, SmartTimer st) {
             st.repeate = true;
             st.interval = getIntervalFromFpsInMs();
-            float currentVal = cycleMin;
-            bool isGoingUp = false;
+            var currentVal = cycleMin;
+            var isGoingUp = false;
             st.start((object sender, ElapsedEventArgs args, SmartTimer timer) => {
 
                 handlecycleColorLightingValue(cycleMax, cycleMin, increase, ref currentVal, ref isGoingUp);
@@ -216,8 +216,8 @@ namespace SharedFunctionalities {
         }
 
         private static void cycleColorLightingWithTimerWithAction(Action<Color> onCycle, float cycleMax, float cycleMin, float increase, Color startColor, SmartTimer st, Action after = null) {
-            float currentVal = cycleMin;
-            bool isGoingUp = false;
+            var currentVal = cycleMin;
+            var isGoingUp = false;
             st.start((object sender, ElapsedEventArgs args, SmartTimer timer) => {
                 handlecycleColorLightingValue(cycleMax, cycleMin, increase, ref currentVal, ref isGoingUp);
                 onCycle(ControlPaint.Light(startColor, currentVal));

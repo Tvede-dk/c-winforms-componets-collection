@@ -50,10 +50,10 @@ namespace SharedFunctionalities.drawing.layers.backgrounds {
         }
 
         public override void doDraw(Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect) {
-            Stopwatch watch = new Stopwatch();
+            var watch = new Stopwatch();
             watch.Start();
             Rectangle newRec = wholeComponent;
-            int maxVal = Math.Max(wholeComponent.Width, wholeComponent.Height);
+            var maxVal = Math.Max(wholeComponent.Width, wholeComponent.Height);
             //if ((maxVal / SpaceBetween) <= 16) {
             //    g.Clear(Color.White);
             //    drawGridOnGraphics(g, wholeComponent.Width, wholeComponent.Height);
@@ -75,8 +75,8 @@ namespace SharedFunctionalities.drawing.layers.backgrounds {
 
         private Bitmap createPattern() {
             #region a far, close, and standard distance mode based on simple benchmarking.
-            int preFactor = 10;
-            int divisionFactor = 20;
+            var preFactor = 10;
+            var divisionFactor = 20;
             if (SpaceBetween > 150) {
                 preFactor = 8;
             }
@@ -84,13 +84,13 @@ namespace SharedFunctionalities.drawing.layers.backgrounds {
                 preFactor = 20;
             }
             #endregion
-            int totalSize = (preFactor * SpaceBetween) - ((SpaceBetween * SpaceBetween) / divisionFactor);
+            var totalSize = (preFactor * SpaceBetween) - ((SpaceBetween * SpaceBetween) / divisionFactor);
             totalSize = totalSize - (totalSize % SpaceBetween);
             totalSize = Math.Max(totalSize, SpaceBetween);
-            Bitmap pattern = new Bitmap((int)((totalSize)), (int)((totalSize)), PixelFormat.Format32bppPArgb);
+            var pattern = new Bitmap((int)((totalSize)), (int)((totalSize)), PixelFormat.Format32bppPArgb);
             using (var gg = Graphics.FromImage(pattern)) {
 
-                Stopwatch sw = new Stopwatch();
+                var sw = new Stopwatch();
                 sw.Start();
                 gg.Clear(Color.White);
                 drawGridOnGraphics(gg, totalSize, totalSize);
@@ -103,11 +103,11 @@ namespace SharedFunctionalities.drawing.layers.backgrounds {
 
         private void drawGridOnGraphics(Graphics gg, int width, int height) {
 
-            Pen blackPen = new Pen(Color.Black, lineSize);
-            for (int i = 0; i < Math.Ceiling((double)height / (double)SpaceBetween); i++) {
+            var blackPen = new Pen(Color.Black, lineSize);
+            for (var i = 0; i < Math.Ceiling((double)height / (double)SpaceBetween); i++) {
                 gg.DrawLine(Pens.Black, 0, SpaceBetween * i, width, SpaceBetween * i);
             }
-            for (int i = 0; i < Math.Ceiling((double)width / (double)SpaceBetween); i++) {
+            for (var i = 0; i < Math.Ceiling((double)width / (double)SpaceBetween); i++) {
                 gg.DrawLine(Pens.Black, SpaceBetween * i, 0, SpaceBetween * i, height);
             }
         }

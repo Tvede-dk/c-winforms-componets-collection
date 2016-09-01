@@ -94,7 +94,7 @@ namespace winforms_collection.powerAssist {
         }
 
         private void showTo(Control testControl, PowerAssistBox form) {
-            int margin = form.Margin;
+            var margin = form.Margin;
             var inner = testControl.PointToScreen(Point.Empty);
             var where = form.WhereToDisplayAt;
             switch (where) {

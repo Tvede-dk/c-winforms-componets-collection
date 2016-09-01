@@ -147,10 +147,10 @@ namespace SharedFunctionalities.keyboard {
         /// <returns></returns>
         public int hookProc(int code, int wParam, ref keyboardHookStruct lParam) {
             if (code >= 0) {
-                Keys key = (Keys)lParam.vkCode;
+                var key = (Keys)lParam.vkCode;
                 key = handleModifiers(key);
                 if (keyToAction.ContainsKey(key)) {
-                    KeyEventArgs kea = new KeyEventArgs(key);
+                    var kea = new KeyEventArgs(key);
                     if ((wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN)) {
 
                         onKeyDown(this, kea);

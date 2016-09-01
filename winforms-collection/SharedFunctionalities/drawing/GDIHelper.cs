@@ -54,9 +54,9 @@ public static class GDIHelper {
     [SecurityPermission(SecurityAction.Assert, Flags =
        SecurityPermissionFlag.UnmanagedCode)]
     public static void bitbltRepeat(this Bitmap bmp, Graphics grDest, int desiredWith, int desiredHeight, int offsetX = 0, int offsetY = 0) {
-        int height = bmp.Height;
-        int width = bmp.Width;
-        using (Graphics grSrc = Graphics.FromImage(bmp)) {
+        var height = bmp.Height;
+        var width = bmp.Width;
+        using (var grSrc = Graphics.FromImage(bmp)) {
             IntPtr hdcDest = IntPtr.Zero;
             IntPtr hdcSrc = IntPtr.Zero;
             IntPtr hBitmap = IntPtr.Zero;
@@ -68,8 +68,8 @@ public static class GDIHelper {
                 hOldObject = SelectObject(hdcSrc, hBitmap);
                 if (hOldObject == IntPtr.Zero)
                     throw new Win32Exception();
-                for (int i = 0; i < Math.Ceiling(desiredHeight / (double)height) + 1; i++) {
-                    for (int j = 0; j < Math.Ceiling(desiredWith / (double)width); j++) {
+                for (var i = 0; i < Math.Ceiling(desiredHeight / (double)height) + 1; i++) {
+                    for (var j = 0; j < Math.Ceiling(desiredWith / (double)width); j++) {
                         BitBlt(hdcDest, width * j, height * i, width, height,
                         hdcSrc, 0, 0, 0x00CC0020U);
                     }

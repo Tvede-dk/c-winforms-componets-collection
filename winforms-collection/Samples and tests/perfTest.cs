@@ -17,7 +17,7 @@ namespace Samples_and_tests {
             //timer.start( ( object obj, System.Timers.ElapsedEventArgs args, SmartTimer st ) => {
             //    this.Width++;
             //}, () => { } );
-            SmartUITimer timer = new SmartUITimer(this);
+            var timer = new SmartUITimer(this);
             timer.repeate = true;
             timer.counter = 250;
             timer.interval = 8;

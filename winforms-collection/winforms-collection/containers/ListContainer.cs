@@ -88,7 +88,7 @@ namespace winforms_collection.containers {
         private void HeightWeight_ListChanged( object sender, ListChangedEventArgs e ) {
 
             WeightHeight1Weight = 0;
-            int counter = 0;
+            var counter = 0;
             foreach ( var item in heightWeight ) {
                 if ( item == 0 ) {
                     if ( DirectionHorizontal ) {
@@ -136,7 +136,7 @@ namespace winforms_collection.containers {
 
             if ( DirectionHorizontal ) {
                 if ( SplitHeight > 0 && Width > minSplitHeight || heightWeight.Count > 0 ) {
-                    int newWidth = 10;
+                    var newWidth = 10;
                     var ctrolIndex = Controls.GetChildIndex( item );
                     if ( heightWeight != null && heightWeight.Count > ctrolIndex ) {
                         if ( heightWeight[ctrolIndex] > 0 ) {
@@ -156,7 +156,7 @@ namespace winforms_collection.containers {
                 item.Dock = DockStyle.Left;
             } else {
                 if ( SplitHeight > 0 && Height > minSplitHeight || heightWeight.Count > 0 ) {
-                    int newHeight = 10;
+                    var newHeight = 10;
                     var ctrolIndex = Controls.GetChildIndex( item );
                     if ( heightWeight != null && heightWeight.Count > ctrolIndex ) {
                         if ( heightWeight[ctrolIndex] > 0 ) {

@@ -26,7 +26,7 @@ namespace winforms_collection {
 
         private void handleLocation(Form parrent) {
             parrent.handleRemoteInvoke(() => {
-                Screen parrentScreen = Screen.FromControl(parrent);
+                var parrentScreen = Screen.FromControl(parrent);
                 this.handleRemoteInvoke(() => {
 
                     Rectangle screen = parrentScreen.Bounds;
@@ -34,7 +34,7 @@ namespace winforms_collection {
                     try {
                         this.Top = (work.Bottom - (this.Height * 2) - 25) - 50;
                         this.Left = work.Right - (screen.Width / 2) - (this.Width / 2);
-                        int nTaskBarHeight = screen.Bottom - parrentScreen.WorkingArea.Bottom;
+                        var nTaskBarHeight = screen.Bottom - parrentScreen.WorkingArea.Bottom;
                     } catch (Exception e) {
 
                     }

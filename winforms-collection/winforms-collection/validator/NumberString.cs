@@ -17,7 +17,7 @@ namespace winforms_collection.validator {
             if ( allowDecimal ) {
                 double d;
                 int i;
-                bool sucess = Double.TryParse( text, out d );
+                var sucess = Double.TryParse( text, out d );
                 if ( !sucess ) {
                     if ( int.TryParse( text, out i ) ) {
                         return true;

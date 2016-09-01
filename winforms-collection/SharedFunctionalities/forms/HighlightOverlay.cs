@@ -23,7 +23,7 @@ namespace SharedFunctionalities.forms {
         protected override void OnPaint( PaintEventArgs e ) {
             //base.OnPaint( e );
             if ( backgroundBrush == null ) {
-                LinearGradientBrush toUse = new LinearGradientBrush( ClientRectangle, Color.FromArgb( 255, 28, 28, 28 ), Color.FromArgb( 89, 89, 89 ), 90f, true );
+                var toUse = new LinearGradientBrush( ClientRectangle, Color.FromArgb( 255, 28, 28, 28 ), Color.FromArgb( 89, 89, 89 ), 90f, true );
                 toUse.SetBlendTriangularShape( 0.8f, 1.0f );
                 //toUse.SetBlendTriangularShape( 1f);
                 backgroundBrush = toUse;

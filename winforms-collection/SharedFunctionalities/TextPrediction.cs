@@ -25,7 +25,7 @@ public static class TextPrediction {
         var result = false;
         var strend = str.LastIndexOf(".");
         if (strend != -1 && str.Length > strend + 1) {
-            string possibleLevel = str.Substring(strend + 1);
+            var possibleLevel = str.Substring(strend + 1);
             result = toplevelDomains.Contains(possibleLevel, comparrer);
         }
         return result;

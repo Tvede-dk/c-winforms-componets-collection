@@ -8,15 +8,15 @@ namespace SharedFunctionalities.DragDrop {
     /// </summary>
     public class DragDropHandler {
         public bool GetFilename(out string filename, DragEventArgs e, Func<string, bool> validator) {
-            bool ret = false;
+            var ret = false;
             filename = String.Empty;
 
             if ((e.AllowedEffect & DragDropEffects.Copy) == DragDropEffects.Copy) {
-                Array data = ((IDataObject)e.Data).GetData("FileNameW") as Array;
+                var data = ((IDataObject)e.Data).GetData("FileNameW") as Array;
                 if (data != null) {
                     if ((data.Length == 1) && (data.GetValue(0) is String)) {
                         filename = ((string[])data)[0];
-                        string ext = Path.GetExtension(filename).ToLower();
+                        var ext = Path.GetExtension(filename).ToLower();
                         if (validator(ext)) {
                             ret = true;
                         }
@@ -42,7 +42,7 @@ namespace SharedFunctionalities.DragDrop {
 
         private void Control_DragDrop(object sender, DragEventArgs e) {
             string file;
-            bool valid = GetFilename(out file, e, validator);
+            var valid = GetFilename(out file, e, validator);
             if (valid) {
                 onDropValid(file);
             }
@@ -50,7 +50,7 @@ namespace SharedFunctionalities.DragDrop {
 
         private void Control_DragEnter(object sender, DragEventArgs e) {
             string file;
-            bool valid = GetFilename(out file, e, validator);
+            var valid = GetFilename(out file, e, validator);
             if (valid) {
                 e.Effect = DragDropEffects.Copy;
             }

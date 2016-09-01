@@ -63,7 +63,7 @@ namespace winforms_collection {
             //TODO make in another thread
             if (!validate()) {
                 var loc = PointToScreen(Point.Empty);
-                Point displayPoint = new Point(loc.X + Width, loc.Y);
+                var displayPoint = new Point(loc.X + Width, loc.Y);
                 popup_boxes.NotificationBar.showAtLocation(validator.getErrorMessage(), displayPoint);
             }
         }
@@ -85,7 +85,7 @@ namespace winforms_collection {
         }
 
         protected override void OnKeyDown(KeyEventArgs e) {
-            bool handled = false;
+            var handled = false;
             #region ctrl + back => delete word
             if (e.Control && e.KeyCode == Keys.Back) {
                 handled = true;
@@ -101,8 +101,8 @@ namespace winforms_collection {
             if (e.KeyCode == Keys.Delete && e.Shift) {
                 handled = true;
                 if (this.Multiline) {
-                    int preStart = SelectionStart;
-                    int lineIndex = GetLineFromCharIndex(preStart);
+                    var preStart = SelectionStart;
+                    var lineIndex = GetLineFromCharIndex(preStart);
                     Lines = SharedFunctionalities.SharedStringUtils.removeIndexFromArray(Lines, lineIndex);
                     SelectionStart = Math.Max(GetFirstCharIndexFromLine(lineIndex), preStart - 1);
                 } else {
@@ -116,13 +116,13 @@ namespace winforms_collection {
                 handled = true;
             }
             if (e.KeyCode == Keys.Down && e.Control && e.Shift && Multiline) {
-                int lineIndex = getCurrentLine();
+                var lineIndex = getCurrentLine();
                 this.Lines = SharedFunctionalities.SharedStringUtils.insertValueIntoIndexInArray(Lines, Lines[GetLineFromCharIndex(SelectionStart)], GetLineFromCharIndex(SelectionStart));
                 setCurrentLine(lineIndex + 1);
                 handled = true;
             }
             if (e.KeyCode == Keys.Up && e.Control && e.Shift && Multiline) {
-                int lineIndex = getCurrentLine();
+                var lineIndex = getCurrentLine();
                 this.Lines = SharedFunctionalities.SharedStringUtils.insertValueIntoIndexInArray(Lines, Lines[GetLineFromCharIndex(SelectionStart)], GetLineFromCharIndex(SelectionStart));
                 setCurrentLine(lineIndex - 1);
                 handled = true;
@@ -145,9 +145,9 @@ namespace winforms_collection {
         }
 
         public void deleteFromCursorToLeftWord() {
-            int end = SelectionStart;
-            int lineStart = GetFirstCharIndexOfCurrentLine();
-            int start = Text.LastIndexOf(' ', end - 1);
+            var end = SelectionStart;
+            var lineStart = GetFirstCharIndexOfCurrentLine();
+            var start = Text.LastIndexOf(' ', end - 1);
 
             if (start == -1) {
                 start = 0;

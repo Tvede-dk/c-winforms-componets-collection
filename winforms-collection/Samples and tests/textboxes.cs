@@ -9,7 +9,7 @@ namespace Samples_and_tests {
     public partial class textboxes : Form {
         public textboxes() {
             InitializeComponent();
-            Timer t = new Timer();
+            var t = new Timer();
             t.Interval = 500;
             t.Enabled = true;
             t.Start();
@@ -51,7 +51,7 @@ namespace Samples_and_tests {
             GC.Collect();
 
             watch.Start();
-            for ( int i = 0; i < iterations; i++ ) {
+            for ( var i = 0; i < iterations; i++ ) {
                 func();
             }
             watch.Stop();
@@ -70,7 +70,7 @@ namespace Samples_and_tests {
         private void button3_Click( object sender, EventArgs e ) {
 
             string[] lines = sTextbox6.Lines;
-            int indexInWordList = (int)numericUpDown1.Value;
+            var indexInWordList = (int)numericUpDown1.Value;
             string[] result = new string[lines.Length];
             char[] split = new char[] { ' ', ',' };
             Parallel.For( 0, lines.Length,
@@ -85,11 +85,11 @@ namespace Samples_and_tests {
 
         private void button4_Click( object sender, EventArgs e ) {
 
-            double mult = profile( 1, () => {
+            var mult = profile( 1, () => {
                 SharedFunctionalities.SharedStringUtils.innerWorkings.splitStringFast( winforms_collection.Properties.Resources.names, Environment.NewLine, StringSplitOptions.None );
             } );
 
-            double single = profile( 1, () => {
+            var single = profile( 1, () => {
                 winforms_collection.Properties.Resources.names.Split( new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries );
             } );
             MessageBox.Show( "mult" + mult + ", single" + single );

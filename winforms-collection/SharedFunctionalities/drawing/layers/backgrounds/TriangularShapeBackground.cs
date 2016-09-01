@@ -35,7 +35,7 @@ namespace SharedFunctionalities.drawing.layers.backgrounds {
 
 
         public override void doDraw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
-            using (LinearGradientBrush toUse = new LinearGradientBrush( wholeComponent, startColor, endColor, 90f, true )) {
+            using (var toUse = new LinearGradientBrush( wholeComponent, startColor, endColor, 90f, true )) {
                 toUse.SetBlendTriangularShape( 0.5f, 1.0f );
                 g.FillRectangle( toUse, wholeComponent );
             }

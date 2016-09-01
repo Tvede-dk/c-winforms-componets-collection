@@ -18,19 +18,6 @@ namespace winforms_collection.advanced.dropdown {
 
         }
 
-
-
-        #region property BorderColor
-        private Color _BorderColor;
-
-
-        public Color BorderColor {
-            get { return _BorderColor; }
-            set { _BorderColor = value; }
-        }
-        #endregion
-
-
         #region back color and brush
 
         public override Color BackColor {

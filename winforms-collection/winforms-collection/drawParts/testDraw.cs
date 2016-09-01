@@ -13,7 +13,7 @@ namespace winforms_collection.drawParts {
         public testDraw() {
             SetStyle( ControlStyles.SupportsTransparentBackColor | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.CacheText | ControlStyles.ResizeRedraw | ControlStyles.UserPaint, true );
             //drawer.addLayer( new backgroundDrawer() );
-            StringFormat format = new StringFormat();
+            var format = new StringFormat();
             format.LineAlignment = StringAlignment.Center;
             format.Alignment = StringAlignment.Center;
             //drawer.addLayer( new TextDrawer( Text, Font, Brushes.Black, format ) );

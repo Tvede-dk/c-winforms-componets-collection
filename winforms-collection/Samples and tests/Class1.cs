@@ -27,19 +27,19 @@ namespace MyNamespace {
         float second;
         public MyForm() {
             bitmap = new Bitmap( 55, 55 );
-            Graphics a = Graphics.FromImage( bitmap );
+            var a = Graphics.FromImage( bitmap );
             a.Clear( BackColor );
             a.FillEllipse( Brushes.Red, 21, 21, 34, 34 );
             a.Dispose();
         }
         void FirstAlternative( Graphics a ) {
-            for ( int i = 0; i < A_BIG_NUMBER; i++ ) {
+            for ( var i = 0; i < A_BIG_NUMBER; i++ ) {
                 a.DrawImage( bitmap, 0, 0 );
             }
         }
         void SecondAlternative( Graphics a ) {
             System.IntPtr intptr = a.GetHdc();
-            for ( int i = 0; i < A_BIG_NUMBER; i++ ) {
+            for ( var i = 0; i < A_BIG_NUMBER; i++ ) {
                 BitBlt( intptr, 55, 0, 55, 55, intptr, 0, 0, 13369376 );
             }
             a.ReleaseHdc( intptr );

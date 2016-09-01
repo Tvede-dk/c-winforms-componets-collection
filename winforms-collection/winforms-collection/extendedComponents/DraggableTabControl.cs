@@ -41,7 +41,7 @@ namespace winforms_collection.extendedComponents {
         protected override void OnDragOver(System.Windows.Forms.DragEventArgs e) {
             base.OnDragOver(e);
 
-            Point pt = new Point(e.X, e.Y);
+            var pt = new Point(e.X, e.Y);
             //We need client coordinates.
             pt = PointToClient(pt);
 
@@ -53,17 +53,17 @@ namespace winforms_collection.extendedComponents {
                 //Make sure there is a TabPage being dragged.
                 if (e.Data.GetDataPresent(typeof(TabPage))) {
                     e.Effect = DragDropEffects.Move;
-                    TabPage drag_tab = (TabPage)e.Data.GetData(typeof(TabPage));
+                    var drag_tab = (TabPage)e.Data.GetData(typeof(TabPage));
 
-                    int item_drag_index = FindIndex(drag_tab);
-                    int drop_location_index = FindIndex(hover_tab);
+                    var item_drag_index = FindIndex(drag_tab);
+                    var drop_location_index = FindIndex(hover_tab);
 
                     //Don't do anything if we are hovering over ourself.
                     if (item_drag_index != drop_location_index) {
-                        ArrayList pages = new ArrayList();
+                        var pages = new ArrayList();
 
                         //Put all tab pages into an array.
-                        for (int i = 0; i < TabPages.Count; i++) {
+                        for (var i = 0; i < TabPages.Count; i++) {
                             //Except the one we are dragging.
                             if (i != item_drag_index)
                                 pages.Add(TabPages[i]);
@@ -90,7 +90,7 @@ namespace winforms_collection.extendedComponents {
         protected override void OnMouseDown(MouseEventArgs e) {
             base.OnMouseDown(e);
             if (e.Button == MouseButtons.Left) {
-                Point pt = new Point(e.X, e.Y);
+                var pt = new Point(e.X, e.Y);
                 TabPage tp = GetTabPageByTab(pt);
 
                 if (tp != null) {
@@ -107,7 +107,7 @@ namespace winforms_collection.extendedComponents {
         private TabPage GetTabPageByTab(Point pt) {
             TabPage tp = null;
 
-            for (int i = 0; i < TabPages.Count; i++) {
+            for (var i = 0; i < TabPages.Count; i++) {
                 if (GetTabRect(i).Contains(pt)) {
                     tp = TabPages[i];
                     break;
@@ -123,7 +123,7 @@ namespace winforms_collection.extendedComponents {
         /// <param name="page">The TabPage we want the index for.</param>
         /// <returns>The index of the given TabPage(-1 if it isn't found.)</returns>
         private int FindIndex(TabPage page) {
-            for (int i = 0; i < TabPages.Count; i++) {
+            for (var i = 0; i < TabPages.Count; i++) {
                 if (TabPages[i] == page)
                     return i;
             }

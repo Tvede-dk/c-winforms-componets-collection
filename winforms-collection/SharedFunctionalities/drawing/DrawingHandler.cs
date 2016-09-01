@@ -29,17 +29,17 @@ namespace SharedFunctionalities.drawing {
         private void doDraw(Graphics g, Rectangle wholeComponent, Rectangle clipRect) {
 
             var orgRectangle = new Rectangle(wholeComponent.X, wholeComponent.Y, wholeComponent.Width, wholeComponent.Height);
-            int startDrawAt = useCommCache(g, orgRectangle, false);
+            var startDrawAt = useCommCache(g, orgRectangle, false);
 
             if (allowCommCache && (commCacheBitmap == null || startDrawAt == 0)) {
                 //make cache
                 createCommCache(orgRectangle);
                 startDrawAt = useCommCache(g, orgRectangle, true);
             }
-            for (int i = startDrawAt; i < layers.Count; i++) {
+            for (var i = startDrawAt; i < layers.Count; i++) {
                 var drawer = layers[i];
                 if (drawer.mayDraw()) {
-                    Stopwatch sw = new Stopwatch();
+                    var sw = new Stopwatch();
                     sw.Start();
                     drawLayer(g, ref wholeComponent, ref clipRect, i, orgRectangle);
                     sw.Stop();
@@ -57,7 +57,7 @@ namespace SharedFunctionalities.drawing {
         }
 
         public void draw(Graphics g, Rectangle wholeComponent, Rectangle clipRect) {
-            Stopwatch sw = new Stopwatch();
+            var sw = new Stopwatch();
             sw.Start();
             doDraw(g, wholeComponent, clipRect);
             sw.Stop();
@@ -72,7 +72,7 @@ namespace SharedFunctionalities.drawing {
 
         private int useCommCache(Graphics g, Rectangle orgRectangle, bool mayInvalidate) {
             if (notInvalidatedFor > 10) {
-                int startDrawAt = 0; //skip unnessary parts.
+                var startDrawAt = 0; //skip unnessary parts.
                 if (allowCommCache && commCacheBitmap != null && backPartsDepth > 0 && validateCommCache()) {
                     g.DrawImage(commCacheBitmap, orgRectangle);
                     startDrawAt = backPartsDepth;//use this instead.
@@ -108,7 +108,7 @@ namespace SharedFunctionalities.drawing {
         }
 
         private bool validateCommCache() {
-            for (int i = 0; i < backPartsDepth; i++) {
+            for (var i = 0; i < backPartsDepth; i++) {
                 if (haveChanged(i)) {
                     invalidate();
                     return false;

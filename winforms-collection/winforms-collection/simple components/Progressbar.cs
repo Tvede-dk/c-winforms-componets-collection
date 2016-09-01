@@ -242,8 +242,8 @@ namespace winforms_collection.simple_components {
             if ( (timerCount * MOVING_PIXLES_FRAME) - flashbarWidth >= (ClientRectangle.Width * progressInProcent / 100) ) {
                 timerCount = 0;
             }
-            int maxInvalidTo = (int)(ClientRectangle.Width * ((float)Math.Max( 60, progressInProcent ) / 100f));
-            Rectangle maxInvalid = new Rectangle( borderSize, borderSize, maxInvalidTo, Height - (borderSize * 2) );
+            var maxInvalidTo = (int)(ClientRectangle.Width * ((float)Math.Max( 60, progressInProcent ) / 100f));
+            var maxInvalid = new Rectangle( borderSize, borderSize, maxInvalidTo, Height - (borderSize * 2) );
             this.Invalidate( maxInvalid );
         }
         private string _overlayText;
@@ -323,8 +323,8 @@ namespace winforms_collection.simple_components {
 
 
         private Rectangle calculateFilledPart() {
-            int procent = progressInProcent;
-            float endOfDrawing = ((ClientRectangle.Width * procent) / 100f);
+            var procent = progressInProcent;
+            var endOfDrawing = ((ClientRectangle.Width * procent) / 100f);
             Rectangle inner = ClientRectangle;
             inner.X = (int)borderSize;
             inner.Width = (int)endOfDrawing - (int)(borderSize * 2);
@@ -417,7 +417,7 @@ namespace winforms_collection.simple_components {
             public void draw( PaintEventArgs e, Progressbar prog ) {
                 Rectangle rf = prog.calculateFilledPart();
                 //determine if we can offload this calculation as well.
-                LinearGradientBrush linGrBrush = new LinearGradientBrush(
+                var linGrBrush = new LinearGradientBrush(
                   new Point( 0, 0 ),
                    new Point( (int)rf.Width + rf.X, 0 ),
                       prog.multiColorStart
@@ -430,7 +430,7 @@ namespace winforms_collection.simple_components {
             public void draw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
                 Rectangle rf = prog.calculateFilledPart();
                 //determine if we can offload this calculation as well.
-                LinearGradientBrush linGrBrush = new LinearGradientBrush(
+                var linGrBrush = new LinearGradientBrush(
                   new Point( 0, 0 ),
                    new Point( (int)rf.Width + rf.X, 0 ),
                       prog.multiColorStart
@@ -500,7 +500,7 @@ namespace winforms_collection.simple_components {
             }
 
             public void draw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
-                string toDislpay = "";
+                var toDislpay = "";
                 if ( prog.drawProcent ) {
                     toDislpay += prog.progressInProcent;
                 }
@@ -550,7 +550,7 @@ namespace winforms_collection.simple_components {
                 Rectangle inner = prog.calculateFilledPart();
                 inner.Height -= 4;
                 inner.Y += 2; //it looks so much more cool.. 
-                int timerVal = prog.timerCount;
+                var timerVal = prog.timerCount;
                 Rectangle high = inner;
                 high.Width = prog.flashbarWidth;
 

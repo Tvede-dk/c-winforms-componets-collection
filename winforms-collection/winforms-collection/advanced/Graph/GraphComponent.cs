@@ -28,7 +28,7 @@ namespace winforms_collection.advanced.Graph {
 
         protected override void OnMouseWheel( MouseEventArgs e ) {
             base.OnMouseWheel( e );
-            int zoom = e.Delta / WHEEL_DELTA;
+            var zoom = e.Delta / WHEEL_DELTA;
             if ( spaceBetween + zoom > 5 && spaceBetween + zoom < 200 ) {
                 spaceBetween += zoom;
             }
