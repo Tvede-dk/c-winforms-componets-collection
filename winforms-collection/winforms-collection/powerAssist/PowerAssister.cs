@@ -7,107 +7,107 @@ namespace winforms_collection.powerAssist {
     public class PowerAssister {
 
         public enum DisplayToControl {
-            LEFT, RIGHT, TOP, BOTTOM
+            Left, Right, Top, Bottom
         }
 
 
         #region property Margin
-        private int _Margin;
+        private int _margin;
 
 
         public int Margin {
-            get { return _Margin; }
-            set { _Margin = value; }
+            get { return _margin; }
+            set { _margin = value; }
         }
         #endregion
 
-        private List<PowerAssistBox> shownBoxes {
+        private List<PowerAssistBox> ShownBoxes {
             get {
-                return controlToShownBox.Values.ToList();
+                return _controlToShownBox.Values.ToList();
             }
 
         }
 
 
-        private bool haveShown = false;
+        private bool _haveShown = false;
 
 
-        private Dictionary<Control, PowerAssistBox> controlToShownBox = new Dictionary<Control, PowerAssistBox>(4);
+        private readonly Dictionary<Control, PowerAssistBox> _controlToShownBox = new Dictionary<Control, PowerAssistBox>(4);
 
-        private Dictionary<Keys, Control> focusDict = new Dictionary<Keys, Control>(4);
+        private readonly Dictionary<Keys, Control> _focusDict = new Dictionary<Keys, Control>(4);
 
 
-        public void show() {
-            if (haveShown) {
+        public void Show() {
+            if (_haveShown) {
                 return;
             }
-            haveShown = true;
-            foreach (var item in controlToShownBox.ToList()) {
+            _haveShown = true;
+            foreach (var item in _controlToShownBox.ToList()) {
                 //configure.
-                show(item.Key, item.Value);
+                Show(item.Key, item.Value);
                 item.Value.ShowInactiveTopmost();
-                SharedFunctionalities.SharedAnimations.fadeIn(item.Value, 150, null);
+                SharedFunctionalities.SharedAnimations.FadeIn(item.Value, 150, null);
             }
         }
 
-        public void hide() {
-            if (haveShown == false) {
+        public void Hide() {
+            if (_haveShown == false) {
                 return;
             }
-            haveShown = false;
+            _haveShown = false;
 
-            foreach (var item in shownBoxes) {
+            foreach (var item in ShownBoxes) {
                 item.Hide();
             }
         }
 
-        public void highlight(Control control) {
-            if (controlToShownBox.ContainsKey(control)) {
-                controlToShownBox[control].highlight();
+        public void Highlight(Control control) {
+            if (_controlToShownBox.ContainsKey(control)) {
+                _controlToShownBox[control].Highlight();
             }
         }
-        public void removeHightligt(Control control) {
-            if (controlToShownBox.ContainsKey(control)) {
-                controlToShownBox[control].removeHighlight();
+        public void RemoveHightligt(Control control) {
+            if (_controlToShownBox.ContainsKey(control)) {
+                _controlToShownBox[control].RemoveHighlight();
             }
         }
 
 
 
-        private void show(Control testControl, PowerAssistBox form) {
+        private void Show(Control testControl, PowerAssistBox form) {
             testControl.Move += (sender, e) => {
-                showTo(testControl, form);
+                ShowTo(testControl, form);
             };
 
             var pform = testControl.FindForm();
             if (pform != null) {
                 pform.Move += (sender, e) => {
-                    showTo(testControl, form);
+                    ShowTo(testControl, form);
                 };
                 pform.Resize += (sender, e) => {
-                    showTo(testControl, form);
+                    ShowTo(testControl, form);
                 };
             }
 
 
-            showTo(testControl, form);
+            ShowTo(testControl, form);
         }
 
-        private void showTo(Control testControl, PowerAssistBox form) {
+        private void ShowTo(Control testControl, PowerAssistBox form) {
             var margin = form.Margin;
             var inner = testControl.PointToScreen(Point.Empty);
             var where = form.WhereToDisplayAt;
             switch (where) {
-                case DisplayToControl.LEFT:
+                case DisplayToControl.Left:
                     inner.X -= (form.Width + margin);
                     break;
-                case DisplayToControl.RIGHT:
+                case DisplayToControl.Right:
                     inner.X += (testControl.Width + margin);
                     break;
-                case DisplayToControl.TOP:
+                case DisplayToControl.Top:
                     inner.Y -= (form.Height + margin);
                     break;
-                case DisplayToControl.BOTTOM:
+                case DisplayToControl.Bottom:
                     inner.Y += (testControl.Height + margin);
                     break;
                 default:
@@ -117,38 +117,38 @@ namespace winforms_collection.powerAssist {
         }
 
         public void Clear() {
-            controlToShownBox.Clear();
-            focusDict.Clear();
-            haveShown = false;
+            _controlToShownBox.Clear();
+            _focusDict.Clear();
+            _haveShown = false;
         }
 
-        public void AddControl(Control control, string text, Keys shortcutKey = Keys.None, DisplayToControl where = PowerAssister.DisplayToControl.RIGHT, int margin = 5) {
+        public void AddControl(Control control, string text, Keys shortcutKey = Keys.None, DisplayToControl where = PowerAssister.DisplayToControl.Right, int margin = 5) {
             var form = new PowerAssistBox(text);
             form.WhereToDisplayAt = where;
             form.Margin = margin;
             form.InnerShortcut = shortcutKey;
-            controlToShownBox.Add(control, form);
-            focusDict.Add(shortcutKey, control);
+            _controlToShownBox.Add(control, form);
+            _focusDict.Add(shortcutKey, control);
         }
 
         public void registerForKeyEventsHandler(KeyEventHandler keyDown, KeyEventHandler keyUp) {
-            foreach (var item in controlToShownBox) {
+            foreach (var item in _controlToShownBox) {
                 item.Key.KeyDown += keyDown;
                 item.Key.KeyUp += keyUp;
             }
         }
 
-        public void registerForKeysWithPreviewKey(Form form = null, Keys previewKey = Keys.Menu) {
-            foreach (var item in controlToShownBox) {
+        public void RegisterForKeysWithPreviewKey(Form form = null, Keys previewKey = Keys.Menu) {
+            foreach (var item in _controlToShownBox) {
                 item.Key.KeyDown += (object obj, KeyEventArgs e) => {
                     if (previewKey == e.KeyCode) {
                         if (form != null) {
                             form.ActiveControl = null;
                         }
                         e.Handled = true;
-                        show();
+                        Show();
                     }
-                    if (handleOnKeyPress(e.KeyData)) {
+                    if (HandleOnKeyPress(e.KeyData)) {
                         e.SuppressKeyPress = true;
                         e.Handled = true;
                     }
@@ -161,7 +161,7 @@ namespace winforms_collection.powerAssist {
                         }
                         e.Handled = true;
                         e.SuppressKeyPress = true;
-                        hide();
+                        Hide();
                     }
                 };
             }
@@ -171,16 +171,16 @@ namespace winforms_collection.powerAssist {
                     if (e.KeyCode.HasFlag(previewKey)) {
                         e.Handled = true;
                         e.SuppressKeyPress = true;
-                        hide();
+                        Hide();
                     }
                 };
-                form.Leave += (sender, theEvent) => { hide(); };
-                form.Deactivate += (sender, theEvent) => { hide(); };
+                form.Leave += (sender, theEvent) => { Hide(); };
+                form.Deactivate += (sender, theEvent) => { Hide(); };
             }
         }
 
 
-        private void trySetFocus(Control control) {
+        private void TrySetFocus(Control control) {
             var asComboBox = control as ComboBox;
             if (asComboBox != null) {
                 asComboBox.DroppedDown = true;
@@ -190,22 +190,22 @@ namespace winforms_collection.powerAssist {
             }
         }
 
-        public bool isVisable() {
-            return haveShown;
+        public bool IsVisable() {
+            return _haveShown;
         }
 
-        public void toogleVisable() {
-            if (isVisable()) {
-                hide();
+        public void ToogleVisable() {
+            if (IsVisable()) {
+                Hide();
             } else {
-                show();
+                Show();
             }
         }
 
-        public bool handleOnKeyPress(Keys keyData) {
-            if (focusDict.ContainsKey(keyData)) {
-                trySetFocus(focusDict[keyData]);
-                hide();
+        public bool HandleOnKeyPress(Keys keyData) {
+            if (_focusDict.ContainsKey(keyData)) {
+                TrySetFocus(_focusDict[keyData]);
+                Hide();
                 return true;
             }
             return false;

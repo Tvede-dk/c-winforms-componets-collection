@@ -2,19 +2,19 @@
 
 namespace winforms_collection.validator {
     public class NumberString : IValidatorType {
-        public bool allowDecimal { get; set; }
-        public bool allowInt { get; set; }
+        public bool AllowDecimal { get; set; }
+        public bool AllowInt { get; set; }
 
 
-        private String errorMsg;
+        private String _errorMsg;
 
 
 
         #region IValidatorType Members
 
         public bool Validate( string text ) {
-            errorMsg = "unknown error";
-            if ( allowDecimal ) {
+            _errorMsg = "unknown error";
+            if ( AllowDecimal ) {
                 double d;
                 int i;
                 var sucess = Double.TryParse( text, out d );
@@ -22,18 +22,18 @@ namespace winforms_collection.validator {
                     if ( int.TryParse( text, out i ) ) {
                         return true;
                     } else {
-                        errorMsg = "Not a number";
+                        _errorMsg = "Not a number";
                         return false;
                     }
                 } else {
                     return true;
                 }
-            } else if ( allowInt ) {
+            } else if ( AllowInt ) {
                 int i;
                 if ( int.TryParse( text, out i ) ) {
                     return true;
                 } else {
-                    errorMsg = "Not a number";
+                    _errorMsg = "Not a number";
                     return false;
                 }
             } else {
@@ -42,8 +42,8 @@ namespace winforms_collection.validator {
             }
         }
 
-        public string getErrorMessage() {
-            return errorMsg;
+        public string GetErrorMessage() {
+            return _errorMsg;
         }
 
 

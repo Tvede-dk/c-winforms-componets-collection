@@ -5,32 +5,33 @@ using System.Windows.Forms;
 namespace winforms_collection.advanced.Graph {
     public class GraphComponent : CustomControl {
 
-        private const int WHEEL_DELTA = 120;
+        private const int WheelDelta = 120;
 
 
         #region property spaceBetween
 
-        public int spaceBetween {
-            get { return back.SpaceBetween; }
+        public int SpaceBetween {
+            get { return _back.SpaceBetween; }
             set {
-                back.SpaceBetween = value;
+                _back.SpaceBetween = value;
                 Invalidate();
             }
         }
         #endregion
-        GridBackground back = new GridBackground();
+
+        readonly GridBackground _back = new GridBackground();
 
         public GraphComponent() {
-            DrawHandler.removeLayer( 0 );
-            DrawHandler.addLayer( back );
-            DrawHandler.disableCommCache();
+            DrawHandler.RemoveLayer( 0 );
+            DrawHandler.AddLayer( _back );
+            DrawHandler.DisableCommCache();
         }
 
         protected override void OnMouseWheel( MouseEventArgs e ) {
             base.OnMouseWheel( e );
-            var zoom = e.Delta / WHEEL_DELTA;
-            if ( spaceBetween + zoom > 5 && spaceBetween + zoom < 200 ) {
-                spaceBetween += zoom;
+            var zoom = e.Delta / WheelDelta;
+            if ( SpaceBetween + zoom > 5 && SpaceBetween + zoom < 200 ) {
+                SpaceBetween += zoom;
             }
         }
         protected override void OnMouseClick( MouseEventArgs e ) {

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 
 namespace SharedFunctionalities.UiInterfaceHandlerPattern {
-    public class UiToObjectHandler<T> where T : UiObjectHandleableInterface {
-        private Dictionary<string, Func<T, UiHandleableInterface>> typeToUi = new Dictionary<string, Func<T, UiHandleableInterface>>();
+    public class UiToObjectHandler<T> where T : IUiObjectHandleableInterface {
+        private readonly Dictionary<string, Func<T, IUiHandleableInterface>> _typeToUi = new Dictionary<string, Func<T, IUiHandleableInterface>>();
 
-        public UiToObjectHandler<T> AddUiForType(string typename, Func<T, UiHandleableInterface> constructorFunction) {
-            typeToUi.Add(typename, constructorFunction);
+        public UiToObjectHandler<T> AddUiForType(string typename, Func<T, IUiHandleableInterface> constructorFunction) {
+            _typeToUi.Add(typename, constructorFunction);
             return this;
         }
 
@@ -15,8 +15,8 @@ namespace SharedFunctionalities.UiInterfaceHandlerPattern {
         /// </summary>
         /// <param name="obj"></param>
         /// <returns>null if unable to pair.</returns>
-        public UiHandleableInterface createUiForObject(T obj) {
-            return typeToUi.ContainsKey(obj.getMatchingTypeName()) ? typeToUi[obj.getMatchingTypeName()](obj) : null;
+        public IUiHandleableInterface CreateUiForObject(T obj) {
+            return _typeToUi.ContainsKey(obj.GetMatchingTypeName()) ? _typeToUi[obj.GetMatchingTypeName()](obj) : null;
         } 
 
 

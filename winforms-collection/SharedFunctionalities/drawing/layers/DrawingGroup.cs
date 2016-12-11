@@ -5,27 +5,27 @@ namespace SharedFunctionalities.drawing.layers {
     public class DrawingGroup : BaseDraw {
 
 
-        private List<IDrawMethod> composition = new List<IDrawMethod>();
+        private readonly List<IDrawMethod> _composition = new List<IDrawMethod>();
 
-        public DrawingGroup addMethod( IDrawMethod method ) {
-            composition.Add( method );
+        public DrawingGroup AddMethod( IDrawMethod method ) {
+            _composition.Add( method );
             return this;
         }
 
-        public override void doDraw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
-            drawAll( g, ref wholeComponent, ref clippingRect );
+        public override void DoDraw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
+            DrawAll( g, ref wholeComponent, ref clippingRect );
         }
 
-        private void drawAll( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
-            foreach ( var item in composition ) {
-                item.draw( g, ref wholeComponent, ref clippingRect );
+        private void DrawAll( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
+            foreach ( var item in _composition ) {
+                item.Draw( g, ref wholeComponent, ref clippingRect );
             }
         }
 
 
-        public override void modifySize( ref Rectangle newSize ) {
-            foreach ( var item in composition ) {
-                item.modifySize( ref newSize );
+        public override void ModifySize( ref Rectangle newSize ) {
+            foreach ( var item in _composition ) {
+                item.ModifySize( ref newSize );
             }
         }
     }

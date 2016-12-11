@@ -2,20 +2,19 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using CommonSenseCSharp.datastructures;
 
 namespace winforms_collection {
     public partial class SimpleList : UserControl {
-        private ListViewItem selectedObject;
+        private ListViewItem _selectedObject;
 
-        private readonly List<object> data = new List<object>();
+        private readonly List<object> _data = new List<object>();
 
         #region event handlers
 
-        private Object lastAdded;
+        private Object _lastAdded;
 
         public void SetData<T>(IEnumerable<T> dataLst) {
             Clear();
@@ -23,10 +22,10 @@ namespace winforms_collection {
         }
 
         public void AddData<T>(T dataObj) {
-            data.Add(dataObj);
-            lastAdded = dataObj;
-            if (onRenderCallback != null) {
-                var lvi = onRenderCallback?.Invoke((T)dataObj);
+            _data.Add(dataObj);
+            _lastAdded = dataObj;
+            if (_onRenderCallback != null) {
+                var lvi = _onRenderCallback?.Invoke((T)dataObj);
                 simpleListControl1.Items.Add(lvi);
             }
 
@@ -39,53 +38,53 @@ namespace winforms_collection {
         }
 
 
-        public void removeAt(int index) {
+        public void RemoveAt(int index) {
             simpleListControl1.Items.RemoveAt(index);
-            data.RemoveAt(index);
+            _data.RemoveAt(index);
         }
 
-        public void callEdit<T>(T obj, int v) {
-            callEdit((object)obj, v);
+        public void CallEdit<T>(T obj, int v) {
+            CallEdit((object)obj, v);
         }
-        private void callEdit(object obj, int v) {
-            if (onEditCallback != null) {
-                onEditCallback?.Invoke(obj, v);
+        private void CallEdit(object obj, int v) {
+            if (_onEditCallback != null) {
+                _onEditCallback?.Invoke(obj, v);
             }
         }
 
         public NonNullList<T> GetData<T>() {
-            return new NonNullList<T>(data.Cast<T>());
+            return new NonNullList<T>(_data.Cast<T>());
         }
 
-        private Action<object, int> onSelectionChangedCallback;
+        private Action<object, int> _onSelectionChangedCallback;
 
         public void OnSelection<T>(Action<T, int> callback) {
-            onSelectionChangedCallback = (object obj, int index) => { callback?.Invoke((T)obj, index); };
-            simpleListControl1.ItemSelectionChanged += onChanged;
+            _onSelectionChangedCallback = (object obj, int index) => { callback?.Invoke((T)obj, index); };
+            simpleListControl1.ItemSelectionChanged += OnChanged;
 
         }
 
-        private void onChanged(object sender, System.Windows.Forms.ListViewItemSelectionChangedEventArgs e) {
-            if (onSelectionChangedCallback != null) {
-                onSelectionChangedCallback?.Invoke(data[e.ItemIndex], e.ItemIndex);
+        private void OnChanged(object sender, System.Windows.Forms.ListViewItemSelectionChangedEventArgs e) {
+            if (_onSelectionChangedCallback != null) {
+                _onSelectionChangedCallback?.Invoke(_data[e.ItemIndex], e.ItemIndex);
             }
 
         }
 
 
-        public void editObject(object newObj, int index) {
+        public void EditObject(object newObj, int index) {
             var addedInstead = false;
-            if (data.Count == 0 || index < 0 || index > data.Count) {
-                data.Add(newObj);
-                lastAdded = newObj;
+            if (_data.Count == 0 || index < 0 || index > _data.Count) {
+                _data.Add(newObj);
+                _lastAdded = newObj;
                 addedInstead = true;
-                index = data.Count - 1;
+                index = _data.Count - 1;
             } else {
-                data[index] = newObj;
+                _data[index] = newObj;
             }
 
-            if (onRenderCallback != null && newObj != null) {
-                var lvi = onRenderCallback?.Invoke(newObj);
+            if (_onRenderCallback != null && newObj != null) {
+                var lvi = _onRenderCallback?.Invoke(newObj);
                 if (addedInstead) {
                     simpleListControl1.Items.Insert(index, lvi);
                 } else {
@@ -97,42 +96,42 @@ namespace winforms_collection {
         }
 
         public void setHandlers<T>(Action onAddHandler, Action<T, int> onEditHandler, Action<T, int> removeHandler, Func<T, ListViewItem> renderFunction) {
-            onAdd(onAddHandler);
-            onEdit(onEditHandler);
-            onRemove(removeHandler);
-            onRender(renderFunction);
+            OnAdd(onAddHandler);
+            OnEdit(onEditHandler);
+            OnRemove(removeHandler);
+            OnRender(renderFunction);
         }
 
-        private void onAdd(Action onAddHandler) {
-            onAddCallback = onAddHandler;
+        private void OnAdd(Action onAddHandler) {
+            _onAddCallback = onAddHandler;
         }
 
-        public void onAddClick() {
-            onAddCallback?.Invoke();
+        public void OnAddClick() {
+            _onAddCallback?.Invoke();
         }
 
-        private Action onAddCallback = null;
+        private Action _onAddCallback = null;
 
-        public void onEdit<T>(Action<T, int> onEditHandler) {
-            onEditCallback = ((object parm, int val) => { onEditHandler?.Invoke((T)parm, val); });
+        public void OnEdit<T>(Action<T, int> onEditHandler) {
+            _onEditCallback = ((object parm, int val) => { onEditHandler?.Invoke((T)parm, val); });
         }
 
-        private Action<object, int> onEditCallback = null;
+        private Action<object, int> _onEditCallback = null;
 
-        public void onRemove<T>(Action<T, int> onRemoveHandler) {
-            this.onRemoveHandler = ((object obj, int val) => { onRemoveHandler?.Invoke((T)obj, val); });
+        public void OnRemove<T>(Action<T, int> onRemoveHandler) {
+            this._onRemoveHandler = ((object obj, int val) => { onRemoveHandler?.Invoke((T)obj, val); });
         }
 
-        private Action<object, int> onRemoveHandler = null;
+        private Action<object, int> _onRemoveHandler = null;
 
         #endregion
 
 
-        public void onRender<T>(Func<T, ListViewItem> onRender) {
-            onRenderCallback = new Func<object, ListViewItem>((object obj) => { return onRender?.Invoke((T)obj); });//wrap it around.
+        public void OnRender<T>(Func<T, ListViewItem> onRender) {
+            _onRenderCallback = new Func<object, ListViewItem>((object obj) => { return onRender?.Invoke((T)obj); });//wrap it around.
         }
 
-        private Func<object, ListViewItem> onRenderCallback = (object obj) =>
+        private Func<object, ListViewItem> _onRenderCallback = (object obj) =>
         {
             return new ListViewItem(obj.ToString());
         };
@@ -161,7 +160,7 @@ namespace winforms_collection {
         private String _title;
 
 
-        public String title {
+        public String Title {
             get { return _title; }
             set {
                 _title = value;
@@ -171,8 +170,8 @@ namespace winforms_collection {
         #endregion
 
         public SimpleList() {
-            onAdd(() => { callEdit(null, -1); });
-            onRemove((object obj, int index) => { removeAt(index); });
+            OnAdd(() => { CallEdit(null, -1); });
+            OnRemove((object obj, int index) => { RemoveAt(index); });
             InitializeComponent();
         }
 
@@ -180,8 +179,8 @@ namespace winforms_collection {
         /// Clears the data in this list. 
         /// </summary>
         public void Clear() {
-            data.Clear();
-            selectedObject = null;
+            _data.Clear();
+            _selectedObject = null;
             simpleListControl1.Clear();
         }
 
@@ -200,45 +199,45 @@ namespace winforms_collection {
         #region events / click handlers internal 
         private void simpleListControl1_SelectedIndexChanged(object sender, EventArgs e) {
             if (simpleListControl1.SelectedItems.Count == 1) {
-                selectedObject = simpleListControl1.SelectedItems[0];
+                _selectedObject = simpleListControl1.SelectedItems[0];
             } else {
-                selectedObject = null;
+                _selectedObject = null;
             }
         }
 
         private void button3_Click(object sender, EventArgs e) {
-            if (onRemoveHandler != null && selectedObject != null) {
+            if (_onRemoveHandler != null && _selectedObject != null) {
                 var index = simpleListControl1.SelectedIndices[0];
-                onRemoveHandler?.Invoke(data[index], index);
+                _onRemoveHandler?.Invoke(_data[index], index);
 
             }
         }
 
         private void button4_Click(object sender, EventArgs e) {
-            if (onEditCallback != null && selectedObject != null) {
+            if (_onEditCallback != null && _selectedObject != null) {
                 var index = simpleListControl1.SelectedIndices[0];
-                onEditCallback?.Invoke(data[index], index);
+                _onEditCallback?.Invoke(_data[index], index);
             }
         }
 
 
 
         private void button1_Click(object sender, EventArgs e) {
-            if (onAddCallback != null) {
-                onAddCallback?.Invoke();
+            if (_onAddCallback != null) {
+                _onAddCallback?.Invoke();
             }
         }
         #endregion
 
 
         public T GetLastAdded<T>() {
-            return (T)lastAdded;
+            return (T)_lastAdded;
         }
 
         private void simpleListControl1_KeyDown(object sender, KeyEventArgs e) {
             if (e.KeyData == Keys.Delete && simpleListControl1.SelectedItems.Count == 1) {
                 var items = simpleListControl1.SelectedIndices;
-                onRemoveHandler?.Invoke(data[items[0]], items[0]);
+                _onRemoveHandler?.Invoke(_data[items[0]], items[0]);
             }
 
         }
@@ -246,7 +245,7 @@ namespace winforms_collection {
         private void simpleListControl1_DoubleClick(object sender, EventArgs e) {
             if (simpleListControl1.SelectedItems.Count == 1) {
                 var items = simpleListControl1.SelectedIndices;
-                onEditCallback?.Invoke(data[items[0]], items[0]);
+                _onEditCallback?.Invoke(_data[items[0]], items[0]);
             }
         }
     }

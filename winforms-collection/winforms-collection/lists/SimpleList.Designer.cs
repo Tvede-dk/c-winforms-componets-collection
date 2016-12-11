@@ -52,9 +52,9 @@ namespace winforms_collection {
             this.listContainer1.Controls.Add(this.label1);
             this.listContainer1.DirectionHorizontal = false;
             this.listContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listContainer1.heightWeight = ((System.ComponentModel.BindingList<float>)(resources.GetObject("listContainer1.heightWeight")));
+            this.listContainer1.HeightWeight = ((System.ComponentModel.BindingList<float>)(resources.GetObject("listContainer1.heightWeight")));
             this.listContainer1.Location = new System.Drawing.Point(0, 0);
-            this.listContainer1.minSplitHeight = 0;
+            this.listContainer1.MinSplitHeight = 0;
             this.listContainer1.Name = "listContainer1";
             this.listContainer1.Size = new System.Drawing.Size(280, 395);
             this.listContainer1.SplitHeight = 0;
@@ -77,9 +77,9 @@ namespace winforms_collection {
             this.listContainer2.Controls.Add(this.button3);
             this.listContainer2.DirectionHorizontal = true;
             this.listContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listContainer2.heightWeight = ((System.ComponentModel.BindingList<float>)(resources.GetObject("listContainer2.heightWeight")));
+            this.listContainer2.HeightWeight = ((System.ComponentModel.BindingList<float>)(resources.GetObject("listContainer2.heightWeight")));
             this.listContainer2.Location = new System.Drawing.Point(0, 0);
-            this.listContainer2.minSplitHeight = 0;
+            this.listContainer2.MinSplitHeight = 0;
             this.listContainer2.Name = "listContainer2";
             this.listContainer2.Size = new System.Drawing.Size(280, 52);
             this.listContainer2.SplitHeight = 3;

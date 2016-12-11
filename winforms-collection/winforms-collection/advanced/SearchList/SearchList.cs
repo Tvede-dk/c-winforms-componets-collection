@@ -17,21 +17,21 @@ namespace winforms_collection.advanced {
         #endregion
 
 
-        public void addStrings( IEnumerable<string> list ) {
+        public void AddStrings( IEnumerable<string> list ) {
             foreach ( var item in list ) {
-                addString( item );
+                AddString( item );
             }
         }
 
-        public void addString( string str ) {
+        public void AddString( string str ) {
 
         }
 
-        public void addString( string str, string tooltip ) {
+        public void AddString( string str, string tooltip ) {
 
         }
 
-        public void addString( String str, string a, int aa ) {
+        public void AddString( String str, string a, int aa ) {
             
         }
 

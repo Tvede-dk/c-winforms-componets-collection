@@ -16,21 +16,21 @@ namespace winforms_collection.simple_components {
 
         #region constants
 
-        const int MOVING_PIXLES_FRAME = 2; //3 becomes "laggy, 1 and 2 at a time, looks equal. so its more effective to go with 2 pixels (half the work).
+        const int MovingPixlesFrame = 2; //3 becomes "laggy, 1 and 2 at a time, looks equal. so its more effective to go with 2 pixels (half the work).
 
         #endregion
 
         #region instance variables( not shared).
-        private IDrawMethod backgroundRender;
-        private IDrawMethod textRender;
-        private IDrawMethod FlashBarRender;
+        private IDrawMethod _backgroundRender;
+        private readonly IDrawMethod _textRender;
+        private readonly IDrawMethod _flashBarRender;
 
 
         #endregion
 
         #region property flash bar width
         private int _flashbarWidth = 16;
-        public int flashbarWidth {
+        public int FlashbarWidth {
             get { return _flashbarWidth; }
             set { _flashbarWidth = value; }
         }
@@ -39,12 +39,12 @@ namespace winforms_collection.simple_components {
 
 
         #region property flashColor
-        private List<Action<Color>> _flashColorChangeListners = new List<Action<Color>>();
+        private readonly List<Action<Color>> _flashColorChangeListners = new List<Action<Color>>();
 
         private Color _flashColor;
         [EditorBrowsable]
         [Description("The flash bar's color. the alpha is the intensity.")]
-        public Color flashColor {
+        public Color FlashColor {
             get { return _flashColor; }
             set {
                 _flashColor = value;
@@ -57,11 +57,11 @@ namespace winforms_collection.simple_components {
         private int _fps = 40;
         [EditorBrowsable]
         [Description("The Frames per seconds. use this to speed up or slow down the flash bar. However keep it as low as possible.")]
-        public int fps {
+        public int Fps {
             get { return _fps; }
             set {
                 _fps = value;
-                animationTimer.Interval = 1000 / fps;
+                _animationTimer.Interval = 1000 / Fps;
             }
         }
         #endregion
@@ -71,7 +71,7 @@ namespace winforms_collection.simple_components {
 
         [EditorBrowsable]
         [Description("the side of the inner border")]
-        public int borderSize {
+        public int BorderSize {
             get { return _borderSize; }
             set { _borderSize = value; }
         }
@@ -82,7 +82,7 @@ namespace winforms_collection.simple_components {
 
         [EditorBrowsable]
         [Description("Any piece of text that comes(if activated) after the percent / value.")]
-        public bool drawOverlay {
+        public bool DrawOverlay {
             get { return _drawOverlay; }
             set { _drawOverlay = value; }
         }
@@ -92,7 +92,7 @@ namespace winforms_collection.simple_components {
         private bool _drawProcent;
         [EditorBrowsable]
         [Description("true if we should draw the number (It does not contain the %)")]
-        public bool drawProcent {
+        public bool DrawProcent {
             get { return _drawProcent; }
             set { _drawProcent = value; }
         }
@@ -102,7 +102,7 @@ namespace winforms_collection.simple_components {
         private int _progressInProcent = 50;
         [EditorBrowsable]
         [Description("the progress in %.")]
-        public int progressInProcent {
+        public int ProgressInProcent {
             get { return _progressInProcent; }
             set {
                 if ( value > 100 || value < 0 ) {
@@ -114,7 +114,7 @@ namespace winforms_collection.simple_components {
         #endregion
 
         #region property OnBackColorChanged
-        private List<Action<Color>> _backColorListners = new List<Action<Color>>();
+        private readonly List<Action<Color>> _backColorListners = new List<Action<Color>>();
 
         protected override void OnBackColorChanged( EventArgs e ) {
             foreach ( var item in _backColorListners ) {
@@ -127,7 +127,7 @@ namespace winforms_collection.simple_components {
 
 
         #region property OnForeColorChanged
-        private List<Action<Color>> _foreColorListners = new List<Action<Color>>();
+        private readonly List<Action<Color>> _foreColorListners = new List<Action<Color>>();
 
         protected override void OnForeColorChanged( EventArgs e ) {
             foreach ( var item in _foreColorListners ) {
@@ -140,12 +140,12 @@ namespace winforms_collection.simple_components {
 
 
         #region property multiColorStart
-        private List<Action<Color>> _multiColorStartChangeListners = new List<Action<Color>>();
+        private readonly List<Action<Color>> _multiColorStartChangeListners = new List<Action<Color>>();
 
         private Color _multiColorStart = Color.FromArgb( 255, 0, 255, 255 );
         [EditorBrowsable]
         [Description("In the multi color mode, this is the start color")]
-        public Color multiColorStart {
+        public Color MultiColorStart {
             get { return _multiColorStart; }
             set {
                 _multiColorStart = value;
@@ -155,12 +155,12 @@ namespace winforms_collection.simple_components {
         #endregion
 
         #region property multiColorEnd
-        private List<Action<Color>> _multiColorEndChangeListners = new List<Action<Color>>();
+        private readonly List<Action<Color>> _multiColorEndChangeListners = new List<Action<Color>>();
 
         private Color _multiColorEnd = Color.FromArgb( 255, 29, 128, 193 );
         [EditorBrowsable]
         [Description("In the multi color mode, this is the end color")]
-        public Color multiColorEnd {
+        public Color MultiColorEnd {
             get { return _multiColorEnd; }
             set {
                 _multiColorEnd = value;
@@ -170,12 +170,12 @@ namespace winforms_collection.simple_components {
         #endregion
 
         #region property singleColorFilledColor
-        private List<Action<Color>> _singleColorFilledColorChangeListners = new List<Action<Color>>();
+        private readonly List<Action<Color>> _singleColorFilledColorChangeListners = new List<Action<Color>>();
 
         private Color _singleColorFilledColor;
         [EditorBrowsable]
         [Description("If only a single color is used, this is the fill color")]
-        public Color singleColorFilledColor {
+        public Color SingleColorFilledColor {
             get { return _singleColorFilledColor; }
             set {
                 _singleColorFilledColor = value;
@@ -187,16 +187,16 @@ namespace winforms_collection.simple_components {
 
         public Progressbar() {
             InitializeComponent();
-            animationTimer.Interval = 1000 / fps;
+            _animationTimer.Interval = 1000 / Fps;
             SetStyle( ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true );
-            backgroundRender = new DrawSingleColorStrategy( this );
-            textRender = new TextRender( this );
-            FlashBarRender = new FlashAnimator( this );
+            _backgroundRender = new DrawSingleColorStrategy( this );
+            _textRender = new TextRender( this );
+            _flashBarRender = new FlashAnimator( this );
             this.DoubleBuffered = true;
-            startAnimations();
-            drawH.addLayer( backgroundRender );
-            drawH.addLayer( textRender );
-            drawH.addLayer( FlashBarRender );
+            StartAnimations();
+            _drawH.AddLayer( _backgroundRender );
+            _drawH.AddLayer( _textRender );
+            _drawH.AddLayer( _flashBarRender );
         }
 
 
@@ -211,39 +211,39 @@ namespace winforms_collection.simple_components {
 
         [EditorBrowsable]
         [Description("Controls if we should disable animations")]
-        public bool disableAnimations {
+        public bool DisableAnimations {
             get { return _disableAnimations; }
             set {
                 _disableAnimations = value;
                 if ( value ) {
-                    animationTimer.Stop();
+                    _animationTimer.Stop();
                 } else {
-                    startAnimations();
+                    StartAnimations();
                 }
             }
         }
 
 
 
-        private Timer animationTimer = new Timer();
+        private readonly Timer _animationTimer = new Timer();
 
-        private void startAnimations() {
-            if ( disableAnimations == false ) {
-                animationTimer.Enabled = true;
-                animationTimer.Start();
-                animationTimer.Tick += animation_Run;
+        private void StartAnimations() {
+            if ( DisableAnimations == false ) {
+                _animationTimer.Enabled = true;
+                _animationTimer.Start();
+                _animationTimer.Tick += animation_Run;
             }
         }
 
 
-        private int timerCount = 0;
+        private int _timerCount = 0;
         private void animation_Run( object sender, EventArgs e ) {
-            timerCount++;
-            if ( (timerCount * MOVING_PIXLES_FRAME) - flashbarWidth >= (ClientRectangle.Width * progressInProcent / 100) ) {
-                timerCount = 0;
+            _timerCount++;
+            if ( (_timerCount * MovingPixlesFrame) - FlashbarWidth >= (ClientRectangle.Width * ProgressInProcent / 100) ) {
+                _timerCount = 0;
             }
-            var maxInvalidTo = (int)(ClientRectangle.Width * ((float)Math.Max( 60, progressInProcent ) / 100f));
-            var maxInvalid = new Rectangle( borderSize, borderSize, maxInvalidTo, Height - (borderSize * 2) );
+            var maxInvalidTo = (int)(ClientRectangle.Width * ((float)Math.Max( 60, ProgressInProcent ) / 100f));
+            var maxInvalid = new Rectangle( BorderSize, BorderSize, maxInvalidTo, Height - (BorderSize * 2) );
             this.Invalidate( maxInvalid );
         }
         private string _overlayText;
@@ -254,7 +254,7 @@ namespace winforms_collection.simple_components {
 
         [EditorBrowsable]
         [Description("")]
-        public string overlayText {
+        public string OverlayText {
             get {
                 return _overlayText;
             }
@@ -268,12 +268,12 @@ namespace winforms_collection.simple_components {
 
 
         #region property flashColorIntensity
-        private List<Action<int>> _flashColorIntensityChangeListners = new List<Action<int>>();
+        private readonly List<Action<int>> _flashColorIntensityChangeListners = new List<Action<int>>();
 
         private int _flashColorIntensity = 70;
         [EditorBrowsable]
         [Description("")]
-        public int flashColorIntensity {
+        public int FlashColorIntensity {
             get { return _flashColorIntensity; }
             set {
                 _flashColorIntensity = value;
@@ -284,25 +284,26 @@ namespace winforms_collection.simple_components {
 
 
         #region property colorMethod
-        private ColorDrawing _colorMethod = ColorDrawing.SINGLE_COLOR;
+        private ColorDrawing _colorMethod = ColorDrawing.SingleColor;
 
         [EditorBrowsable]
         [Description("")]
-        public ColorDrawing colorMethod {
+        public ColorDrawing ColorMethod {
             get {
                 return this._colorMethod;
             }
             set {
-                if ( value == ColorDrawing.SINGLE_COLOR ) {
-                    backgroundRender = new DrawSingleColorStrategy( this );
-                } else if ( value == ColorDrawing.GRADIENT_LEFT_RIGHT ) {
-                    backgroundRender = new DrawMultiColorStrategy( this );
+                if ( value == ColorDrawing.SingleColor ) {
+                    _backgroundRender = new DrawSingleColorStrategy( this );
+                } else if ( value == ColorDrawing.GradientLeftRight ) {
+                    _backgroundRender = new DrawMultiColorStrategy( this );
                 }
                 this._colorMethod = value;
             }
         }
         #endregion
-        DrawingHandler drawH = new DrawingHandler();
+
+        readonly DrawingHandler _drawH = new DrawingHandler();
 
         #region paint methods
         protected override void OnPaint( PaintEventArgs e ) {
@@ -312,7 +313,7 @@ namespace winforms_collection.simple_components {
             //if ( disableAnimations == false ) {
             //    FlashBarRender.draw( e, this );
             //}
-            drawH.draw( e.Graphics, ClientRectangle, e.ClipRectangle );
+            _drawH.Draw( e.Graphics, ClientRectangle, e.ClipRectangle );
 
         }
 
@@ -322,13 +323,13 @@ namespace winforms_collection.simple_components {
         }
 
 
-        private Rectangle calculateFilledPart() {
-            var procent = progressInProcent;
+        private Rectangle CalculateFilledPart() {
+            var procent = ProgressInProcent;
             var endOfDrawing = ((ClientRectangle.Width * procent) / 100f);
             Rectangle inner = ClientRectangle;
-            inner.X = (int)borderSize;
-            inner.Width = (int)endOfDrawing - (int)(borderSize * 2);
-            inner.Y = (int)borderSize;
+            inner.X = (int)BorderSize;
+            inner.Width = (int)endOfDrawing - (int)(BorderSize * 2);
+            inner.Y = (int)BorderSize;
             inner.Height -= inner.Y * 2;
             return inner;
         }
@@ -338,31 +339,31 @@ namespace winforms_collection.simple_components {
         #region internal implementations
 
         public enum ColorDrawing {
-            SINGLE_COLOR,
-            GRADIENT_LEFT_RIGHT
+            SingleColor,
+            GradientLeftRight
         }
 
         public class DrawSingleColorStrategy : IDrawMethod {
-            private Brush drawingBrush;
-            private Brush backColorBrush;
-            private Progressbar prog;
-            private bool isCacheValid = false;
+            private Brush _drawingBrush;
+            private Brush _backColorBrush;
+            private readonly Progressbar _prog;
+            private bool _isCacheValid = false;
             public DrawSingleColorStrategy( Progressbar prog ) {
-                prog._singleColorFilledColorChangeListners.Add( onNewColor );
-                onNewColor( prog.singleColorFilledColor );
-                prog._backColorListners.Add( onNewBackColor );
-                onNewBackColor( prog.BackColor );
-                this.prog = prog;
+                prog._singleColorFilledColorChangeListners.Add( OnNewColor );
+                OnNewColor( prog.SingleColorFilledColor );
+                prog._backColorListners.Add( OnNewBackColor );
+                OnNewBackColor( prog.BackColor );
+                this._prog = prog;
             }
 
-            public void onNewColor( Color col ) {
-                drawingBrush = new SolidBrush( col );
-                isCacheValid = false;
+            public void OnNewColor( Color col ) {
+                _drawingBrush = new SolidBrush( col );
+                _isCacheValid = false;
             }
 
-            public void onNewBackColor( Color col ) {
-                backColorBrush = new SolidBrush( col );
-                isCacheValid = false;
+            public void OnNewBackColor( Color col ) {
+                _backColorBrush = new SolidBrush( col );
+                _isCacheValid = false;
             }
 
             //public void draw( PaintEventArgs e, Progressbar prog ) {
@@ -370,222 +371,222 @@ namespace winforms_collection.simple_components {
             //    e.Graphics.FillRectangle( drawingBrush, prog.calculateFilledPart() );
             //}
 
-            public void draw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
-                g.FillRectangle( backColorBrush, prog.ClientRectangle );
-                g.FillRectangle( drawingBrush, prog.calculateFilledPart() );
-                isCacheValid = true;
+            public void Draw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
+                g.FillRectangle( _backColorBrush, _prog.ClientRectangle );
+                g.FillRectangle( _drawingBrush, _prog.CalculateFilledPart() );
+                _isCacheValid = true;
             }
 
-            public bool isTransperant() {
+            public bool IsTransperant() {
                 return true;
             }
 
-            public bool willFillRectangleOut() {
+            public bool WillFillRectangleOut() {
                 return true;
             }
 
-            public bool mayCacheLayer() {
+            public bool MayCacheLayer() {
                 return true;
             }
 
-            public bool isCacheInvalid() {
-                return !isCacheValid;
+            public bool IsCacheInvalid() {
+                return !_isCacheValid;
             }
 
-            public bool mayDraw() {
+            public bool MayDraw() {
                 return true;
 
             }
-            public void modifySize( ref Rectangle newSize ) {
+            public void ModifySize( ref Rectangle newSize ) {
                 return;
             }
         }
         public class DrawMultiColorStrategy : IDrawMethod {
-            private Progressbar prog;
-            private Brush backColor;
+            private readonly Progressbar _prog;
+            private Brush _backColor;
             public DrawMultiColorStrategy( Progressbar prog ) {
-                prog._backColorListners.Add( onNewColor );
-                onNewColor( prog.BackColor );
-                this.prog = prog;
+                prog._backColorListners.Add( OnNewColor );
+                OnNewColor( prog.BackColor );
+                this._prog = prog;
             }
 
-            public void onNewColor( Color col ) {
-                backColor = new SolidBrush( col );
+            public void OnNewColor( Color col ) {
+                _backColor = new SolidBrush( col );
             }
 
 
-            public void draw( PaintEventArgs e, Progressbar prog ) {
-                Rectangle rf = prog.calculateFilledPart();
+            public void Draw( PaintEventArgs e, Progressbar prog ) {
+                Rectangle rf = prog.CalculateFilledPart();
                 //determine if we can offload this calculation as well.
                 var linGrBrush = new LinearGradientBrush(
                   new Point( 0, 0 ),
                    new Point( (int)rf.Width + rf.X, 0 ),
-                      prog.multiColorStart
-                    , prog.multiColorEnd );
+                      prog.MultiColorStart
+                    , prog.MultiColorEnd );
 
-                e.Graphics.FillRectangle( backColor, prog.ClientRectangle );
+                e.Graphics.FillRectangle( _backColor, prog.ClientRectangle );
                 e.Graphics.FillRectangle( linGrBrush, rf );
             }
 
-            public void draw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
-                Rectangle rf = prog.calculateFilledPart();
+            public void Draw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
+                Rectangle rf = _prog.CalculateFilledPart();
                 //determine if we can offload this calculation as well.
                 var linGrBrush = new LinearGradientBrush(
                   new Point( 0, 0 ),
                    new Point( (int)rf.Width + rf.X, 0 ),
-                      prog.multiColorStart
-                    , prog.multiColorEnd );
+                      _prog.MultiColorStart
+                    , _prog.MultiColorEnd );
 
-                g.FillRectangle( backColor, prog.ClientRectangle );
+                g.FillRectangle( _backColor, _prog.ClientRectangle );
                 g.FillRectangle( linGrBrush, rf );
             }
 
-            public bool isTransperant() {
+            public bool IsTransperant() {
                 return true;
             }
 
-            public bool willFillRectangleOut() {
+            public bool WillFillRectangleOut() {
                 return true;
             }
 
-            public bool mayCacheLayer() {
+            public bool MayCacheLayer() {
                 return true;
             }
 
-            public bool isCacheInvalid() {
+            public bool IsCacheInvalid() {
                 return false;
             }
 
-            public bool mayDraw() {
+            public bool MayDraw() {
                 return true;
             }
-            public void modifySize( ref Rectangle newSize ) {
+            public void ModifySize( ref Rectangle newSize ) {
                 return;
             }
         }
 
         public class TextRender : IDrawMethod {
-            private bool isCacheValid = false;
-            private Brush textColorBrush;
-            private StringFormat format;
-            private Progressbar prog;
+            private bool _isCacheValid = false;
+            private Brush _textColorBrush;
+            private readonly StringFormat _format;
+            private readonly Progressbar _prog;
             public TextRender( Progressbar prog ) {
-                prog._foreColorListners.Add( onNewColor );
-                onNewColor( prog.ForeColor );
-                format = new StringFormat();
-                format.LineAlignment = StringAlignment.Center;
-                format.Alignment = StringAlignment.Center;
-                this.prog = prog;
+                prog._foreColorListners.Add( OnNewColor );
+                OnNewColor( prog.ForeColor );
+                _format = new StringFormat();
+                _format.LineAlignment = StringAlignment.Center;
+                _format.Alignment = StringAlignment.Center;
+                this._prog = prog;
             }
 
-            public void onNewColor( Color col ) {
-                textColorBrush = new SolidBrush( col );
-                isCacheValid = false;
+            public void OnNewColor( Color col ) {
+                _textColorBrush = new SolidBrush( col );
+                _isCacheValid = false;
             }
 
-            public bool isTransperant() {
+            public bool IsTransperant() {
                 return true;
             }
 
-            public bool willFillRectangleOut() {
+            public bool WillFillRectangleOut() {
                 return true;
             }
 
-            public bool mayCacheLayer() {
+            public bool MayCacheLayer() {
                 return true;
             }
 
-            public bool isCacheInvalid() {
-                return !isCacheValid;
+            public bool IsCacheInvalid() {
+                return !_isCacheValid;
             }
 
-            public void draw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
+            public void Draw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
                 var toDislpay = "";
-                if ( prog.drawProcent ) {
-                    toDislpay += prog.progressInProcent;
+                if ( _prog.DrawProcent ) {
+                    toDislpay += _prog.ProgressInProcent;
                 }
-                if ( prog.drawOverlay ) {
-                    toDislpay += prog.overlayText;
+                if ( _prog.DrawOverlay ) {
+                    toDislpay += _prog.OverlayText;
                 }
-                g.DrawString( toDislpay, prog.Font, textColorBrush, prog.ClientRectangle, format );
-                isCacheValid = true;
+                g.DrawString( toDislpay, _prog.Font, _textColorBrush, _prog.ClientRectangle, _format );
+                _isCacheValid = true;
             }
 
-            public bool mayDraw() {
+            public bool MayDraw() {
                 return true;
             }
 
-            public void modifySize( ref Rectangle newSize ) {
+            public void ModifySize( ref Rectangle newSize ) {
                 return;
             }
         }
 
         public class FlashAnimator : IDrawMethod {
 
-            private SolidBrush highlighterBrush;
-            private int colorIntensity = 70;
-            private Progressbar prog;
-            public bool shouldDraw = true;
+            private SolidBrush _highlighterBrush;
+            private int _colorIntensity = 70;
+            private readonly Progressbar _prog;
+            public bool ShouldDraw = true;
 
             public FlashAnimator( Progressbar prog ) {
-                prog._flashColorChangeListners.Add( onNewColor );
-                prog._flashColorIntensityChangeListners.Add( onNewIntensity );
-                this.colorIntensity = prog.flashColorIntensity;
-                onNewColor( prog.flashColor );
-                this.prog = prog;
+                prog._flashColorChangeListners.Add( OnNewColor );
+                prog._flashColorIntensityChangeListners.Add( OnNewIntensity );
+                this._colorIntensity = prog.FlashColorIntensity;
+                OnNewColor( prog.FlashColor );
+                this._prog = prog;
             }
 
-            public void onNewIntensity( int val ) {
-                colorIntensity = val;
-                var col = highlighterBrush.Color;
-                var newColor = Color.FromArgb( colorIntensity, col.R, col.G, col.B );
-                highlighterBrush = new SolidBrush( newColor );
+            public void OnNewIntensity( int val ) {
+                _colorIntensity = val;
+                var col = _highlighterBrush.Color;
+                var newColor = Color.FromArgb( _colorIntensity, col.R, col.G, col.B );
+                _highlighterBrush = new SolidBrush( newColor );
             }
-            public void onNewColor( Color col ) {
-                var newColor = Color.FromArgb( colorIntensity, col.R, col.G, col.B );
-                highlighterBrush = new SolidBrush( newColor );
+            public void OnNewColor( Color col ) {
+                var newColor = Color.FromArgb( _colorIntensity, col.R, col.G, col.B );
+                _highlighterBrush = new SolidBrush( newColor );
             }
 
-            public void draw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
-                Rectangle inner = prog.calculateFilledPart();
+            public void Draw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
+                Rectangle inner = _prog.CalculateFilledPart();
                 inner.Height -= 4;
                 inner.Y += 2; //it looks so much more cool.. 
-                var timerVal = prog.timerCount;
+                var timerVal = _prog._timerCount;
                 Rectangle high = inner;
-                high.Width = prog.flashbarWidth;
+                high.Width = _prog.FlashbarWidth;
 
                 var end = inner.Width + inner.X;
 
-                high.X = ((timerVal * MOVING_PIXLES_FRAME) - prog.flashbarWidth);
-                if ( high.X + prog.flashbarWidth > end ) {
+                high.X = ((timerVal * MovingPixlesFrame) - _prog.FlashbarWidth);
+                if ( high.X + _prog.FlashbarWidth > end ) {
                     high.Width = end - high.X;
-                } else if ( high.X < prog.borderSize ) {
-                    high.Width = (timerVal * MOVING_PIXLES_FRAME) - (prog.borderSize);
-                    high.X = prog.borderSize;
+                } else if ( high.X < _prog.BorderSize ) {
+                    high.Width = (timerVal * MovingPixlesFrame) - (_prog.BorderSize);
+                    high.X = _prog.BorderSize;
                 }
-                g.FillRectangle( highlighterBrush, high );
+                g.FillRectangle( _highlighterBrush, high );
             }
 
-            public bool isTransperant() {
+            public bool IsTransperant() {
                 return true;
             }
 
-            public bool willFillRectangleOut() {
+            public bool WillFillRectangleOut() {
                 return false;
             }
 
-            public bool mayCacheLayer() {
+            public bool MayCacheLayer() {
                 return true;
             }
 
-            public bool isCacheInvalid() {
+            public bool IsCacheInvalid() {
                 return true;
             }
 
-            public bool mayDraw() {
-                return shouldDraw;
+            public bool MayDraw() {
+                return ShouldDraw;
             }
-            public void modifySize( ref Rectangle newSize ) {
+            public void ModifySize( ref Rectangle newSize ) {
                 return;
             }
 

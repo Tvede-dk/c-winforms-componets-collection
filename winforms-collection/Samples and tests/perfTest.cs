@@ -3,8 +3,8 @@ using System;
 using System.Windows.Forms;
 
 namespace Samples_and_tests {
-    public partial class perfTest : Form {
-        public perfTest() {
+    public partial class PerfTest : Form {
+        public PerfTest() {
             InitializeComponent();
         }
 
@@ -17,12 +17,12 @@ namespace Samples_and_tests {
             //timer.start( ( object obj, System.Timers.ElapsedEventArgs args, SmartTimer st ) => {
             //    this.Width++;
             //}, () => { } );
-            var timer = new SmartUITimer(this);
-            timer.repeate = true;
-            timer.counter = 250;
-            timer.interval = 8;
-            timer.start((object obj, System.Timers.ElapsedEventArgs args, SmartTimer st) => {
-                graphComponent1.spaceBetween += 1;
+            var timer = new SmartUiTimer(this);
+            timer.Repeate = true;
+            timer.Counter = 250;
+            timer.Interval = 8;
+            timer.Start((object obj, System.Timers.ElapsedEventArgs args, SmartTimer st) => {
+                graphComponent1.SpaceBetween += 1;
             }, () => { Dispose(); });
         }
 

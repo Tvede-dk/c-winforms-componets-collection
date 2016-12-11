@@ -6,15 +6,15 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using winforms_collection;
 namespace Samples_and_tests {
-    public partial class textboxes : Form {
-        public textboxes() {
+    public partial class Textboxes : Form {
+        public Textboxes() {
             InitializeComponent();
             var t = new Timer();
             t.Interval = 500;
             t.Enabled = true;
             t.Start();
             t.Tick += T_Tick;
-            new controls().Show();
+            new Controls().Show();
         }
 
         private void button1_Click( object sender, EventArgs e ) {
@@ -36,10 +36,10 @@ namespace Samples_and_tests {
         }
 
         private void T_Tick( object sender, EventArgs e ) {
-            progressbar1.progressInProcent++;
+            progressbar1.ProgressInProcent++;
         }
 
-        public static double profile( int iterations, Action func ) {
+        public static double Profile( int iterations, Action func ) {
             // warm up jit.
             func();
 
@@ -85,11 +85,11 @@ namespace Samples_and_tests {
 
         private void button4_Click( object sender, EventArgs e ) {
 
-            var mult = profile( 1, () => {
-                SharedFunctionalities.SharedStringUtils.innerWorkings.splitStringFast( winforms_collection.Properties.Resources.names, Environment.NewLine, StringSplitOptions.None );
+            var mult = Profile( 1, () => {
+                SharedFunctionalities.SharedStringUtils.InnerWorkings.SplitStringFast( winforms_collection.Properties.Resources.names, Environment.NewLine, StringSplitOptions.None );
             } );
 
-            var single = profile( 1, () => {
+            var single = Profile( 1, () => {
                 winforms_collection.Properties.Resources.names.Split( new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries );
             } );
             MessageBox.Show( "mult" + mult + ", single" + single );
@@ -122,7 +122,7 @@ namespace Samples_and_tests {
         }
 
         private void button10_Click( object sender, EventArgs e ) {
-            winforms_collection.popup_boxes.NotificationBar.showAtLocation( "test text", new System.Drawing.Point { Y = 50, X = 50 } );
+            winforms_collection.popup_boxes.NotificationBar.ShowAtLocation( "test text", new System.Drawing.Point { Y = 50, X = 50 } );
         }
 
         private void styleableButton1_Click( object sender, EventArgs e ) {

@@ -5,39 +5,39 @@ namespace SharedFunctionalities.drawing.layers {
     /// combines most of the required stuff to implement the iDrawMethod.
     /// </summary>
     public abstract class BaseDraw : IDrawMethod {
-        private bool haveChangedSinceDraw = true;
-        public void draw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
-            haveChangedSinceDraw = false;
-            doDraw( g, ref wholeComponent, ref clippingRect );
+        private bool _haveChangedSinceDraw = true;
+        public void Draw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
+            _haveChangedSinceDraw = false;
+            DoDraw( g, ref wholeComponent, ref clippingRect );
         }
 
-        public abstract void doDraw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect );
+        public abstract void DoDraw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect );
 
 
-        public bool isCacheInvalid() {
-            return haveChangedSinceDraw;
+        public bool IsCacheInvalid() {
+            return _haveChangedSinceDraw;
         }
 
-        public virtual bool isTransperant() {
+        public virtual bool IsTransperant() {
             return true;
         }
 
-        public virtual bool mayCacheLayer() {
+        public virtual bool MayCacheLayer() {
             return true;
         }
 
-        public virtual bool mayDraw() {
+        public virtual bool MayDraw() {
             return true;
         }
 
-        public virtual bool willFillRectangleOut() {
+        public virtual bool WillFillRectangleOut() {
             return true;
         }
 
-        public virtual void invalidate() {
-            haveChangedSinceDraw = true;
+        public virtual void Invalidate() {
+            _haveChangedSinceDraw = true;
         }
 
-        public abstract void modifySize( ref Rectangle newSize );
+        public abstract void ModifySize( ref Rectangle newSize );
     }
 }

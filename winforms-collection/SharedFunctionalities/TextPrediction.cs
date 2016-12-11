@@ -4,15 +4,15 @@ using System.Linq;
 
 public static class TextPrediction {
 
-    private static HashSet<string> toplevelDomains = new HashSet<string>();
+    private static readonly HashSet<string> _toplevelDomains = new HashSet<string>();
 
-    private static StrCompare comparrer = new StrCompare();
+    private static readonly StrCompare _comparrer = new StrCompare();
 
     static TextPrediction() {
-        toplevelDomains = new HashSet<string>(getToplevelDomains(), comparrer);
+        _toplevelDomains = new HashSet<string>(GetToplevelDomains(), _comparrer);
     }
 
-    public static List<string> getToplevelDomains() {
+    public static List<string> GetToplevelDomains() {
         return SharedFunctionalities.Properties.Resources.topleveldomains.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
     }
 
@@ -26,7 +26,7 @@ public static class TextPrediction {
         var strend = str.LastIndexOf(".");
         if (strend != -1 && str.Length > strend + 1) {
             var possibleLevel = str.Substring(strend + 1);
-            result = toplevelDomains.Contains(possibleLevel, comparrer);
+            result = _toplevelDomains.Contains(possibleLevel, _comparrer);
         }
         return result;
     }

@@ -9,14 +9,14 @@ namespace SharedFunctionalities.forms {
 
 
         protected override void WndProc( ref Message m ) {
-            const int WM_NCHITTEST = 0x0084;
-            const int WM_TIMER = 0x0113;
-            const int HTTRANSPARENT = (-1);
+            const int wmNchittest = 0x0084;
+            const int wmTimer = 0x0113;
+            const int httransparent = (-1);
             switch ( m.Msg ) {
-                case WM_NCHITTEST:
-                    m.Result = (IntPtr)HTTRANSPARENT;
+                case wmNchittest:
+                    m.Result = (IntPtr)httransparent;
                     break;
-                case WM_TIMER:
+                case wmTimer:
                 default:
                     base.WndProc( ref m );
                     break;

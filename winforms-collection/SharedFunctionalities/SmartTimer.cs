@@ -4,19 +4,19 @@ using System.Timers;
 namespace SharedFunctionalities {
     public class SmartTimer {
         #region variables and properties
-        private Timer innerTimer = new Timer();
+        private readonly Timer _innerTimer = new Timer();
 
-        private Action afterHandler;
+        private Action _afterHandler;
 
-        private int currentCounter = 0;
+        private int _currentCounter = 0;
 
-        private Action<object, System.Timers.ElapsedEventArgs, SmartTimer> TimerHandler;
+        private Action<object, System.Timers.ElapsedEventArgs, SmartTimer> _timerHandler;
         #region property interval 
 
-        public int interval
+        public int Interval
         {
-            get { return (int)innerTimer.Interval; }
-            set { innerTimer.Interval = value; }
+            get { return (int)_innerTimer.Interval; }
+            set { _innerTimer.Interval = value; }
         }
 
         #endregion
@@ -26,7 +26,7 @@ namespace SharedFunctionalities {
         private int _counter = int.MaxValue;
 
 
-        public int counter
+        public int Counter
         {
             get { return _counter; }
             set { _counter = value; }
@@ -38,10 +38,10 @@ namespace SharedFunctionalities {
         #region property continuous
 
 
-        public bool repeate
+        public bool Repeate
         {
-            get { return innerTimer.AutoReset; }
-            set { innerTimer.AutoReset = value; }
+            get { return _innerTimer.AutoReset; }
+            set { _innerTimer.AutoReset = value; }
         }
         #endregion
 
@@ -49,15 +49,15 @@ namespace SharedFunctionalities {
 
         public SmartTimer() {
             //always have a default value, rather than null's n zeros. That usually results in a much more "simple" code. 
-            innerTimer.AutoReset = true;
-            innerTimer.Interval = 250;
-            innerTimer.Elapsed += onTimer;
+            _innerTimer.AutoReset = true;
+            _innerTimer.Interval = 250;
+            _innerTimer.Elapsed += OnTimer;
         }
 
-        private void onTimer(object sender, ElapsedEventArgs e) {
-            if (TimerHandler != null && currentCounter <= counter && repeate) {
-                TimerHandler.Invoke(sender, e, this);
-                currentCounter++;
+        private void OnTimer(object sender, ElapsedEventArgs e) {
+            if (_timerHandler != null && _currentCounter <= Counter && Repeate) {
+                _timerHandler.Invoke(sender, e, this);
+                _currentCounter++;
             } else {
                 Stop();
             }
@@ -69,19 +69,19 @@ namespace SharedFunctionalities {
         /// </summary>
         /// <param name="handler"> the on "ticeket" function. NB: the first object is the sender.</param>
         /// <param name="after">The event after we are done.(can be null)</param>
-        public virtual void start(Action<object, ElapsedEventArgs, SmartTimer> handler, Action after) {
-            this.TimerHandler = handler;
-            this.afterHandler = after;
-            currentCounter = 0;
-            innerTimer.Enabled = true;
-            innerTimer.Start();
+        public virtual void Start(Action<object, ElapsedEventArgs, SmartTimer> handler, Action after) {
+            this._timerHandler = handler;
+            this._afterHandler = after;
+            _currentCounter = 0;
+            _innerTimer.Enabled = true;
+            _innerTimer.Start();
         }
         /// <summary>
         /// Starts a timer with the current settings. When timeout it calls the onDone method. 
         /// </summary>
         /// <param name="onDone">Waits till the timer times out then call the onDone method</param>
-        public virtual void start(Action onDone) {
-            start((object sender, ElapsedEventArgs e, SmartTimer timer) => { }, onDone);
+        public virtual void Start(Action onDone) {
+            Start((object sender, ElapsedEventArgs e, SmartTimer timer) => { }, onDone);
 
         }
         /// <summary>
@@ -89,12 +89,12 @@ namespace SharedFunctionalities {
         /// </summary>
         /// <param name="mayCallAfterHandler">set to false if afterHandler may not be called. defaults to true.</param>
         public void Stop(bool mayCallAfterHandler = true) {
-            currentCounter = 0;
-            TimerHandler = null;
-            innerTimer.Enabled = false;
-            innerTimer.Stop();
+            _currentCounter = 0;
+            _timerHandler = null;
+            _innerTimer.Enabled = false;
+            _innerTimer.Stop();
             if (mayCallAfterHandler) {
-                afterHandler?.Invoke();
+                _afterHandler?.Invoke();
             }
         }
         #endregion

@@ -5,35 +5,35 @@ using SharedFunctionalities;
 namespace winforms_collection.navigation {
     public partial class CollapsableSplitContainer : SplitContainer {
 
-        private ContainerPanelState state = new ContainerPanelState();
+        private ContainerPanelState _state = new ContainerPanelState();
 
-        private SmartUITimer currentAnimation = null;
+        private SmartUiTimer _currentAnimation = null;
 
-        private PanelCollapsedSelector collapsedPanel = new PanelCollapsedSelector();
+        private readonly PanelCollapsedSelector _collapsedPanel = new PanelCollapsedSelector();
 
         public CollapsableSplitContainer() {
             InitializeComponent();
-            collapsedPanel.IsPanel1Collapsed = Panel1Collapsed;
-            collapsedPanel.IsPanel2Collapsed = Panel2Collapsed;
+            _collapsedPanel.IsPanel1Collapsed = Panel1Collapsed;
+            _collapsedPanel.IsPanel2Collapsed = Panel2Collapsed;
         }
 
-        private void stopAnimations() {
-            currentAnimation?.Stop(false);
+        private void StopAnimations() {
+            _currentAnimation?.Stop(false);
         }
-        private void savePanelState() {
-            state.isSplitterFixed = IsSplitterFixed;
-            state.splitterDistance = SplitterDistance;
-            state.fixPanel = FixedPanel;
-        }
-
-        private void loadPanelState() {
-            IsSplitterFixed = state.isSplitterFixed;
-            SplitterDistance = state.splitterDistance;
-            FixedPanel = state.fixPanel;
+        private void SavePanelState() {
+            _state.isSplitterFixed = IsSplitterFixed;
+            _state.splitterDistance = SplitterDistance;
+            _state.FixPanel = FixedPanel;
         }
 
+        private void LoadPanelState() {
+            IsSplitterFixed = _state.isSplitterFixed;
+            SplitterDistance = _state.splitterDistance;
+            FixedPanel = _state.FixPanel;
+        }
 
-        private void resetSplitter(bool isForPanel1) {
+
+        private void ResetSplitter(bool isForPanel1) {
             IsSplitterFixed = false;
             FixedPanel = FixedPanel.None;
             if (isForPanel1) {
@@ -44,56 +44,56 @@ namespace winforms_collection.navigation {
         }
 
         public void CollapsePanel1() {
-            if (collapsedPanel.IsAnyCollapsed) {
+            if (_collapsedPanel.IsAnyCollapsed) {
                 return;
             }
 
-            stopAnimations();
+            StopAnimations();
 
-            collapsedPanel.IsPanel1Collapsed = true;
-            savePanelState();
-            resetSplitter(true);
+            _collapsedPanel.IsPanel1Collapsed = true;
+            SavePanelState();
+            ResetSplitter(true);
 
-            SharedAnimations.animateProperty(this, SplitterDistance, 0, 300, (diff) => {
+            SharedAnimations.AnimateProperty(this, SplitterDistance, 0, 300, (diff) => {
                 SplitterDistance = Math.Max(SplitterDistance + diff, 0);
             }, () => {
                 SplitterDistance = 0;
-                currentAnimation = null;
-                collapsedPanel.IsPanel1Collapsed = true;
+                _currentAnimation = null;
+                _collapsedPanel.IsPanel1Collapsed = true;
             });
 
         }
 
         public void ExpandPanel1() {
-            if (!collapsedPanel.IsPanel1Collapsed) {
+            if (!_collapsedPanel.IsPanel1Collapsed) {
                 return;
             }
-            stopAnimations();
-            resetSplitter(false);
+            StopAnimations();
+            ResetSplitter(false);
 
-            currentAnimation = SharedAnimations.animateProperty(this, SplitterDistance, state.splitterDistance, 300, (diff) => {
+            _currentAnimation = SharedAnimations.AnimateProperty(this, SplitterDistance, _state.splitterDistance, 300, (diff) => {
                 SplitterDistance += Math.Max(diff, 0);
             }, () => {
-                collapsedPanel.IsPanel1Collapsed = false;
-                currentAnimation = null;
-                loadPanelState();
+                _collapsedPanel.IsPanel1Collapsed = false;
+                _currentAnimation = null;
+                LoadPanelState();
             });
         }
 
         private class PanelCollapsedSelector {
 
-            private bool isPanel1Collapsed = false;
-            private bool isPanel2Collapsed = false;
+            private bool _isPanel1Collapsed = false;
+            private readonly bool _isPanel2Collapsed = false;
 
             public bool IsPanel1Collapsed
             {
                 get
                 {
-                    return isPanel1Collapsed;
+                    return _isPanel1Collapsed;
                 }
                 set
                 {
-                    isPanel1Collapsed = value;
+                    _isPanel1Collapsed = value;
                 }
             }
 
@@ -101,11 +101,11 @@ namespace winforms_collection.navigation {
             {
                 get
                 {
-                    return isPanel2Collapsed;
+                    return _isPanel2Collapsed;
                 }
                 set
                 {
-                    isPanel1Collapsed = value;
+                    _isPanel1Collapsed = value;
                 }
             }
 
@@ -113,7 +113,7 @@ namespace winforms_collection.navigation {
             {
                 get
                 {
-                    return isPanel1Collapsed || isPanel2Collapsed;
+                    return _isPanel1Collapsed || _isPanel2Collapsed;
                 }
             }
 
@@ -124,7 +124,7 @@ namespace winforms_collection.navigation {
         private struct ContainerPanelState {
             public int splitterDistance;
             public bool isSplitterFixed;
-            public FixedPanel fixPanel;
+            public FixedPanel FixPanel;
         }
     }
 

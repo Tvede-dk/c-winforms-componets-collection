@@ -11,14 +11,14 @@ namespace SharedFunctionalities.drawing.layers {
         private Brush _displayBrush;
 
 
-        public Brush displayBrush {
+        public Brush DisplayBrush {
             get { return _displayBrush; }
             set {
                 if (_displayBrush != null) {
                     _displayBrush.Dispose();
                 }
                 _displayBrush = value;
-                invalidate();
+                Invalidate();
             }
         }
         #endregion
@@ -28,7 +28,7 @@ namespace SharedFunctionalities.drawing.layers {
         private StringFormat _stringFormat;
 
 
-        public StringFormat stringFormat {
+        public StringFormat StringFormat {
             get { return _stringFormat; }
             set { _stringFormat = value; }
         }
@@ -36,28 +36,28 @@ namespace SharedFunctionalities.drawing.layers {
 
 
         #region property Text
-        private string _Text;
+        private string _text;
 
 
         public string Text {
-            get { return _Text; }
+            get { return _text; }
             set {
-                _Text = value;
-                invalidate();
+                _text = value;
+                Invalidate();
             }
         }
         #endregion
 
 
         #region property Font
-        private Font _Font;
+        private Font _font;
 
 
-        public Font font {
-            get { return _Font; }
+        public Font Font {
+            get { return _font; }
             set {
-                _Font = value;
-                invalidate();
+                _font = value;
+                Invalidate();
             }
         }
         #endregion
@@ -66,28 +66,28 @@ namespace SharedFunctionalities.drawing.layers {
 
 
         public TextBaseLayer() {
-            stringFormat = StringFormat.GenericDefault;
-            displayBrush = new SolidBrush(Color.Black);
+            StringFormat = StringFormat.GenericDefault;
+            DisplayBrush = new SolidBrush(Color.Black);
         }
 
-        public override void doDraw(Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect) {
+        public override void DoDraw(Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect) {
             //the following is NESSARY for transperant backgrounds, which we always want..
             //TextRender is slower (on my machine), this seems odd, but then again, windows 10 <3
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
-            g.DrawString(Text, font, displayBrush, wholeComponent, stringFormat);
+            g.DrawString(Text, Font, DisplayBrush, wholeComponent, StringFormat);
         }
 
 
-        public override bool mayDraw() {
-            return Text != null && Text.Length > 0 && font != null;
+        public override bool MayDraw() {
+            return Text != null && Text.Length > 0 && Font != null;
         }
 
-        public override bool willFillRectangleOut() {
+        public override bool WillFillRectangleOut() {
             return false;
         }
 
-        public override void modifySize(ref Rectangle newSize) {
+        public override void ModifySize(ref Rectangle newSize) {
             return;
         }
     }

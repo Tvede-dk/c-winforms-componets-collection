@@ -1,8 +1,8 @@
 ﻿using System.Windows.Forms;
 
 namespace Samples_and_tests {
-    public partial class controls : Form {
-        public controls() {
+    public partial class Controls : Form {
+        public Controls() {
             InitializeComponent();
                 
             //simpleList1.onAdd( new Func<string>( () => { return "swag"; } ) );

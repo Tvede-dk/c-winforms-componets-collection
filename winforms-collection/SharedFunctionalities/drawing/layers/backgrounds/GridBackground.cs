@@ -8,12 +8,12 @@ namespace SharedFunctionalities.drawing.layers.backgrounds {
 
 
         #region property SpaceBetween
-        private int _SpaceBetween = 15 * 5;
+        private int _spaceBetween = 15 * 5;
 
 
         public int SpaceBetween {
-            get { return _SpaceBetween; }
-            set { _SpaceBetween = value; invalidate(); }
+            get { return _spaceBetween; }
+            set { _spaceBetween = value; Invalidate(); }
         }
         #endregion
 
@@ -23,7 +23,7 @@ namespace SharedFunctionalities.drawing.layers.backgrounds {
         private int _lineSize = 1;
 
 
-        public int lineSize {
+        public int LineSize {
             get { return _lineSize; }
             set { _lineSize = value; }
         }
@@ -31,14 +31,14 @@ namespace SharedFunctionalities.drawing.layers.backgrounds {
 
         //public int translateX = 0;
         #region property LineColor
-        private Color _LineColor = Color.LightSlateGray;
+        private Color _lineColor = Color.LightSlateGray;
 
 
         public Color LineColor {
-            get { return _LineColor; }
+            get { return _lineColor; }
             set {
-                _LineColor = value;
-                invalidate();
+                _lineColor = value;
+                Invalidate();
             }
         }
         #endregion
@@ -46,10 +46,10 @@ namespace SharedFunctionalities.drawing.layers.backgrounds {
 
 
         ~GridBackground() {
-            invalidate();
+            Invalidate();
         }
 
-        public override void doDraw(Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect) {
+        public override void DoDraw(Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect) {
             var watch = new Stopwatch();
             watch.Start();
             Rectangle newRec = wholeComponent;
@@ -58,7 +58,7 @@ namespace SharedFunctionalities.drawing.layers.backgrounds {
             //    g.Clear(Color.White);
             //    drawGridOnGraphics(g, wholeComponent.Width, wholeComponent.Height);
             //} else {
-                wholeComponent = drawUsingBitblt(g, newRec);
+                wholeComponent = DrawUsingBitblt(g, newRec);
             //}
             watch.Stop();
             if (watch.Elapsed.TotalMilliseconds > 1) {
@@ -66,14 +66,14 @@ namespace SharedFunctionalities.drawing.layers.backgrounds {
             }
         }
 
-        private Rectangle drawUsingBitblt(Graphics g, Rectangle wholeComponent) {
-            Bitmap pattern = createPattern();
-            pattern.bitbltRepeat(g, wholeComponent.Width, wholeComponent.Height);
+        private Rectangle DrawUsingBitblt(Graphics g, Rectangle wholeComponent) {
+            Bitmap pattern = CreatePattern();
+            pattern.BitbltRepeat(g, wholeComponent.Width, wholeComponent.Height);
             pattern.Dispose();
             return wholeComponent;
         }
 
-        private Bitmap createPattern() {
+        private Bitmap CreatePattern() {
             #region a far, close, and standard distance mode based on simple benchmarking.
             var preFactor = 10;
             var divisionFactor = 20;
@@ -93,7 +93,7 @@ namespace SharedFunctionalities.drawing.layers.backgrounds {
                 var sw = new Stopwatch();
                 sw.Start();
                 gg.Clear(Color.White);
-                drawGridOnGraphics(gg, totalSize, totalSize);
+                DrawGridOnGraphics(gg, totalSize, totalSize);
 
                 sw.Stop();
                 Console.WriteLine("time for making pattern:" + sw.Elapsed.TotalMilliseconds);
@@ -101,9 +101,9 @@ namespace SharedFunctionalities.drawing.layers.backgrounds {
             return pattern;
         }
 
-        private void drawGridOnGraphics(Graphics gg, int width, int height) {
+        private void DrawGridOnGraphics(Graphics gg, int width, int height) {
 
-            var blackPen = new Pen(Color.Black, lineSize);
+            var blackPen = new Pen(Color.Black, LineSize);
             for (var i = 0; i < Math.Ceiling((double)height / (double)SpaceBetween); i++) {
                 gg.DrawLine(Pens.Black, 0, SpaceBetween * i, width, SpaceBetween * i);
             }
@@ -112,11 +112,11 @@ namespace SharedFunctionalities.drawing.layers.backgrounds {
             }
         }
 
-        public override void modifySize(ref Rectangle newSize) {
+        public override void ModifySize(ref Rectangle newSize) {
 
         }
-        public override void invalidate() {
-            base.invalidate();
+        public override void Invalidate() {
+            base.Invalidate();
         }
     }
 }

@@ -10,25 +10,25 @@ namespace winforms_collection.containers {
 
 
         #region property DirectionHorizontal
-        private bool _DirectionHorizontal;
+        private bool _directionHorizontal;
 
 
         public bool DirectionHorizontal {
-            get { return _DirectionHorizontal; }
-            set { _DirectionHorizontal = value; }
+            get { return _directionHorizontal; }
+            set { _directionHorizontal = value; }
         }
         #endregion
 
 
         #region property SplitHeight
-        private int _SplitHeight;
+        private int _splitHeight;
 
         [EditorBrowsable]
         [Description("Determines the amount of visible controls in the list, and splits the height equally")]
         public int SplitHeight {
-            get { return _SplitHeight; }
+            get { return _splitHeight; }
             set {
-                _SplitHeight = value;
+                _splitHeight = value;
                 this.Invalidate( true );
             }
         }
@@ -40,7 +40,7 @@ namespace winforms_collection.containers {
         private int _minSplitHeight;
 
 
-        public int minSplitHeight {
+        public int MinSplitHeight {
             get { return _minSplitHeight; }
             set { _minSplitHeight = value; }
         }
@@ -50,13 +50,13 @@ namespace winforms_collection.containers {
 
 
         #region property heightWeight
-        private List<Action<BindingList<float>>> _heightWeightChangeListners = new List<Action<BindingList<float>>>();
+        private readonly List<Action<BindingList<float>>> _heightWeightChangeListners = new List<Action<BindingList<float>>>();
 
-        private BindingList<float> _heightWeight;
+        private readonly BindingList<float> _heightWeight;
         [EditorBrowsable]
         [Editor()]
         [Description("")]
-        public BindingList<float> heightWeight {
+        public BindingList<float> HeightWeight {
             get { return _heightWeight; }
             set {
                 _heightWeight.Clear();//should suspend the invalidation here.
@@ -70,8 +70,8 @@ namespace winforms_collection.containers {
                 foreach ( var item in _heightWeightChangeListners ) { item( value ); }
             }
         }
-        private int HeightOf0WeightControls = 0;
-        private float WeightHeight1Weight = 1;
+        private int _heightOf0WeightControls = 0;
+        private float _weightHeight1Weight = 1;
         #endregion
 
 
@@ -87,17 +87,17 @@ namespace winforms_collection.containers {
 
         private void HeightWeight_ListChanged( object sender, ListChangedEventArgs e ) {
 
-            WeightHeight1Weight = 0;
+            _weightHeight1Weight = 0;
             var counter = 0;
-            foreach ( var item in heightWeight ) {
+            foreach ( var item in HeightWeight ) {
                 if ( item == 0 ) {
                     if ( DirectionHorizontal ) {
-                        HeightOf0WeightControls += Controls[counter].Width;
+                        _heightOf0WeightControls += Controls[counter].Width;
                     } else {
-                        HeightOf0WeightControls += Controls[counter].Height;
+                        _heightOf0WeightControls += Controls[counter].Height;
                     }
                 } else {
-                    WeightHeight1Weight += item;
+                    _weightHeight1Weight += item;
                 }
                 counter++;
             }
@@ -106,7 +106,7 @@ namespace winforms_collection.containers {
 
         protected override void OnControlAdded( ControlEventArgs e ) {
             base.OnControlAdded( e );
-            handleChildControl( e.Control );
+            HandleChildControl( e.Control );
         }
 
         public override Size GetPreferredSize( Size proposedSize ) {
@@ -118,29 +118,29 @@ namespace winforms_collection.containers {
 
         protected override void OnResize( EventArgs eventargs ) {
             base.OnResize( eventargs );
-            handleChildrenSizing();
+            HandleChildrenSizing();
         }
 
         protected override void OnInvalidated( InvalidateEventArgs e ) {
-            handleChildrenSizing();
+            HandleChildrenSizing();
             base.OnInvalidated( e );
         }
 
-        private void handleChildrenSizing() {
+        private void HandleChildrenSizing() {
             foreach ( Control item in Controls ) {
-                handleChildControl( item );
+                HandleChildControl( item );
             }
         }
 
-        private void handleChildControl( Control item ) {
+        private void HandleChildControl( Control item ) {
 
             if ( DirectionHorizontal ) {
-                if ( SplitHeight > 0 && Width > minSplitHeight || heightWeight.Count > 0 ) {
+                if ( SplitHeight > 0 && Width > MinSplitHeight || HeightWeight.Count > 0 ) {
                     var newWidth = 10;
                     var ctrolIndex = Controls.GetChildIndex( item );
-                    if ( heightWeight != null && heightWeight.Count > ctrolIndex ) {
-                        if ( heightWeight[ctrolIndex] > 0 ) {
-                            newWidth = (int)(((Width - HeightOf0WeightControls) * heightWeight[ctrolIndex]) / WeightHeight1Weight);
+                    if ( HeightWeight != null && HeightWeight.Count > ctrolIndex ) {
+                        if ( HeightWeight[ctrolIndex] > 0 ) {
+                            newWidth = (int)(((Width - _heightOf0WeightControls) * HeightWeight[ctrolIndex]) / _weightHeight1Weight);
                         } else {
                             newWidth = item.Width;
                         }
@@ -155,12 +155,12 @@ namespace winforms_collection.containers {
                 }
                 item.Dock = DockStyle.Left;
             } else {
-                if ( SplitHeight > 0 && Height > minSplitHeight || heightWeight.Count > 0 ) {
+                if ( SplitHeight > 0 && Height > MinSplitHeight || HeightWeight.Count > 0 ) {
                     var newHeight = 10;
                     var ctrolIndex = Controls.GetChildIndex( item );
-                    if ( heightWeight != null && heightWeight.Count > ctrolIndex ) {
-                        if ( heightWeight[ctrolIndex] > 0 ) {
-                            newHeight = (int)(((Height - HeightOf0WeightControls) * heightWeight[ctrolIndex]) / WeightHeight1Weight);
+                    if ( HeightWeight != null && HeightWeight.Count > ctrolIndex ) {
+                        if ( HeightWeight[ctrolIndex] > 0 ) {
+                            newHeight = (int)(((Height - _heightOf0WeightControls) * HeightWeight[ctrolIndex]) / _weightHeight1Weight);
                         } else {
                             newHeight = item.Height;
                         }

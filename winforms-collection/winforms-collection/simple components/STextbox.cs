@@ -11,19 +11,19 @@ namespace winforms_collection {
         private string _placeHolder = "";
 
         private Font _placeHolderFont;
-        private SolidBrush _placeHolderBrush = new SolidBrush(Color.FromArgb(150, 205, 205, 205)); // #cccccc with 50% transperency
+        private readonly SolidBrush _placeHolderBrush = new SolidBrush(Color.FromArgb(150, 205, 205, 205)); // #cccccc with 50% transperency
 
         [EditorBrowsable()]
         [Description("This is also known as a hint, or watermark. Its a hint to the user about what this textfield should contain.")]
 
-        public string placeHolder {
+        public string PlaceHolder {
             get { return _placeHolder; }
             set { _placeHolder = value; }
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         private IValidatorType _validator;
-        public IValidatorType validator {
+        public IValidatorType Validator {
             get {
                 return _validator;
             }
@@ -32,18 +32,18 @@ namespace winforms_collection {
             }
         }
 
-        private TextboxType _dataType = TextboxType.REGULAR_TEXT;
+        private TextboxType _dataType = TextboxType.RegularText;
 
         [EditorBrowsable]
         [Description("...")]
 
-        public TextboxType dataType {
+        public TextboxType DataType {
             get {
                 return _dataType;
             }
             set {
                 _dataType = value;
-                onTextboxTypeChange(value);
+                OnTextboxTypeChange(value);
             }
         }
 
@@ -52,22 +52,22 @@ namespace winforms_collection {
             base.OnTextChanged(e);
             //run validation in background.
             if (_validator != null) {
-                runValidator();
+                RunValidator();
             }
         }
 
 
 
-        private void runValidator() {
+        private void RunValidator() {
             //propperly a threadpool , given that it is a cpu intensitive validation, and we might want this multiple places and alike..
             //TODO make in another thread
-            if (!validate()) {
+            if (!Validate()) {
                 var loc = PointToScreen(Point.Empty);
                 var displayPoint = new Point(loc.X + Width, loc.Y);
-                popup_boxes.NotificationBar.showAtLocation(validator.getErrorMessage(), displayPoint);
+                popup_boxes.NotificationBar.ShowAtLocation(Validator.GetErrorMessage(), displayPoint);
             }
         }
-        public bool validate() {
+        public bool Validate() {
             if (_validator != null) {
                 return _validator.Validate(Text);
             } else {
@@ -90,9 +90,9 @@ namespace winforms_collection {
             if (e.Control && e.KeyCode == Keys.Back) {
                 handled = true;
                 if (SelectionLength > 1) {
-                    slice(SelectionStart, SelectionStart + SelectionLength);
+                    Slice(SelectionStart, SelectionStart + SelectionLength);
                 } else {
-                    deleteFromCursorToLeftWord();
+                    DeleteFromCursorToLeftWord();
                 }
             }
 
@@ -103,7 +103,7 @@ namespace winforms_collection {
                 if (this.Multiline) {
                     var preStart = SelectionStart;
                     var lineIndex = GetLineFromCharIndex(preStart);
-                    Lines = SharedFunctionalities.SharedStringUtils.removeIndexFromArray(Lines, lineIndex);
+                    Lines = SharedFunctionalities.SharedStringUtils.RemoveIndexFromArray(Lines, lineIndex);
                     SelectionStart = Math.Max(GetFirstCharIndexFromLine(lineIndex), preStart - 1);
                 } else {
                     Text = "";
@@ -116,15 +116,15 @@ namespace winforms_collection {
                 handled = true;
             }
             if (e.KeyCode == Keys.Down && e.Control && e.Shift && Multiline) {
-                var lineIndex = getCurrentLine();
-                this.Lines = SharedFunctionalities.SharedStringUtils.insertValueIntoIndexInArray(Lines, Lines[GetLineFromCharIndex(SelectionStart)], GetLineFromCharIndex(SelectionStart));
-                setCurrentLine(lineIndex + 1);
+                var lineIndex = GetCurrentLine();
+                this.Lines = SharedFunctionalities.SharedStringUtils.InsertValueIntoIndexInArray(Lines, Lines[GetLineFromCharIndex(SelectionStart)], GetLineFromCharIndex(SelectionStart));
+                SetCurrentLine(lineIndex + 1);
                 handled = true;
             }
             if (e.KeyCode == Keys.Up && e.Control && e.Shift && Multiline) {
-                var lineIndex = getCurrentLine();
-                this.Lines = SharedFunctionalities.SharedStringUtils.insertValueIntoIndexInArray(Lines, Lines[GetLineFromCharIndex(SelectionStart)], GetLineFromCharIndex(SelectionStart));
-                setCurrentLine(lineIndex - 1);
+                var lineIndex = GetCurrentLine();
+                this.Lines = SharedFunctionalities.SharedStringUtils.InsertValueIntoIndexInArray(Lines, Lines[GetLineFromCharIndex(SelectionStart)], GetLineFromCharIndex(SelectionStart));
+                SetCurrentLine(lineIndex - 1);
                 handled = true;
             }
             if (handled) {
@@ -136,15 +136,15 @@ namespace winforms_collection {
             base.OnKeyDown(e);
         }
 
-        public void setCurrentLine(int line) {
+        public void SetCurrentLine(int line) {
             this.SelectionStart = GetFirstCharIndexFromLine(line);
         }
 
-        public int getCurrentLine() {
+        public int GetCurrentLine() {
             return GetLineFromCharIndex(SelectionStart);
         }
 
-        public void deleteFromCursorToLeftWord() {
+        public void DeleteFromCursorToLeftWord() {
             var end = SelectionStart;
             var lineStart = GetFirstCharIndexOfCurrentLine();
             var start = Text.LastIndexOf(' ', end - 1);
@@ -152,12 +152,12 @@ namespace winforms_collection {
             if (start == -1) {
                 start = 0;
             }
-            slice(Math.Max(start, lineStart - 1), end);
+            Slice(Math.Max(start, lineStart - 1), end);
             SelectionStart = Text.Length;
         }
 
 
-        public void showTextHint(String hint) {
+        public void ShowTextHint(String hint) {
 
         }
 
@@ -169,45 +169,45 @@ namespace winforms_collection {
             base.OnLostFocus(e);
         }
 
-        private void slice(int sliceStart, int sliceEnd) {
+        private void Slice(int sliceStart, int sliceEnd) {
             var secoundPart = "";
             if (sliceEnd < Text.Length) {
                 secoundPart = Text.Substring(sliceEnd);
             }
             Text = Text.Substring(0, sliceStart) + secoundPart;
         }
-        private void loadNames() {
-            AutoCompleteCustomSource = StaticsLoads.getAutocompleteNames();
+        private void LoadNames() {
+            AutoCompleteCustomSource = StaticsLoads.GetAutocompleteNames();
         }
 
         private static class StaticsLoads {
-            static AutoCompleteStringCollection autoCompleteNames;
-            public static AutoCompleteStringCollection getAutocompleteNames() {
-                if (autoCompleteNames == null && isDesignMode() == false && IsInDesignMode() == false) {
-                    autoCompleteNames = new AutoCompleteStringCollection();
-                    autoCompleteNames.AddRange(Properties.Resources.names.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries));
+            static AutoCompleteStringCollection _autoCompleteNames;
+            public static AutoCompleteStringCollection GetAutocompleteNames() {
+                if (_autoCompleteNames == null && IsDesignMode() == false && IsInDesignMode() == false) {
+                    _autoCompleteNames = new AutoCompleteStringCollection();
+                    _autoCompleteNames.AddRange(Properties.Resources.names.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries));
                 }
-                return autoCompleteNames;
+                return _autoCompleteNames;
             }
         }
 
-        private void onTextboxTypeChange(TextboxType value) {
+        private void OnTextboxTypeChange(TextboxType value) {
             switch (value) {
-                case TextboxType.REGULAR_TEXT:
+                case TextboxType.RegularText:
                     this.AutoCompleteCustomSource = null;
                     break;
-                case TextboxType.PERSON_NAME:
-                    loadNames();
+                case TextboxType.PersonName:
+                    LoadNames();
                     break;
-                case TextboxType.DECIMAL:
+                case TextboxType.Decimal:
                     var dec = new NumberString();
-                    dec.allowDecimal = true;
-                    this.validator = dec;
+                    dec.AllowDecimal = true;
+                    this.Validator = dec;
                     break;
-                case TextboxType.NUMBER:
+                case TextboxType.Number:
                     var num = new NumberString();
-                    num.allowInt = true;
-                    this.validator = num;
+                    num.AllowInt = true;
+                    this.Validator = num;
                     break;
                 default:
                     break;
@@ -221,7 +221,7 @@ namespace winforms_collection {
         }
 
 
-        private bool getDesignMode() {
+        private bool GetDesignMode() {
             IDesignerHost host;
             if (Site != null) {
                 host = Site.GetService(typeof(IDesignerHost)) as IDesignerHost;
@@ -232,15 +232,15 @@ namespace winforms_collection {
             MessageBox.Show("Runtime Mode");
             return false;
         }
-        private static bool isDesignMode() {
+        private static bool IsDesignMode() {
             return (LicenseManager.UsageMode == LicenseUsageMode.Designtime);
         }
 
         public enum TextboxType {
-            REGULAR_TEXT,
-            PERSON_NAME,
-            NUMBER,
-            DECIMAL
+            RegularText,
+            PersonName,
+            Number,
+            Decimal
         }
     }
 }

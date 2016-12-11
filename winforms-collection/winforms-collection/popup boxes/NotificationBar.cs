@@ -4,8 +4,8 @@ using System.Windows.Forms;
 using SharedFunctionalities;
 namespace winforms_collection.popup_boxes {
     public partial class NotificationBar : Form {
-        private const int fastFadeTimeInMs = 250;
-        private const int fastFadeoutInMs = 350;
+        private const int FastFadeTimeInMs = 250;
+        private const int FastFadeoutInMs = 350;
         private const int TimeToDimissAfterMouseOverInMs = 2000;
         #region property text
         public string LabelText {
@@ -21,19 +21,19 @@ namespace winforms_collection.popup_boxes {
             InitializeComponent();
             TransparencyKey = BackColor;
             this.label1.Text = LabelText;
-            SharedAnimations.fadeIn( this, fastFadeTimeInMs, null );
+            SharedAnimations.FadeIn( this, FastFadeTimeInMs, null );
 
         }
 
 
 
-        private void end() {
+        private void End() {
 
-            SharedAnimations.fadeOut( this, fastFadeoutInMs, () => { Dispose(); } );
+            SharedAnimations.FadeOut( this, FastFadeoutInMs, () => { Dispose(); } );
         }
 
 
-        public static void showAtLocation( String text, Point pt ) {
+        public static void ShowAtLocation( String text, Point pt ) {
             var not = new NotificationBar();
             not.LabelText = text;
             not.Show();
@@ -44,12 +44,12 @@ namespace winforms_collection.popup_boxes {
         }
 
         private void pictureBox1_Click( object sender, EventArgs e ) {
-            end();
+            End();
         }
 
 
         private void label1_MouseLeave( object sender, EventArgs e ) {
-            new SmartUITimer( this ) { repeate = false, counter = 0, interval = TimeToDimissAfterMouseOverInMs }.start( () => { end(); } );
+            new SmartUiTimer( this ) { Repeate = false, Counter = 0, Interval = TimeToDimissAfterMouseOverInMs }.Start( () => { End(); } );
         }
     }
 }

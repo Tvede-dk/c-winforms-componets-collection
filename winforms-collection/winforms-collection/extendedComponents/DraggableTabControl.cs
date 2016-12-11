@@ -7,7 +7,7 @@ namespace winforms_collection.extendedComponents {
         /// <summary> 
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.Container components = null;
+        private readonly System.ComponentModel.Container _components = null;
 
         public DraggableTabControl() {
             // This call is required by the Windows.Forms Form Designer.
@@ -22,8 +22,8 @@ namespace winforms_collection.extendedComponents {
         /// </summary>
         protected override void Dispose(bool disposing) {
             if (disposing) {
-                if (components != null) {
-                    components.Dispose();
+                if (_components != null) {
+                    _components.Dispose();
                 }
             }
             base.Dispose(disposing);
@@ -46,31 +46,31 @@ namespace winforms_collection.extendedComponents {
             pt = PointToClient(pt);
 
             //Get the tab we are hovering over.
-            TabPage hover_tab = GetTabPageByTab(pt);
+            TabPage hoverTab = GetTabPageByTab(pt);
 
             //Make sure we are on a tab.
-            if (hover_tab != null) {
+            if (hoverTab != null) {
                 //Make sure there is a TabPage being dragged.
                 if (e.Data.GetDataPresent(typeof(TabPage))) {
                     e.Effect = DragDropEffects.Move;
-                    var drag_tab = (TabPage)e.Data.GetData(typeof(TabPage));
+                    var dragTab = (TabPage)e.Data.GetData(typeof(TabPage));
 
-                    var item_drag_index = FindIndex(drag_tab);
-                    var drop_location_index = FindIndex(hover_tab);
+                    var itemDragIndex = FindIndex(dragTab);
+                    var dropLocationIndex = FindIndex(hoverTab);
 
                     //Don't do anything if we are hovering over ourself.
-                    if (item_drag_index != drop_location_index) {
+                    if (itemDragIndex != dropLocationIndex) {
                         var pages = new ArrayList();
 
                         //Put all tab pages into an array.
                         for (var i = 0; i < TabPages.Count; i++) {
                             //Except the one we are dragging.
-                            if (i != item_drag_index)
+                            if (i != itemDragIndex)
                                 pages.Add(TabPages[i]);
                         }
 
                         //Now put the one we are dragging it at the proper location.
-                        pages.Insert(drop_location_index, drag_tab);
+                        pages.Insert(dropLocationIndex, dragTab);
 
                         //Make them all go away for a nanosec.
                         TabPages.Clear();
@@ -79,7 +79,7 @@ namespace winforms_collection.extendedComponents {
                         TabPages.AddRange((TabPage[])pages.ToArray(typeof(TabPage)));
 
                         //Make sure the drag tab is selected.
-                        SelectedTab = drag_tab;
+                        SelectedTab = dragTab;
                     }
                 }
             } else {

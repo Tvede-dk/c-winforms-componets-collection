@@ -29,28 +29,28 @@ namespace SharedFunctionalities.DragDrop {
         /// <summary>
         /// param is the extension, returns true if valid.
         /// </summary>
-        public Func<string, bool> validator { get; set; }
+        public Func<string, bool> Validator { get; set; }
         /// <summary>
         /// string is the filename
         /// </summary>
-        public Action<string> onDropValid { get; set; }
+        public Action<string> OnDropValid { get; set; }
 
-        public void registerToView(Control control) {
+        public void RegisterToView(Control control) {
             control.DragEnter += Control_DragEnter;
             control.DragDrop += Control_DragDrop;
         }
 
         private void Control_DragDrop(object sender, DragEventArgs e) {
             string file;
-            var valid = GetFilename(out file, e, validator);
+            var valid = GetFilename(out file, e, Validator);
             if (valid) {
-                onDropValid(file);
+                OnDropValid(file);
             }
         }
 
         private void Control_DragEnter(object sender, DragEventArgs e) {
             string file;
-            var valid = GetFilename(out file, e, validator);
+            var valid = GetFilename(out file, e, Validator);
             if (valid) {
                 e.Effect = DragDropEffects.Copy;
             }

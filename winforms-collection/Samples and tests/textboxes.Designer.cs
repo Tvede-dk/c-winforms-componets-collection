@@ -1,5 +1,5 @@
 ﻿namespace Samples_and_tests {
-    partial class textboxes {
+    partial class Textboxes {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -39,10 +39,10 @@
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
-            this.testDraw1 = new winforms_collection.drawParts.testDraw();
+            this.testDraw1 = new winforms_collection.drawParts.TestDraw();
             this.styleableButton2 = new winforms_collection.advanced.StyleableButton();
             this.styleableButton1 = new winforms_collection.advanced.StyleableButton();
-            this.dropdown1 = new winforms_collection.advanced.dropdown.dropdown();
+            this.dropdown1 = new winforms_collection.advanced.dropdown.Dropdown();
             this.progressbar1 = new winforms_collection.simple_components.Progressbar();
             this.sTextbox8 = new winforms_collection.STextbox();
             this.sTextbox7 = new winforms_collection.STextbox();
@@ -246,23 +246,23 @@
             // progressbar1
             // 
             this.progressbar1.BackColor = System.Drawing.Color.Transparent;
-            this.progressbar1.borderSize = 5;
-            this.progressbar1.colorMethod = winforms_collection.simple_components.Progressbar.ColorDrawing.SINGLE_COLOR;
-            this.progressbar1.disableAnimations = false;
-            this.progressbar1.drawOverlay = true;
-            this.progressbar1.drawProcent = true;
-            this.progressbar1.flashbarWidth = 20;
-            this.progressbar1.flashColor = System.Drawing.Color.Orange;
-            this.progressbar1.flashColorIntensity = 150;
+            this.progressbar1.BorderSize = 5;
+            this.progressbar1.ColorMethod = winforms_collection.simple_components.Progressbar.ColorDrawing.SingleColor;
+            this.progressbar1.DisableAnimations = false;
+            this.progressbar1.DrawOverlay = true;
+            this.progressbar1.DrawProcent = true;
+            this.progressbar1.FlashbarWidth = 20;
+            this.progressbar1.FlashColor = System.Drawing.Color.Orange;
+            this.progressbar1.FlashColorIntensity = 150;
             this.progressbar1.ForeColor = System.Drawing.Color.Cyan;
-            this.progressbar1.fps = 60;
+            this.progressbar1.Fps = 60;
             this.progressbar1.Location = new System.Drawing.Point(12, 223);
-            this.progressbar1.multiColorEnd = System.Drawing.Color.Blue;
-            this.progressbar1.multiColorStart = System.Drawing.Color.LightCoral;
+            this.progressbar1.MultiColorEnd = System.Drawing.Color.Blue;
+            this.progressbar1.MultiColorStart = System.Drawing.Color.LightCoral;
             this.progressbar1.Name = "progressbar1";
-            this.progressbar1.overlayText = "% swag";
-            this.progressbar1.progressInProcent = 10;
-            this.progressbar1.singleColorFilledColor = System.Drawing.Color.Transparent;
+            this.progressbar1.OverlayText = "% swag";
+            this.progressbar1.ProgressInProcent = 10;
+            this.progressbar1.SingleColorFilledColor = System.Drawing.Color.Transparent;
             this.progressbar1.Size = new System.Drawing.Size(341, 18);
             this.progressbar1.TabIndex = 19;
             this.progressbar1.Text = "progressbar1";
@@ -271,100 +271,100 @@
             // 
             this.sTextbox8.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.sTextbox8.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.sTextbox8.dataType = winforms_collection.STextbox.TextboxType.PERSON_NAME;
+            this.sTextbox8.DataType = winforms_collection.STextbox.TextboxType.PersonName;
             this.sTextbox8.Location = new System.Drawing.Point(805, 15);
             this.sTextbox8.MaxLength = 0;
             this.sTextbox8.Name = "sTextbox8";
-            this.sTextbox8.placeHolder = "test";
+            this.sTextbox8.PlaceHolder = "test";
             this.sTextbox8.Size = new System.Drawing.Size(100, 20);
             this.sTextbox8.TabIndex = 17;
-            this.sTextbox8.validator = null;
+            this.sTextbox8.Validator = null;
             // 
             // sTextbox7
             // 
-            this.sTextbox7.dataType = winforms_collection.STextbox.TextboxType.REGULAR_TEXT;
+            this.sTextbox7.DataType = winforms_collection.STextbox.TextboxType.RegularText;
             this.sTextbox7.Location = new System.Drawing.Point(559, 281);
             this.sTextbox7.MaxLength = 0;
             this.sTextbox7.Multiline = true;
             this.sTextbox7.Name = "sTextbox7";
-            this.sTextbox7.placeHolder = "";
+            this.sTextbox7.PlaceHolder = "";
             this.sTextbox7.Size = new System.Drawing.Size(184, 216);
             this.sTextbox7.TabIndex = 16;
-            this.sTextbox7.validator = null;
+            this.sTextbox7.Validator = null;
             // 
             // sTextbox6
             // 
-            this.sTextbox6.dataType = winforms_collection.STextbox.TextboxType.REGULAR_TEXT;
+            this.sTextbox6.DataType = winforms_collection.STextbox.TextboxType.RegularText;
             this.sTextbox6.Location = new System.Drawing.Point(15, 271);
             this.sTextbox6.MaxLength = 0;
             this.sTextbox6.Multiline = true;
             this.sTextbox6.Name = "sTextbox6";
-            this.sTextbox6.placeHolder = "";
+            this.sTextbox6.PlaceHolder = "";
             this.sTextbox6.Size = new System.Drawing.Size(334, 71);
             this.sTextbox6.TabIndex = 12;
-            this.sTextbox6.validator = null;
+            this.sTextbox6.Validator = null;
             // 
             // sTextbox5
             // 
             this.sTextbox5.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystem;
-            this.sTextbox5.dataType = winforms_collection.STextbox.TextboxType.REGULAR_TEXT;
+            this.sTextbox5.DataType = winforms_collection.STextbox.TextboxType.RegularText;
             this.sTextbox5.Location = new System.Drawing.Point(675, 15);
             this.sTextbox5.MaxLength = 0;
             this.sTextbox5.Multiline = true;
             this.sTextbox5.Name = "sTextbox5";
-            this.sTextbox5.placeHolder = "";
+            this.sTextbox5.PlaceHolder = "";
             this.sTextbox5.Size = new System.Drawing.Size(100, 234);
             this.sTextbox5.TabIndex = 11;
-            this.sTextbox5.validator = null;
+            this.sTextbox5.Validator = null;
             // 
             // sTextbox4
             // 
-            this.sTextbox4.dataType = winforms_collection.STextbox.TextboxType.REGULAR_TEXT;
+            this.sTextbox4.DataType = winforms_collection.STextbox.TextboxType.RegularText;
             this.sTextbox4.Location = new System.Drawing.Point(488, 15);
             this.sTextbox4.MaxLength = 0;
             this.sTextbox4.Multiline = true;
             this.sTextbox4.Name = "sTextbox4";
-            this.sTextbox4.placeHolder = "";
+            this.sTextbox4.PlaceHolder = "";
             this.sTextbox4.Size = new System.Drawing.Size(100, 234);
             this.sTextbox4.TabIndex = 10;
-            this.sTextbox4.validator = null;
+            this.sTextbox4.Validator = null;
             // 
             // sTextbox3
             // 
-            this.sTextbox3.dataType = winforms_collection.STextbox.TextboxType.REGULAR_TEXT;
+            this.sTextbox3.DataType = winforms_collection.STextbox.TextboxType.RegularText;
             this.sTextbox3.Location = new System.Drawing.Point(362, 15);
             this.sTextbox3.MaxLength = 0;
             this.sTextbox3.Multiline = true;
             this.sTextbox3.Name = "sTextbox3";
-            this.sTextbox3.placeHolder = "";
+            this.sTextbox3.PlaceHolder = "";
             this.sTextbox3.Size = new System.Drawing.Size(100, 234);
             this.sTextbox3.TabIndex = 9;
-            this.sTextbox3.validator = null;
+            this.sTextbox3.Validator = null;
             // 
             // sTextbox2
             // 
-            this.sTextbox2.dataType = winforms_collection.STextbox.TextboxType.REGULAR_TEXT;
+            this.sTextbox2.DataType = winforms_collection.STextbox.TextboxType.RegularText;
             this.sTextbox2.Location = new System.Drawing.Point(134, 38);
             this.sTextbox2.MaxLength = 0;
             this.sTextbox2.Multiline = true;
             this.sTextbox2.Name = "sTextbox2";
-            this.sTextbox2.placeHolder = "";
+            this.sTextbox2.PlaceHolder = "";
             this.sTextbox2.Size = new System.Drawing.Size(203, 32);
             this.sTextbox2.TabIndex = 2;
-            this.sTextbox2.validator = null;
+            this.sTextbox2.Validator = null;
             // 
             // sTextbox1
             // 
-            this.sTextbox1.dataType = winforms_collection.STextbox.TextboxType.DECIMAL;
+            this.sTextbox1.DataType = winforms_collection.STextbox.TextboxType.Decimal;
             this.sTextbox1.Location = new System.Drawing.Point(134, 15);
             this.sTextbox1.MaxLength = 0;
             this.sTextbox1.Name = "sTextbox1";
-            this.sTextbox1.placeHolder = "";
+            this.sTextbox1.PlaceHolder = "";
             this.sTextbox1.Size = new System.Drawing.Size(203, 20);
             this.sTextbox1.TabIndex = 0;
-            numberString2.allowDecimal = true;
-            numberString2.allowInt = false;
-            this.sTextbox1.validator = numberString2;
+            numberString2.AllowDecimal = true;
+            numberString2.AllowInt = false;
+            this.sTextbox1.Validator = numberString2;
             // 
             // textboxes
             // 
@@ -399,7 +399,7 @@
             this.Controls.Add(this.sTextbox2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.sTextbox1);
-            this.Name = "textboxes";
+            this.Name = "Textboxes";
             this.Text = "5";
             this.Load += new System.EventHandler(this.textboxes_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
@@ -434,10 +434,10 @@
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.Button button10;
-        private winforms_collection.advanced.dropdown.dropdown dropdown1;
+        private winforms_collection.advanced.dropdown.Dropdown dropdown1;
         private winforms_collection.advanced.StyleableButton styleableButton1;
         private winforms_collection.advanced.StyleableButton styleableButton2;
-        private winforms_collection.drawParts.testDraw testDraw1;
+        private winforms_collection.drawParts.TestDraw testDraw1;
     }
 }
 

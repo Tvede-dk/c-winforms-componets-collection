@@ -1,5 +1,5 @@
 ﻿namespace Samples_and_tests {
-    partial class perfTest {
+    partial class PerfTest {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -36,7 +36,7 @@
             this.graphComponent1.Location = new System.Drawing.Point(0, 0);
             this.graphComponent1.Name = "graphComponent1";
             this.graphComponent1.Size = new System.Drawing.Size(1260, 816);
-            this.graphComponent1.spaceBetween = 5;
+            this.graphComponent1.SpaceBetween = 5;
             this.graphComponent1.TabIndex = 0;
             this.graphComponent1.Text = "graphComponent1";
             this.graphComponent1.Click += new System.EventHandler(this.graphComponent1_Click);
@@ -47,7 +47,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1260, 816);
             this.Controls.Add(this.graphComponent1);
-            this.Name = "perfTest";
+            this.Name = "PerfTest";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "5";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;

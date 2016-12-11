@@ -10,19 +10,19 @@ public static class FormExtensions {
     #region show topmost form without focus
 
 
-    private const int SW_SHOWNOACTIVATE = 4;
-    private const int HWND_TOPMOST = -1;
-    private const uint SWP_NOACTIVATE = 0x0010;
-    const UInt32 SWP_NOSIZE = 0x0001;
-    const UInt32 SWP_NOMOVE = 0x0002;
-    const UInt32 SWP_SHOWWINDOW = 0x0040;
+    private const int SwShownoactivate = 4;
+    private const int HwndTopmost = -1;
+    private const uint SwpNoactivate = 0x0010;
+    const UInt32 SwpNosize = 0x0001;
+    const UInt32 SwpNomove = 0x0002;
+    const UInt32 SwpShowwindow = 0x0040;
 
     [DllImport("user32.dll", EntryPoint = "SetWindowPos")]
     static extern bool SetWindowPos(
          IntPtr hWnd,             // Window handle
          int hWndInsertAfter,  // Placement-order handle
-         int X,                // Horizontal position
-         int Y,                // Vertical position
+         int x,                // Horizontal position
+         int y,                // Vertical position
          int cx,               // Width
          int cy,               // Height
          uint uFlags);         // Window positioning flags
@@ -31,28 +31,28 @@ public static class FormExtensions {
     static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
     public static void ShowInactiveTopmost<T>(this T frm) where T : Form {
-        ShowWindow(frm.Handle, SW_SHOWNOACTIVATE);
-        SetWindowPos(frm.Handle, HWND_TOPMOST,
+        ShowWindow(frm.Handle, SwShownoactivate);
+        SetWindowPos(frm.Handle, HwndTopmost,
         frm.Left, frm.Top, frm.Width, frm.Height,
-        SWP_NOACTIVATE);
+        SwpNoactivate);
     }
     #endregion
 
-    public static void setTopMost<T>(this T f) where T : Form {
-        SetWindowPos(f.Handle, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
+    public static void SetTopMost<T>(this T f) where T : Form {
+        SetWindowPos(f.Handle, HwndTopmost, 0, 0, 0, 0, SwpNomove | SwpNosize | SwpShowwindow);
 
     }
 
     #region animations
 
     public static void FadeIn<T>(this T frm, int displayTimeInMs, Action after, float maxVal = 1f, float startVal = 0f) where T : Form {
-        SharedAnimations.fadeIn(frm, displayTimeInMs, after, maxVal, startVal);
+        SharedAnimations.FadeIn(frm, displayTimeInMs, after, maxVal, startVal);
     }
     public static void FadeOut<T>(this T frm, int displayTimeInMs, Action after, float minVal = 1f, float startVal = 0f) where T : Form {
-        SharedAnimations.fadeOut(frm, displayTimeInMs, after, minVal, startVal);
+        SharedAnimations.FadeOut(frm, displayTimeInMs, after, minVal, startVal);
     }
 
-    public static void handleRemoteInvoke(this Control con, Action code) {
+    public static void HandleRemoteInvoke(this Control con, Action code) {
         if (con.InvokeRequired) {
             con.BeginInvoke(code);
         } else {

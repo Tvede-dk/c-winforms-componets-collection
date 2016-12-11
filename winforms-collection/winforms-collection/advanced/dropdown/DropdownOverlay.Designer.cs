@@ -36,9 +36,9 @@
             this.listContainer1.Controls.Add(this.label1);
             this.listContainer1.DirectionHorizontal = false;
             this.listContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listContainer1.heightWeight = ((System.ComponentModel.BindingList<float>)(resources.GetObject("listContainer1.heightWeight")));
+            this.listContainer1.HeightWeight = ((System.ComponentModel.BindingList<float>)(resources.GetObject("listContainer1.heightWeight")));
             this.listContainer1.Location = new System.Drawing.Point(0, 0);
-            this.listContainer1.minSplitHeight = 0;
+            this.listContainer1.MinSplitHeight = 0;
             this.listContainer1.Name = "listContainer1";
             this.listContainer1.Size = new System.Drawing.Size(120, 25);
             this.listContainer1.SplitHeight = 0;

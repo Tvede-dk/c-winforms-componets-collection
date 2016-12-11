@@ -1,5 +1,5 @@
 ﻿namespace Samples_and_tests {
-    partial class UIExample {
+    partial class UiExample {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -77,7 +77,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(980, 570);
             this.Controls.Add(this.collapsableSplitContainer1);
-            this.Name = "UIExample";
+            this.Name = "UiExample";
             this.Text = "UIExample";
             this.collapsableSplitContainer1.Panel1.ResumeLayout(false);
             this.collapsableSplitContainer1.Panel2.ResumeLayout(false);

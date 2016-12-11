@@ -15,10 +15,10 @@ namespace SharedFunctionalities {
         /// TODO refactor.
         /// </summary>
         /// <returns></returns>
-        private static int getCPUSpeedInMhz() {
-            RegistryKey processor_name = Registry.LocalMachine.OpenSubKey(@"Hardware\Description\System\CentralProcessor\0", RegistryKeyPermissionCheck.ReadSubTree);
-            if (processor_name != null && processor_name.GetValue("ProcessorNameString") != null) {
-                return (int)processor_name.GetValue("~MHz");
+        private static int GetCpuSpeedInMhz() {
+            RegistryKey processorName = Registry.LocalMachine.OpenSubKey(@"Hardware\Description\System\CentralProcessor\0", RegistryKeyPermissionCheck.ReadSubTree);
+            if (processorName != null && processorName.GetValue("ProcessorNameString") != null) {
+                return (int)processorName.GetValue("~MHz");
             } else {
                 return 1500;
             }
@@ -35,24 +35,24 @@ namespace SharedFunctionalities {
         /// <param name="callbackWithDifference"></param>
         /// <param name="onCompleted"></param>
         /// <returns> null if unable to start animation. otherwise the ui timer </returns>
-        public static SmartUITimer animateProperty(Control ui, int fromValue, int toValue, int durationInMs, Action<int> callbackWithDifference, Action onCompleted)  {
+        public static SmartUiTimer AnimateProperty(Control ui, int fromValue, int toValue, int durationInMs, Action<int> callbackWithDifference, Action onCompleted)  {
             if (ui != null && ui.IsHandleCreated) {
                 var newSizeDiff = toValue - fromValue;
-                var numOfSteps = getNumberOfFramesByTimeAndFps(durationInMs, fps);
+                var numOfSteps = GetNumberOfFramesByTimeAndFps(durationInMs, _fps);
                 var difference = (int)(newSizeDiff / (float)(numOfSteps + 1));
-                return startTimer(durationInMs, () => {
+                return StartTimer(durationInMs, () => {
                     callbackWithDifference(difference);
                 }, onCompleted, ui);
             }
             return null;
         }
 
-        public static void animateWidth(Control ui, int animateTo, int displayTimeInMs, Action onCompleted) {
+        public static void AnimateWidth(Control ui, int animateTo, int displayTimeInMs, Action onCompleted) {
             if (ui != null && ui.IsHandleCreated) {
                 var newSizeDiff = animateTo - ui.Width;
-                var numOfSteps = getNumberOfFramesByTimeAndFps(displayTimeInMs, fps);
+                var numOfSteps = GetNumberOfFramesByTimeAndFps(displayTimeInMs, _fps);
                 var difference = (int)(newSizeDiff / (float)(numOfSteps + 1));
-                startTimer(displayTimeInMs, () => {
+                StartTimer(displayTimeInMs, () => {
                     ui.Width += (int)difference;
                 }, onCompleted, ui);
             }
@@ -60,18 +60,18 @@ namespace SharedFunctionalities {
         }
         #endregion
         #region constants & static variables
-        private const int secInMS = 1000;
+        private const int SecInMs = 1000;
 
-        private static int fps = 45;
+        private static int _fps = 45;
 
         static SharedAnimations() {
-            var speed = getCPUSpeedInMhz();
+            var speed = GetCpuSpeedInMhz();
             if (speed >= 2000) { //2 ghz
                 SetHighQuality();
             } else if (speed > 1500) {
-                setMediumQuality();
+                SetMediumQuality();
             } else {
-                setLowQuality();
+                SetLowQuality();
             }
         }
 
@@ -81,55 +81,55 @@ namespace SharedFunctionalities {
         /// <summary>
         /// WARNING requires a lot of processing power (120 FPS)
         /// </summary>
-        public static void setUltraQuality() {
-            fps = 120;
+        public static void SetUltraQuality() {
+            _fps = 120;
         }
 
         /// <summary>
         /// Looks good, 60 fps for the win
         /// </summary>
         public static void SetHighQuality() {
-            fps = 60;
+            _fps = 60;
         }
 
         /// <summary>
         /// Very smooth, almost not choppy (but might occur).
         /// </summary>
-        public static void setMediumQuality() {
-            fps = 45;
+        public static void SetMediumQuality() {
+            _fps = 45;
         }
         /// <summary>
         /// will be a bit choppy
         /// </summary>
-        public static void setLowQuality() {
-            fps = 25;
+        public static void SetLowQuality() {
+            _fps = 25;
         }
 
-        public static void setQuality(int fps) {
-            SharedAnimations.fps = fps;
+        public static void SetQuality(int fps) {
+            SharedAnimations._fps = fps;
         }
         #endregion
         #region fade effects 
-        public static void fadeIn(Form f, int displayTimeInMs, Action after, float maxVal = 1f, float startVal = 0f) {
+        public static void FadeIn(Form f, int displayTimeInMs, Action after, float maxVal = 1f, float startVal = 0f) {
             if (f != null && f.IsHandleCreated) {
-                var numOfSteps = getNumberOfFramesByTimeAndFps(displayTimeInMs, fps);
+                var numOfSteps = GetNumberOfFramesByTimeAndFps(displayTimeInMs, _fps);
                 f.BeginInvoke((MethodInvoker)(() => { f.Opacity = startVal; }));
                 var difference = maxVal / (float)numOfSteps;
-                startTimer(displayTimeInMs, () => {
+                StartTimer(displayTimeInMs, () => {
                     f.Opacity += difference;
                 }, after, f);
             }
         }
 
-        public static void fadeOut(Form f, int displayTimeInMs, Action after, float minVal = 1f, float startVal = 0f) {
+        public static void FadeOut(Form f, int displayTimeInMs, Action after, float minVal = 1f, float startVal = 0f) {
             if (f != null && f.IsHandleCreated) {
                 if (startVal <= 0f) {
                     startVal = (float)f.Opacity;
                 }
                 f.BeginInvoke((MethodInvoker)(() => { f.Opacity = startVal; }));
-                var numOfSteps = getNumberOfFramesByTimeAndFps(displayTimeInMs, fps);
+                var numOfSteps = GetNumberOfFramesByTimeAndFps(displayTimeInMs, _fps);
                 var diff = minVal / (double)numOfSteps;
-                startTimer(displayTimeInMs, () => {
+                StartTimer(displayTimeInMs, () => {
                     f.Opacity -= diff;
                 }, after, f);
             }
@@ -139,44 +139,44 @@ namespace SharedFunctionalities {
 
         #endregion
 
-        public static void expandY(Form f, int displayTimeInMs, Action after, int newSizeY) {
+        public static void ExpandY(Form f, int displayTimeInMs, Action after, int newSizeY) {
             if (f != null && f.IsHandleCreated) {
                 var newSizeDiff = newSizeY - f.Height;
-                var numOfSteps = getNumberOfFramesByTimeAndFps(displayTimeInMs, fps);
+                var numOfSteps = GetNumberOfFramesByTimeAndFps(displayTimeInMs, _fps);
                 var difference = (int)(newSizeDiff / (float)(numOfSteps + 1));
-                startTimer(displayTimeInMs, () => {
+                StartTimer(displayTimeInMs, () => {
                     f.Height += (int)difference;
                 }, after, f);
             }
         }
 
-        public static void collapsY(Form f, int displayTimeInMs, Action after, int newSizeY) {
+        public static void CollapsY(Form f, int displayTimeInMs, Action after, int newSizeY) {
             if (f != null && f.IsHandleCreated) {
-                var numOfSteps = getNumberOfFramesByTimeAndFps(displayTimeInMs, fps);
+                var numOfSteps = GetNumberOfFramesByTimeAndFps(displayTimeInMs, _fps);
                 var difference = newSizeY / (float)(numOfSteps + 1);
-                startTimer(displayTimeInMs, () => {
+                StartTimer(displayTimeInMs, () => {
                     f.Height -= (int)difference;
                 }, after, f);
             }
         }
 
         #region internal calculation
-        private static SmartUITimer startTimer(int displayTimeInMs, Action handler, Action after, Control con) {
-            var numOfSteps = getNumberOfFramesByTimeAndFps(displayTimeInMs, fps);
-            var timer = new SmartUITimer(con) { repeate = true, interval = getIntervalFromFpsInMs(), counter = numOfSteps };
-            timer.start((object sender, ElapsedEventArgs e, SmartTimer st) => { handler.Invoke(); }, after);
+        private static SmartUiTimer StartTimer(int displayTimeInMs, Action handler, Action after, Control con) {
+            var numOfSteps = GetNumberOfFramesByTimeAndFps(displayTimeInMs, _fps);
+            var timer = new SmartUiTimer(con) { Repeate = true, Interval = GetIntervalFromFpsInMs(), Counter = numOfSteps };
+            timer.Start((object sender, ElapsedEventArgs e, SmartTimer st) => { handler.Invoke(); }, after);
             return timer;
         }
         /// <summary>
         /// calculates the duration in time from the fps value.
         /// </summary>
         /// <returns>The timing in milisecounds for the fps</returns>
-        public static int getIntervalFromFpsInMs() {
-            return secInMS / fps;
+        public static int GetIntervalFromFpsInMs() {
+            return SecInMs / _fps;
         }
 
-        private static int getNumberOfFramesByTimeAndFps(int durationInMs, int fps) {
-            return (int)Math.Floor((double)(durationInMs * fps) / secInMS);
+        private static int GetNumberOfFramesByTimeAndFps(int durationInMs, int fps) {
+            return (int)Math.Floor((double)(durationInMs * fps) / SecInMs);
         }
 
 
@@ -187,22 +187,22 @@ namespace SharedFunctionalities {
 
         #region cycle a color 
 
-        public static void cycleColorLighting(Func<Color, Boolean> onCycle, float cycleMax, float cycleMin, float increase, Color startColor, Control uiThreadControl) {
-            cycleColorLightingWithTimerWithFunction(onCycle, cycleMax, cycleMin, increase, startColor, new SmartUITimer(uiThreadControl));
+        public static void CycleColorLighting(Func<Color, Boolean> onCycle, float cycleMax, float cycleMin, float increase, Color startColor, Control uiThreadControl) {
+            CycleColorLightingWithTimerWithFunction(onCycle, cycleMax, cycleMin, increase, startColor, new SmartUiTimer(uiThreadControl));
         }
 
-        public static void cycleColorLighting(Func<Color, Boolean> onCycle, float cycleMax, float cycleMin, float increase, Color startColor) {
-            cycleColorLightingWithTimerWithFunction(onCycle, cycleMax, cycleMin, increase, startColor, new SmartTimer());
+        public static void CycleColorLighting(Func<Color, Boolean> onCycle, float cycleMax, float cycleMin, float increase, Color startColor) {
+            CycleColorLightingWithTimerWithFunction(onCycle, cycleMax, cycleMin, increase, startColor, new SmartTimer());
         }
 
-        private static void cycleColorLightingWithTimerWithFunction(Func<Color, Boolean> onCycle, float cycleMax, float cycleMin, float increase, Color startColor, SmartTimer st) {
-            st.repeate = true;
-            st.interval = getIntervalFromFpsInMs();
+        private static void CycleColorLightingWithTimerWithFunction(Func<Color, Boolean> onCycle, float cycleMax, float cycleMin, float increase, Color startColor, SmartTimer st) {
+            st.Repeate = true;
+            st.Interval = GetIntervalFromFpsInMs();
             var currentVal = cycleMin;
             var isGoingUp = false;
-            st.start((object sender, ElapsedEventArgs args, SmartTimer timer) => {
+            st.Start((object sender, ElapsedEventArgs args, SmartTimer timer) => {
 
-                handlecycleColorLightingValue(cycleMax, cycleMin, increase, ref currentVal, ref isGoingUp);
+                HandlecycleColorLightingValue(cycleMax, cycleMin, increase, ref currentVal, ref isGoingUp);
                 if (onCycle(ControlPaint.Light(startColor, currentVal)) == false) {
                     timer.Stop();
                 }
@@ -210,27 +210,27 @@ namespace SharedFunctionalities {
         }
 
 
-        public static void cycleColorLighting(int cycleDurationInMs, Action<Color> onCycle, float cycleMax, float cycleMin, float increase, Color startColor, Action after = null) {
-            cycleColorLightingWithTimerWithAction(onCycle, cycleMax, cycleMin, increase, startColor,
-                new SmartTimer() { interval = getIntervalFromFpsInMs(), counter = getNumberOfFramesByTimeAndFps(cycleDurationInMs, fps) }, after);
+        public static void CycleColorLighting(int cycleDurationInMs, Action<Color> onCycle, float cycleMax, float cycleMin, float increase, Color startColor, Action after = null) {
+            CycleColorLightingWithTimerWithAction(onCycle, cycleMax, cycleMin, increase, startColor,
+                new SmartTimer() { Interval = GetIntervalFromFpsInMs(), Counter = GetNumberOfFramesByTimeAndFps(cycleDurationInMs, _fps) }, after);
         }
 
-        private static void cycleColorLightingWithTimerWithAction(Action<Color> onCycle, float cycleMax, float cycleMin, float increase, Color startColor, SmartTimer st, Action after = null) {
+        private static void CycleColorLightingWithTimerWithAction(Action<Color> onCycle, float cycleMax, float cycleMin, float increase, Color startColor, SmartTimer st, Action after = null) {
             var currentVal = cycleMin;
             var isGoingUp = false;
-            st.start((object sender, ElapsedEventArgs args, SmartTimer timer) => {
-                handlecycleColorLightingValue(cycleMax, cycleMin, increase, ref currentVal, ref isGoingUp);
+            st.Start((object sender, ElapsedEventArgs args, SmartTimer timer) => {
+                HandlecycleColorLightingValue(cycleMax, cycleMin, increase, ref currentVal, ref isGoingUp);
                 onCycle(ControlPaint.Light(startColor, currentVal));
             }, after);
         }
 
-        public static void cycleColorLighting(int cycleDurationInMs, Action<Color> onCycle, float cycleMax, float cycleMin, float increase, Color startColor, Control uiThreadControl, Action after = null) {
-            cycleColorLightingWithTimerWithAction(onCycle, cycleMax, cycleMin, increase, startColor,
-                new SmartUITimer(uiThreadControl) { interval = getIntervalFromFpsInMs(), counter = getNumberOfFramesByTimeAndFps(cycleDurationInMs, fps) }, after);
+        public static void CycleColorLighting(int cycleDurationInMs, Action<Color> onCycle, float cycleMax, float cycleMin, float increase, Color startColor, Control uiThreadControl, Action after = null) {
+            CycleColorLightingWithTimerWithAction(onCycle, cycleMax, cycleMin, increase, startColor,
+                new SmartUiTimer(uiThreadControl) { Interval = GetIntervalFromFpsInMs(), Counter = GetNumberOfFramesByTimeAndFps(cycleDurationInMs, _fps) }, after);
         }
 
 
-        private static void handlecycleColorLightingValue(float cycleMax, float cycleMin, float increase, ref float currentVal, ref bool isGoingUp) {
+        private static void HandlecycleColorLightingValue(float cycleMax, float cycleMin, float increase, ref float currentVal, ref bool isGoingUp) {
             if (isGoingUp) {
                 isGoingUp = (currentVal + increase) < cycleMax;
                 currentVal += increase;
@@ -248,13 +248,14 @@ namespace SharedFunctionalities {
 
         public static HighlightOverlay Highlight(Control controle, float maxOverlayOpacity = 1.0f, int overlayEffectTimeInMs = 250, Brush overrideBackBrush = null) {
             var hadFocus = controle.Focused;
-            var overlay = new forms.HighlightOverlay();
-            overlay.StartPosition = FormStartPosition.Manual;
-            overlay.Location = controle.PointToScreen(Point.Empty);
+            var overlay = new HighlightOverlay() {
+                StartPosition = FormStartPosition.Manual,
+                Location = controle.PointToScreen(Point.Empty)
+            };
             overlay.ShowInactiveTopmost();
             overlay.Size = controle.Size;
             if (overrideBackBrush != null) {
-                overlay.setBackgroundBrush(overrideBackBrush);
+                overlay.SetBackgroundBrush(overrideBackBrush);
             }
             controle.FindForm().Move += (object sender, EventArgs e) => { overlay.Location = controle.PointToScreen(Point.Empty); };
             overlay.FadeIn(overlayEffectTimeInMs, null, maxOverlayOpacity);

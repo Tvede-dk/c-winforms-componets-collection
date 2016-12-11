@@ -4,13 +4,13 @@ using System.Drawing;
 using System.Windows.Forms;
 
 namespace winforms_collection.drawParts {
-    public class testDraw : Control {
+    public class TestDraw : Control {
 
-        private DrawingHandler drawer = new DrawingHandler();
+        private readonly DrawingHandler _drawer = new DrawingHandler();
 
 
 
-        public testDraw() {
+        public TestDraw() {
             SetStyle( ControlStyles.SupportsTransparentBackColor | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.CacheText | ControlStyles.ResizeRedraw | ControlStyles.UserPaint, true );
             //drawer.addLayer( new backgroundDrawer() );
             var format = new StringFormat();
@@ -29,7 +29,7 @@ namespace winforms_collection.drawParts {
 
         protected override void OnResize( EventArgs e ) {
             base.OnResize( e );
-            drawer.invalidate();
+            _drawer.Invalidate();
         }
 
 

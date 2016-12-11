@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
 
 namespace winforms_collection.popup_boxes {
-    public class baseForm : Form {
+    public class BaseForm : Form {
 
         //public void handleInvoke( Action code ) {
         //    handleRemoteInvoke( this, code );

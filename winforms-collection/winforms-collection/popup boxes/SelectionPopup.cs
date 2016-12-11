@@ -4,35 +4,35 @@ using System.Windows.Forms;
 
 namespace winforms_collection.popup_boxes {
     public partial class SelectionPopup<T> : Form {
-        private readonly Func<T, string> modelToString;
+        private readonly Func<T, string> _modelToString;
 
 
         #region property ResultSelection
-        private HashSet<T> _ResultSelection;
+        private HashSet<T> _resultSelection;
 
 
         public HashSet<T> ResultSelection {
-            get { return _ResultSelection; }
-            set { _ResultSelection = value; }
+            get { return _resultSelection; }
+            set { _resultSelection = value; }
         }
         #endregion
 
-        private readonly List<T> realData;
+        private readonly List<T> _realData;
 
         public SelectionPopup(List<T> data, Func<T, string> modelToString, bool multiSelect = false, bool showChecboxes = false) {
             InitializeComponent();
             ResultSelection = new HashSet<T>();
             simpleListControl1.MultiSelect = multiSelect;
             simpleListControl1.CheckBoxes = showChecboxes;
-            this.realData = data;
-            this.modelToString = modelToString;
-            setupList();
+            this._realData = data;
+            this._modelToString = modelToString;
+            SetupList();
         }
 
-        private void setupList() {
+        private void SetupList() {
             simpleListControl1.BeginUpdate();
-            foreach (var item in realData) {
-                simpleListControl1.Items.Add(modelToString?.Invoke(item));
+            foreach (var item in _realData) {
+                simpleListControl1.Items.Add(_modelToString?.Invoke(item));
             }
             simpleListControl1.EndUpdate();
             simpleListControl1.Update();
@@ -46,18 +46,18 @@ namespace winforms_collection.popup_boxes {
 
             if (simpleListControl1.MultiSelect) {
                 foreach (var item in simpleListControl1.SelectedIndices) {
-                    var first = realData[(int)item];
+                    var first = _realData[(int)item];
                     ResultSelection.Add(first);
                 }
                 if (simpleListControl1.CheckBoxes) {
                     foreach (var item in simpleListControl1.CheckedIndices) {
-                        var first = realData[(int)item];
+                        var first = _realData[(int)item];
                         ResultSelection.Add(first);
                     }
                 }
             } else {
                 var firstIndex = simpleListControl1.SelectedIndices[0];
-                var first = realData[firstIndex];
+                var first = _realData[firstIndex];
                 ResultSelection.Add(first);
             }
 

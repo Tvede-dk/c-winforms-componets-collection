@@ -4,17 +4,17 @@ using System.Windows.Forms;
 using SharedFunctionalities;
 
 namespace winforms_collection.advanced.dropdown {
-    public partial class dropdown : CustomControl {
+    public partial class Dropdown : CustomControl {
 
 
-        public dropdown() {
+        public Dropdown() {
             InitializeComponent();
         }
 
         protected override void OnPaint( PaintEventArgs e ) {
             base.OnPaint( e );
-            drawBackground( e );
-            drawBorder( e );
+            DrawBackground( e );
+            DrawBorder( e );
 
         }
 
@@ -45,11 +45,11 @@ namespace winforms_collection.advanced.dropdown {
 
 
         #region simple draw stuff
-        private void drawBorder( PaintEventArgs e ) {
+        private void DrawBorder( PaintEventArgs e ) {
             e.Graphics.DrawRectangle( Pens.Black, 0, 0, Width - (int)Pens.Black.Width, Height - (int)Pens.Black.Width ); // 1 px wide margin .
         }
 
-        private void drawBackground( PaintEventArgs e ) {
+        private void DrawBackground( PaintEventArgs e ) {
             e.Graphics.FillRectangle( _backBrush, e.ClipRectangle );
         }
 

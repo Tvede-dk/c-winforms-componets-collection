@@ -5,7 +5,7 @@ using SharedFunctionalities;
 
 namespace winforms_collection {
     public partial class FastNoticePopup : Form {
-        private int displayTime;
+        private readonly int _displayTime;
 
         public FastNoticePopup(String text, int displayTime, Bitmap bmp, Form parrent = null) {
             InitializeComponent();
@@ -13,21 +13,21 @@ namespace winforms_collection {
                 parrent = this;
             }
             this.StartPosition = FormStartPosition.Manual;
-            handleLocation(parrent);
+            HandleLocation(parrent);
             this.label1.Text = text;
             this.pictureBox1.Image = bmp;
-            this.displayTime = displayTime;
+            this._displayTime = displayTime;
             this.Opacity = 0f;
         }
         protected override void OnLoad(EventArgs e) {
             base.OnLoad(e);
-            this.FadeIn(displayTime / 4, afterFadeIn);
+            this.FadeIn(_displayTime / 4, AfterFadeIn);
         }
 
-        private void handleLocation(Form parrent) {
-            parrent.handleRemoteInvoke(() => {
+        private void HandleLocation(Form parrent) {
+            parrent.HandleRemoteInvoke(() => {
                 var parrentScreen = Screen.FromControl(parrent);
-                this.handleRemoteInvoke(() => {
+                this.HandleRemoteInvoke(() => {
 
                     Rectangle screen = parrentScreen.Bounds;
                     Rectangle work = parrentScreen.WorkingArea;
@@ -44,15 +44,15 @@ namespace winforms_collection {
 
 
 
-        public void afterFadeIn() {
-            new SmartTimer { repeate = false, counter = 1, interval = displayTime }.start(afterWait); //wait some time.
+        public void AfterFadeIn() {
+            new SmartTimer { Repeate = false, Counter = 1, Interval = _displayTime }.Start(AfterWait); //wait some time.
         }
 
-        public void afterWait() {
-            this.FadeOut(displayTime / 4, afterFadeOut);
+        public void AfterWait() {
+            this.FadeOut(_displayTime / 4, AfterFadeOut);
         }
 
-        public void afterFadeOut() {
+        public void AfterFadeOut() {
             this.DialogResult = DialogResult.OK;
             Dispose();
         }

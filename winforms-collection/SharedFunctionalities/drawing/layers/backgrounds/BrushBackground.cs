@@ -4,28 +4,28 @@ namespace SharedFunctionalities.drawing.layers.backgrounds {
     public class BrushBackground : BaseDraw {
 
         #region property Background
-        private Brush _Background = Brushes.Black;
+        private Brush _background = Brushes.Black;
 
         ~BrushBackground() {
-            if ( _Background != null ) {
-                _Background.Dispose();
+            if ( _background != null ) {
+                _background.Dispose();
             }
         }
 
         public Brush Background {
-            get { return _Background; }
+            get { return _background; }
             set {
-                _Background = value;
-                invalidate();
+                _background = value;
+                Invalidate();
             }
         }
         #endregion
 
-        public override void doDraw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
+        public override void DoDraw( Graphics g, ref Rectangle wholeComponent, ref Rectangle clippingRect ) {
             g.FillRectangle( Background, wholeComponent );
         }
 
-        public override void modifySize( ref Rectangle newSize ) {
+        public override void ModifySize( ref Rectangle newSize ) {
             return;
         }
     }

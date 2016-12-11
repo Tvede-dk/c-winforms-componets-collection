@@ -9,37 +9,37 @@ using System.Windows.Forms;
 
 namespace winforms_collection.advanced {
     public class StyleableButton : CustomControl, IButtonControl {
-        private static readonly Color initColor = Color.FromArgb(255, 9, 74, 178); //a simple blue.
+        private static readonly Color InitColor = Color.FromArgb(255, 9, 74, 178); //a simple blue.
 
-        private TriangularShapeBackground backLayer = new TriangularShapeBackground() { endColor = Color.CadetBlue, startColor = Color.BlueViolet };
+        private readonly TriangularShapeBackground _backLayer = new TriangularShapeBackground() { EndColor = Color.CadetBlue, StartColor = Color.BlueViolet };
 
-        private CenterText textLayer = new CenterText();
+        private readonly CenterText _textLayer = new CenterText();
 
 
 
         #region property startColor / end color delegates
         [EditorBrowsable]
-        public Color startColor {
-            get { return backLayer.startColor; }
-            set { backLayer.startColor = value; }
+        public Color StartColor {
+            get { return _backLayer.StartColor; }
+            set { _backLayer.StartColor = value; }
 
         }
 
         [EditorBrowsable]
-        public Color endColor {
-            get { return backLayer.endColor; }
-            set { backLayer.endColor = value; }
+        public Color EndColor {
+            get { return _backLayer.EndColor; }
+            set { _backLayer.EndColor = value; }
         }
         #endregion
 
 
         public StyleableButton() {
-            DrawHandler.addLayer(backLayer);
-            DrawHandler.addLayer(textLayer);
-            textLayer.font = Font;
+            DrawHandler.AddLayer(_backLayer);
+            DrawHandler.AddLayer(_textLayer);
+            _textLayer.Font = Font;
             ForeColor = Color.Cornsilk;
-            startColor = initColor;
-            endColor = initColor;
+            StartColor = InitColor;
+            EndColor = InitColor;
 
         }
 
@@ -50,7 +50,7 @@ namespace winforms_collection.advanced {
 
             set {
                 base.Font = value;
-                textLayer.font = value;
+                _textLayer.Font = value;
             }
         }
 
@@ -60,7 +60,7 @@ namespace winforms_collection.advanced {
             }
             set {
                 base.Text = value;
-                textLayer.Text = value;
+                _textLayer.Text = value;
             }
         }
 
@@ -69,27 +69,27 @@ namespace winforms_collection.advanced {
             SharedAnimations.Highlight( this, 0.1f, 120 );
         }
 
-        private HighlightOverlay overlay;
+        private HighlightOverlay _overlay;
 
         protected override void OnGotFocus(EventArgs e) {
             base.OnGotFocus(e);
-            overlay = SharedAnimations.Highlight(this, 0.1f, 50, Brushes.Blue);
+            _overlay = SharedAnimations.Highlight(this, 0.1f, 50, Brushes.Blue);
         }
 
         protected override void OnLostFocus(EventArgs e) {
             base.OnLostFocus(e);
-            overlay.FadeOut(0, () => { overlay.Dispose(); });
+            _overlay.FadeOut(0, () => { _overlay.Dispose(); });
         }
 
 
         protected override void OnMouseDown(MouseEventArgs e) {
             base.OnMouseDown(e);
             //make an "insert" effect.
-            overlay = SharedAnimations.Highlight(this, 0.4f, 100, Brushes.White);
+            _overlay = SharedAnimations.Highlight(this, 0.4f, 100, Brushes.White);
         }
         protected override void OnMouseUp(MouseEventArgs e) {
             base.OnMouseUp(e);
-            overlay.FadeOut(150, () => { overlay.Dispose(); });
+            _overlay.FadeOut(150, () => { _overlay.Dispose(); });
         }
 
         protected override void OnKeyDown(KeyEventArgs e) {
@@ -116,7 +116,7 @@ namespace winforms_collection.advanced {
 
             set {
                 base.ForeColor = value;
-                textLayer.displayBrush = new SolidBrush(value);
+                _textLayer.DisplayBrush = new SolidBrush(value);
             }
         }
 

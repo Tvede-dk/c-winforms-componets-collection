@@ -2,8 +2,8 @@
 using System.Windows.Forms;
 
 namespace Samples_and_tests {
-    public partial class UIExample : Form {
-        public UIExample() {
+    public partial class UiExample : Form {
+        public UiExample() {
             InitializeComponent();
         }
 

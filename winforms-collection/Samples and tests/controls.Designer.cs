@@ -1,5 +1,5 @@
 ﻿namespace Samples_and_tests {
-    partial class controls {
+    partial class Controls {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -23,7 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(controls));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Controls));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.listContainer1 = new winforms_collection.containers.ListContainer();
             this.button1 = new System.Windows.Forms.Button();
@@ -72,9 +72,9 @@
             this.listContainer1.Controls.Add(this.label1);
             this.listContainer1.DirectionHorizontal = false;
             this.listContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listContainer1.heightWeight = ((System.ComponentModel.BindingList<float>)(resources.GetObject("listContainer1.heightWeight")));
+            this.listContainer1.HeightWeight = ((System.ComponentModel.BindingList<float>)(resources.GetObject("listContainer1.heightWeight")));
             this.listContainer1.Location = new System.Drawing.Point(0, 0);
-            this.listContainer1.minSplitHeight = 0;
+            this.listContainer1.MinSplitHeight = 0;
             this.listContainer1.Name = "listContainer1";
             this.listContainer1.Size = new System.Drawing.Size(564, 546);
             this.listContainer1.SplitHeight = 4;
@@ -147,7 +147,7 @@
             this.simpleList1.Name = "simpleList1";
             this.simpleList1.Size = new System.Drawing.Size(610, 546);
             this.simpleList1.TabIndex = 0;
-            this.simpleList1.title = "tst";
+            this.simpleList1.Title = "tst";
             // 
             // label7
             // 
@@ -187,7 +187,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1178, 546);
             this.Controls.Add(this.splitContainer1);
-            this.Name = "controls";
+            this.Name = "Controls";
             this.Text = "controls";
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);

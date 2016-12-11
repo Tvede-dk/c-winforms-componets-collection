@@ -5,8 +5,8 @@ using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.Permissions;
 
-public static class GDIHelper {
-    private const uint SRCCOPY = 0x00CC0020;
+public static class GdiHelper {
+    private const uint Srccopy = 0x00CC0020;
     [SuppressUnmanagedCodeSecurityAttribute]
     [DllImport("gdi32.dll", EntryPoint = "SelectObject")]
     public static extern IntPtr SelectObject(
@@ -53,7 +53,7 @@ public static class GDIHelper {
     [SuppressUnmanagedCodeSecurityAttribute]
     [SecurityPermission(SecurityAction.Assert, Flags =
        SecurityPermissionFlag.UnmanagedCode)]
-    public static void bitbltRepeat(this Bitmap bmp, Graphics grDest, int desiredWith, int desiredHeight, int offsetX = 0, int offsetY = 0) {
+    public static void BitbltRepeat(this Bitmap bmp, Graphics grDest, int desiredWith, int desiredHeight, int offsetX = 0, int offsetY = 0) {
         var height = bmp.Height;
         var width = bmp.Width;
         using (var grSrc = Graphics.FromImage(bmp)) {

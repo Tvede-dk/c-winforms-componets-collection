@@ -61,15 +61,15 @@
             // 
             // sTextbox1
             // 
-            this.sTextbox1.dataType = winforms_collection.STextbox.TextboxType.REGULAR_TEXT;
+            this.sTextbox1.DataType = winforms_collection.STextbox.TextboxType.RegularText;
             this.sTextbox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sTextbox1.Location = new System.Drawing.Point(0, 0);
             this.sTextbox1.MaxLength = 0;
             this.sTextbox1.Name = "sTextbox1";
-            this.sTextbox1.placeHolder = "";
+            this.sTextbox1.PlaceHolder = "";
             this.sTextbox1.Size = new System.Drawing.Size(377, 20);
             this.sTextbox1.TabIndex = 0;
-            this.sTextbox1.validator = null;
+            this.sTextbox1.Validator = null;
             // 
             // DescriptionValue
             // 

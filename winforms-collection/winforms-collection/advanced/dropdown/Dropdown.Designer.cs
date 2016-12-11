@@ -1,5 +1,5 @@
 ﻿namespace winforms_collection.advanced.dropdown {
-    partial class dropdown {
+    partial class Dropdown {
         /// <summary> 
         /// Required designer variable.
         /// </summary>

@@ -11,74 +11,74 @@ namespace SharedFunctionalities.drawing {
         [DllImport("msvcrt.dll", EntryPoint = "memcpy", CallingConvention = CallingConvention.Cdecl, SetLastError = false)]
         public static extern IntPtr memcpy(IntPtr dest, IntPtr src, UIntPtr count);
 
-        private List<IDrawMethod> layers = new List<IDrawMethod>();
+        private readonly List<IDrawMethod> _layers = new List<IDrawMethod>();
 
-        private bool allowCommCache = true;
+        private bool _allowCommCache = true;
 
 
         //eventually make it work after 50 draws without invalidate ?
-        private Bitmap commCacheBitmap;
+        private Bitmap _commCacheBitmap;
 
-        private int backPartsDepth = 0;
+        private int _backPartsDepth = 0;
 
-        private long totalDraws = 0;
-        private double totalTime = 0.0d;
+        private long _totalDraws = 0;
+        private double _totalTime = 0.0d;
 
-        private int notInvalidatedFor = 0;
+        private int _notInvalidatedFor = 0;
 
-        private void doDraw(Graphics g, Rectangle wholeComponent, Rectangle clipRect) {
+        private void DoDraw(Graphics g, Rectangle wholeComponent, Rectangle clipRect) {
 
             var orgRectangle = new Rectangle(wholeComponent.X, wholeComponent.Y, wholeComponent.Width, wholeComponent.Height);
-            var startDrawAt = useCommCache(g, orgRectangle, false);
+            var startDrawAt = UseCommCache(g, orgRectangle, false);
 
-            if (allowCommCache && (commCacheBitmap == null || startDrawAt == 0)) {
+            if (_allowCommCache && (_commCacheBitmap == null || startDrawAt == 0)) {
                 //make cache
-                createCommCache(orgRectangle);
-                startDrawAt = useCommCache(g, orgRectangle, true);
+                CreateCommCache(orgRectangle);
+                startDrawAt = UseCommCache(g, orgRectangle, true);
             }
-            for (var i = startDrawAt; i < layers.Count; i++) {
-                var drawer = layers[i];
-                if (drawer.mayDraw()) {
+            for (var i = startDrawAt; i < _layers.Count; i++) {
+                var drawer = _layers[i];
+                if (drawer.MayDraw()) {
                     var sw = new Stopwatch();
                     sw.Start();
-                    drawLayer(g, ref wholeComponent, ref clipRect, i, orgRectangle);
+                    DrawLayer(g, ref wholeComponent, ref clipRect, i, orgRectangle);
                     sw.Stop();
                     //Console.WriteLine( "\tLayer {0}:{1}", i, sw.Elapsed.TotalMilliseconds );
                 }
             }
 
-            notInvalidatedFor++;
+            _notInvalidatedFor++;
         }
 
-        public void disableCommCache() {
+        public void DisableCommCache() {
 
-            allowCommCache = false;
-            invalidate();
+            _allowCommCache = false;
+            Invalidate();
         }
 
-        public void draw(Graphics g, Rectangle wholeComponent, Rectangle clipRect) {
+        public void Draw(Graphics g, Rectangle wholeComponent, Rectangle clipRect) {
             var sw = new Stopwatch();
             sw.Start();
-            doDraw(g, wholeComponent, clipRect);
+            DoDraw(g, wholeComponent, clipRect);
             sw.Stop();
-            totalDraws++;
-            totalTime += sw.Elapsed.TotalMilliseconds;
+            _totalDraws++;
+            _totalTime += sw.Elapsed.TotalMilliseconds;
             if (sw.Elapsed.TotalMilliseconds > 16) {
-                Console.WriteLine("time:{0}, average:{1}", sw.Elapsed.TotalMilliseconds, (totalTime / (double)totalDraws));
+                Console.WriteLine("time:{0}, average:{1}", sw.Elapsed.TotalMilliseconds, (_totalTime / (double)_totalDraws));
             }
 
         }
 
 
-        private int useCommCache(Graphics g, Rectangle orgRectangle, bool mayInvalidate) {
-            if (notInvalidatedFor > 10) {
+        private int UseCommCache(Graphics g, Rectangle orgRectangle, bool mayInvalidate) {
+            if (_notInvalidatedFor > 10) {
                 var startDrawAt = 0; //skip unnessary parts.
-                if (allowCommCache && commCacheBitmap != null && backPartsDepth > 0 && validateCommCache()) {
-                    g.DrawImage(commCacheBitmap, orgRectangle);
-                    startDrawAt = backPartsDepth;//use this instead.
+                if (_allowCommCache && _commCacheBitmap != null && _backPartsDepth > 0 && ValidateCommCache()) {
+                    g.DrawImage(_commCacheBitmap, orgRectangle);
+                    startDrawAt = _backPartsDepth;//use this instead.
                 } else {
                     if (mayInvalidate) {
-                        invalidate(); //make sure we dont use any resources unless nessary.
+                        Invalidate(); //make sure we dont use any resources unless nessary.
                     }
                 }
                 return startDrawAt;
@@ -88,73 +88,73 @@ namespace SharedFunctionalities.drawing {
         }
 
 
-        private void createCommCache(Rectangle orgComponent) {
-            if (notInvalidatedFor > 10) {
+        private void CreateCommCache(Rectangle orgComponent) {
+            if (_notInvalidatedFor > 10) {
                 //g.DrawImage( commCacheBitmap, orgRectangle );
-                commCacheBitmap = new Bitmap(orgComponent.Width, orgComponent.Height, PixelFormat.Format32bppPArgb);
-                using (var g = Graphics.FromImage(commCacheBitmap)) {
-                    for (backPartsDepth = 0; backPartsDepth < layers.Count; backPartsDepth++) {
-                        if (haveChanged(backPartsDepth)) {
+                _commCacheBitmap = new Bitmap(orgComponent.Width, orgComponent.Height, PixelFormat.Format32bppPArgb);
+                using (var g = Graphics.FromImage(_commCacheBitmap)) {
+                    for (_backPartsDepth = 0; _backPartsDepth < _layers.Count; _backPartsDepth++) {
+                        if (HaveChanged(_backPartsDepth)) {
                             break;
                         }
-                        drawLayer(g, ref orgComponent, ref orgComponent, backPartsDepth, orgComponent);
+                        DrawLayer(g, ref orgComponent, ref orgComponent, _backPartsDepth, orgComponent);
                     }
                 }
             }
         }
 
-        private bool haveChanged(int index) {
-            return (!layers[index].mayDraw()) || layers[index].isCacheInvalid() || (!layers[index].mayCacheLayer());
+        private bool HaveChanged(int index) {
+            return (!_layers[index].MayDraw()) || _layers[index].IsCacheInvalid() || (!_layers[index].MayCacheLayer());
         }
 
-        private bool validateCommCache() {
-            for (var i = 0; i < backPartsDepth; i++) {
-                if (haveChanged(i)) {
-                    invalidate();
+        private bool ValidateCommCache() {
+            for (var i = 0; i < _backPartsDepth; i++) {
+                if (HaveChanged(i)) {
+                    Invalidate();
                     return false;
                 }
             }
             return true;
         }
 
-        private void drawLayer(Graphics g, ref Rectangle wholeComponent, ref Rectangle clipRect, int i, Rectangle orgRect) {
-            layers[i].draw(g, ref wholeComponent, ref clipRect);
+        private void DrawLayer(Graphics g, ref Rectangle wholeComponent, ref Rectangle clipRect, int i, Rectangle orgRect) {
+            _layers[i].Draw(g, ref wholeComponent, ref clipRect);
         }
 
-        public void invalidate() {
-            if (commCacheBitmap != null) {
-                commCacheBitmap.Dispose();
+        public void Invalidate() {
+            if (_commCacheBitmap != null) {
+                _commCacheBitmap.Dispose();
             }
-            notInvalidatedFor = 0;
-            commCacheBitmap = null;
+            _notInvalidatedFor = 0;
+            _commCacheBitmap = null;
         }
 
-        public void addLayer(IDrawMethod method) {
-            layers.Add(method);
+        public void AddLayer(IDrawMethod method) {
+            _layers.Add(method);
         }
 
-        public void removeLayer(int index) {
+        public void RemoveLayer(int index) {
             index = Math.Max(index, 0);
-            layers.RemoveAt(index);
-            invalidate();
+            _layers.RemoveAt(index);
+            Invalidate();
         }
 
-        public void moveLayer(int fromLayer, int toLayer) {
-            IDrawMethod temp = layers[fromLayer];
-            removeLayer(fromLayer);
-            insertLayer(temp, toLayer);
+        public void MoveLayer(int fromLayer, int toLayer) {
+            IDrawMethod temp = _layers[fromLayer];
+            RemoveLayer(fromLayer);
+            InsertLayer(temp, toLayer);
         }
-        public void insertLayer(IDrawMethod method, int index) {
+        public void InsertLayer(IDrawMethod method, int index) {
             index = Math.Max(index, 0);
-            if (index >= layers.Count) {
-                addLayer(method);
+            if (index >= _layers.Count) {
+                AddLayer(method);
             } else {
-                layers.Insert(index, method);
+                _layers.Insert(index, method);
             }
         }
 
         ~DrawingHandler() {
-            invalidate();
+            Invalidate();
         }
 
     }
